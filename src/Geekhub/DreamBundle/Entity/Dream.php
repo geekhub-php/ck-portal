@@ -2,6 +2,7 @@
 
 namespace Geekhub\DreamBundle\Entity;
 
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -31,6 +32,14 @@ class Dream
     /**
      * @var string
      *
+     * @Gedmo\Slug(fields={"title"})
+     * @ORM\Column(length=255, unique=true)
+     */
+    private $slug;
+
+    /**
+     * @var string
+     *
      * @ORM\Column(name="description", type="text")
      */
     private $description;
@@ -38,7 +47,7 @@ class Dream
     /**
      * @var string
      *
-     * @ORM\Column(name="phone", type="string", length=255)
+     * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
     private $phone;
 
@@ -52,7 +61,7 @@ class Dream
     /**
      * @var string
      *
-     * @ORM\Column(name="state", type="string", columnDefinition="ENUM('open', 'close', 'complete', 'success')")
+     * @ORM\Column(name="state", type="string", columnDefinition="ENUM('open', 'close', 'complete', 'success')", nullable=false)
      */
     private $state;
 
@@ -63,6 +72,24 @@ class Dream
      */
     private $onFront;
 
+
+    private $deleted;
+
+    /**
+     * @var datetime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created", type="datetime")
+     */
+    private $created;
+
+    /**
+     * @var datetime
+     *
+     * @Gedmo\Timestampable(on="update")
+     * @ORM\Column(name="updated", type="datetime")
+     */
+    private $updated;
 
     /**
      * Get id
@@ -95,6 +122,14 @@ class Dream
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * @return string
+     */
+    public function getSlug()
+    {
+        return $this->slug;
     }
 
     /**
@@ -210,5 +245,21 @@ class Dream
     public function getOnFront()
     {
         return $this->onFront;
+    }
+
+    /**
+     * @return \Geekhub\DreamBundle\Entity\datetime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    /**
+     * @return \Geekhub\DreamBundle\Entity\datetime
+     */
+    public function getUpdated()
+    {
+        return $this->updated;
     }
 }
