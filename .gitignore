@@ -7,4 +7,4 @@ vendor
 composer.phar
 
 .idea/
-app/parameters.yml
+app/config/parameters.yml
