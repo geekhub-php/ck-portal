@@ -3,6 +3,8 @@
 namespace Geekhub\DreamBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
+use Doctrine\Common\Collections\ArrayCollection;
+use DoctrineExtensions\Taggable\Taggable;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -11,7 +13,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Table(name="dream")
  * @ORM\Entity
  */
-class Dream
+class Dream implements Taggable
 {
     /**
      * @var integer
@@ -43,6 +45,8 @@ class Dream
      * @ORM\Column(name="description", type="text")
      */
     private $description;
+
+    private $tags;
 
     /**
      * @var string
@@ -153,6 +157,23 @@ class Dream
     public function getDescription()
     {
         return $this->description;
+    }
+
+    public function getTags()
+    {
+        $this->tags = $this->tags ?: new ArrayCollection();
+
+        return $this->tags;
+    }
+
+    public function getTaggableType()
+    {
+        return 'dream_tag';
+    }
+
+    public function getTaggableId()
+    {
+        return $this->getId();
     }
 
     /**
