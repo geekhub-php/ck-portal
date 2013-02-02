@@ -1,0 +1,3 @@
+dream_homepage:
+    pattern:  /hello/{name}
+    defaults: { _controller: DreamBundle:Default:index }
