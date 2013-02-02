@@ -68,3 +68,8 @@ stof_doctrine_extensions:
             timestampable: true
             uploadable: true
             softdeleteable: true
+
+fpn_tag:
+    model:
+        tag_class:     Geekhub\TagBundle\Entity\Tag
+        tagging_class: Geekhub\TagBundle\Entity\Tagging
