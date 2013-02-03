@@ -269,7 +269,7 @@ class Dream implements Taggable
     }
 
     /**
-     * @return \Geekhub\DreamBundle\Entity\datetime
+     * @return datetime
      */
     public function getCreated()
     {
@@ -277,7 +277,7 @@ class Dream implements Taggable
     }
 
     /**
-     * @return \Geekhub\DreamBundle\Entity\datetime
+     * @return datetime
      */
     public function getUpdated()
     {
