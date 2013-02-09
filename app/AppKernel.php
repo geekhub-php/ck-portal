@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new FPN\TagBundle\FPNTagBundle(),
             new Geekhub\TagBundle\TagBundle(),
+            new Geekhub\UserBundle\UserBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
