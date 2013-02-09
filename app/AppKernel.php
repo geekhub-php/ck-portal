@@ -23,6 +23,7 @@ class AppKernel extends Kernel
             new Stof\DoctrineExtensionsBundle\StofDoctrineExtensionsBundle(),
             new FPN\TagBundle\FPNTagBundle(),
             new Geekhub\TagBundle\TagBundle(),
+            new FOS\UserBundle\FOSUserBundle(),
             new Geekhub\UserBundle\UserBundle(),
         );
 

@@ -22,7 +22,8 @@
 
         "stof/doctrine-extensions-bundle": "dev-master",
         "fpn/doctrine-extensions-taggable": "dev-master",
-        "fpn/tag-bundle":"dev-master"
+        "fpn/tag-bundle":"dev-master",
+        "friendsofsymfony/user-bundle": "*",
     },
     "scripts": {
         "post-install-cmd": [
