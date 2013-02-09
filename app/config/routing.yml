@@ -2,6 +2,9 @@ dream:
     resource: "@DreamBundle/Resources/config/routing.yml"
     prefix:   /
 
+user_bundle:
+    resource: "@UserBundle/Resources/config/routing.yml"
+
 hwi_oauth_redirect:
     resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
     prefix:   /connect
