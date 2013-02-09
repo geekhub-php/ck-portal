@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new Geekhub\TagBundle\TagBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Geekhub\UserBundle\UserBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

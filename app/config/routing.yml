@@ -2,6 +2,10 @@ dream:
     resource: "@DreamBundle/Resources/config/routing.yml"
     prefix:   /
 
+hwi_oauth_redirect:
+    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
+    prefix:   /connect
+
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
 # This route should be enabled with caution as it can open a security vulnerability
