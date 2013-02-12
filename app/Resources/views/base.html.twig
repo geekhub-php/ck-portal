@@ -7,7 +7,27 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        {% block header %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <img src="{{ user.profilePicture }}" style="float:left;" />Hello {{ user.name }}
+            <br />
+            <a href="http://{{ user.website }}">
+                   Site
+            </a>
+            <br />
+            <a href="{{ user.facebookProfile }}">
+                    facebook
+            </a>
+            <br />
+            <a href="mailto:{{ user.email }}">
+                    email
+            </a>
+        {% else %}
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"><img src="http://tools20.ru/img/facebook_login.png" /></a>
+        {% endif %}
+        {% endblock %}
         {% block body %}{% endblock %}
+        {% block footer %}{% endblock %}
         {% block javascripts %}{% endblock %}
     </body>
 </html>

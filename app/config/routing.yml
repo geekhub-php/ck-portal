@@ -1,4 +1,4 @@
-dream:
+dream_bundle:
     resource: "@DreamBundle/Resources/config/routing.yml"
     prefix:   /
 
