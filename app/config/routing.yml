@@ -4,10 +4,7 @@ dream_bundle:
 
 user_bundle:
     resource: "@UserBundle/Resources/config/routing.yml"
-
-hwi_oauth_redirect:
-    resource: "@HWIOAuthBundle/Resources/config/routing/redirect.xml"
-    prefix:   /connect
+    prefix:   /
 
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
