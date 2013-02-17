@@ -1,8 +1,25 @@
 parameters:
     my_user_provider.class: Geekhub\UserBundle\UserProvider\FOSUBUserProvider
+    abstact_social_network_provider.class: Geekhub\UserBundle\UserProvider\AbstractSocialNetworkProvider
+    vkontakte_user_provider.class: Geekhub\UserBundle\UserProvider\VkontakteUserProvider
+    facebook_user_provider.class: Geekhub\UserBundle\UserProvider\FacebookUserProvider
 
 services:
     my_user_provider:
         class: "%my_user_provider.class%"
         #this is the place where the properties are passed to the UserProvider - see config.yml
-        arguments: [@fos_user.user_manager,{facebook: facebookId, google: googleId}]
+        arguments: [@fos_user.user_manager,{facebook: facebookId, vkontakte: vkontakteId}]
+        calls:
+            - [ setVkontakteProvider, [ @vkontakte_user_provider ] ]
+            - [ setFacebookProvider, [ @facebook_user_provider ] ]
+    abstract_social_network_provider:
+        class: "%abstact_social_network_provider.class%"
+        arguments: [@fos_user.user_manager]
+
+    vkontakte_user_provider:
+        class: "%vkontakte_user_provider.class%"
+        parent: abstract_social_network_provider
+    facebook_user_provider:
+        class: "%facebook_user_provider.class%"
+        parent: abstract_social_network_provider
+
