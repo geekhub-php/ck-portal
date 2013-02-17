@@ -22,9 +22,13 @@
             <a href="mailto:{{ user.email }}">
                     email
             </a>
-        {% else %}
-            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"><img src="http://tools20.ru/img/facebook_login.png" /></a>
         {% endif %}
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}">
+                <img src="http://tools20.ru/img/facebook_login.png" />
+            </a>
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte'}) }}">
+                <img src="http://travel.luxexpress.eu/sites/all/modules/vk_login/img/vkontakte_button_ru.png" />
+            </a>
         {% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}
