@@ -8,6 +8,10 @@ use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 class FOSUBUserProvider extends BaseClass
 {
 
+    private $vkontakteProvider;
+
+    private $facebookProvider;
+
     /**
      * {@inheritDoc}
      */
@@ -42,32 +46,15 @@ class FOSUBUserProvider extends BaseClass
      */
     public function loadUserByOAuthUserResponse(UserResponseInterface $response)
     {
+        $service = $response->getResourceOwner()->getName();
+        $property = $service.'Provider';
+        $userProvider = $this->$property;
+
         $username = $response->getUsername();
-        $responseData = $response->getResponse();
+
         $user = $this->userManager->findUserBy(array($this->getProperty($response) => $username));
-        //when the user is registrating
         if (null === $user) {
-            $service = $response->getResourceOwner()->getName();
-            $setter = 'set'.ucfirst($service);
-            $setter_id = $setter.'Id';
-            $setter_token = $setter.'AccessToken';
-            // create new user here
-            $user = $this->userManager->createUser();
-            $user->$setter_id($username);
-            $user->$setter_token($response->getAccessToken());
-            //I have set all requested data with the user's username
-            //modify here with relevant data
-            $user->setUsername($response->getNickname());
-            $user->setName($responseData['name']);
-            $user->setEmail($responseData['email']);
-            $user->setPlainPassword($username);
-            isset($responseData['gender']) ? $user->setGender($responseData['gender']) : $user->setGender('');
-            isset($responseData['website']) ? $user->setWebsite($responseData['website']) : $user->setWebsite('');
-            $user->setFacebookProfile('http://www.facebook.com/'.$response->getNickname());
-            $user->setProfilePicture('http://graph.facebook.com/'.$response->getNickname().'/picture');
-            $user->setEnabled(true);
-            $this->userManager->updateUser($user);
-            return $user;
+            $user = $userProvider->setUserFromResponse($response);
         }
 
         //if user exists - go with the HWIOAuth way
@@ -81,5 +68,16 @@ class FOSUBUserProvider extends BaseClass
 
         return $user;
     }
+
+    public function setVkontakteProvider(VkontakteUserProvider $vkontakteProvider)
+    {
+        $this->vkontakteProvider = $vkontakteProvider;
+    }
+
+    public function setFacebookProvider(FacebookUserProvider $facebookProvider)
+    {
+        $this->facebookProvider = $facebookProvider;
+    }
+
 
 }
