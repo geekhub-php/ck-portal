@@ -34,5 +34,8 @@ hwi_oauth_redirect:
 facebook_login:
     pattern: /login/check-facebook
 
+vkontakte_login:
+    pattern: /login/check-vkontakte
+
 google_login:
     pattern: /login/check-google
