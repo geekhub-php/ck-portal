@@ -39,3 +39,9 @@ vkontakte_login:
 
 google_login:
     pattern: /login/check-odnoklassniki
+
+# Its route rewrite original route for HWIOAuthBundle
+# Will remove when add merge account feature
+hwi_oauth_connect_service:
+    pattern:    /login/service/{service}
+    defaults:   { _controller: UserBundle:Default:accessDenied }
