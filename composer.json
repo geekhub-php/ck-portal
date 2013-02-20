@@ -24,7 +24,8 @@
         "fpn/doctrine-extensions-taggable": "dev-master",
         "fpn/tag-bundle":"dev-master",
         "friendsofsymfony/user-bundle": "*",
-        "hwi/oauth-bundle": "0.2.*@dev"
+        "hwi/oauth-bundle": "0.2.*@dev",
+        "liip/imagine-bundle": "dev-master"
     },
     "scripts": {
         "post-install-cmd": [
