@@ -27,6 +27,7 @@ class AppKernel extends Kernel
             new Geekhub\UserBundle\UserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new \Liip\ImagineBundle\LiipImagineBundle(),
+            new Geekhub\PointBundle\PointBundle()
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
