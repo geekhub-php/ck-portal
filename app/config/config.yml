@@ -113,3 +113,11 @@ hwi_oauth:
             scope:               "VALUABLE_ACCESS;PHOTO CONTENT"
     # here you will add one (or more) configurations for resource owners
 
+liip_imagine:
+    web_root: %kernel.root_dir%/../web
+    data_root: %kernel.root_dir%/../web
+    filter_sets:
+        profile_avatar:
+            quality: 75
+            filters:
+                thumbnail: { size: [200, 200], mode: outbound }
