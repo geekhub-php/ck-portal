@@ -26,8 +26,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Geekhub\UserBundle\UserBundle(),
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
-            new \Liip\ImagineBundle\LiipImagineBundle(),
-            new Geekhub\PointBundle\PointBundle()
+            new Liip\ImagineBundle\LiipImagineBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
