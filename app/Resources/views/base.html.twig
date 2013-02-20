@@ -9,19 +9,53 @@
     <body>
         {% block header %}
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
-            <img src="{{ user.profilePicture }}" style="float:left;" />Hello {{ user.name }}
-            <br />
-            <a href="http://{{ user.website }}">
-                   Site
-            </a>
-            <br />
-            <a href="{{ user.facebookProfile }}">
+
+            {% if user.profilePicture is defined and user.profilePicture is not empty %}
+                <img src="{{ user.profilePicture | imagine_filter('profile_avatar') }}" style="float:left;" />
+            {% endif %}
+
+            Hello {{ user.name }}
+
+            {% if user.website is defined and user.website is not empty %}
+                <br />
+                <a target="_blank" href="http://{{ user.website }}">
+                    Site
+                </a>
+            {% endif %}
+
+            {% if user.vkontakteProfile is defined and user.vkontakteProfile is not empty %}
+                <br />
+                <a target="_blank" href="{{ user.vkontakteProfile }}">
+                    vkontakte
+                </a>
+            {% endif %}
+
+            {% if user.facebookProfile is defined and user.facebookProfile is not empty %}
+                <br />
+                <a target="_blank" href="{{ user.facebookProfile }}">
                     facebook
-            </a>
-            <br />
-            <a href="mailto:{{ user.email }}">
-                    email
-            </a>
+                </a>
+            {% endif %}
+
+            {% if user.odnoklassnikiProfile is defined and user.odnoklassnikiProfile is not empty %}
+                <br />
+                <a target="_blank" href="{{ user.odnoklassnikiProfile }}">
+                    odnoklassniki
+                </a>
+            {% endif %}
+
+            {% if user.gender is defined and user.gender is not empty %}
+                <br />
+                Your gender is {{ user.gender }}
+            {% endif %}
+
+            {% if user.email is defined and user.email is not empty %}
+                <br />
+                <a href="mailto:{{ user.email }}">
+                    Write me
+                </a>
+            {% endif %}
+
         {% endif %}
             <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}">
                 <img src="http://tools20.ru/img/facebook_login.png" />
@@ -29,6 +63,10 @@
             <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte'}) }}">
                 <img src="http://travel.luxexpress.eu/sites/all/modules/vk_login/img/vkontakte_button_ru.png" />
             </a>
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'odnoklassniki'}) }}">
+                <img width="150px" src="http://s019.radikal.ru/i644/1302/98/eb018a978bb8.jpg" />
+            </a>
+
         {% endblock %}
         {% block body %}{% endblock %}
         {% block footer %}{% endblock %}
