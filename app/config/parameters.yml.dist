@@ -11,5 +11,14 @@ parameters:
     mailer_user:       ~
     mailer_password:   ~
 
-    locale:            en
+    locale:            uk
     secret:            ThisTokenIsNotSoSecretChangeIt
+
+#    OAuth parameters
+    facebook_app_id:      ~
+    facebook_app_secret:  ~
+    vkontakte_app_id:     ~
+    vkontakte_app_secret: ~
+    odnoklassniki_app_id:       ~
+    odnoklassniki_app_secret:   ~
+    odnoklassniki_app_public:   ~

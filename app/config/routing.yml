@@ -1,6 +1,14 @@
-dream:
+dream_bundle:
     resource: "@DreamBundle/Resources/config/routing.yml"
     prefix:   /
+
+user_bundle:
+    resource: "@UserBundle/Resources/config/routing.yml"
+    prefix:   /
+
+_imagine:
+    resource: .
+    type:     imagine
 
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
