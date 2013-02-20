@@ -15,6 +15,10 @@ abstract class AbstractSocialNetworkUserProvider
 
     protected $propertyServiceAccessToken;
 
+    protected $kernelWebDir;
+
+    protected $imgPath = '/uploads/';
+
     public function __construct (UserManagerInterface $userManager )
     {
         $this->userManager = $userManager;
@@ -41,5 +45,28 @@ abstract class AbstractSocialNetworkUserProvider
         $date = date($format, $stringDate);
 
         return new \DateTime($date);
+    }
+
+    public function setKernelWebDir($kernelWebDir)
+    {
+        $this->kernelWebDir = $kernelWebDir;
+    }
+
+    public function copyImgFromRemote($remoteImg, $localFileName)
+    {
+        $content = file_get_contents($remoteImg);
+        $destination = $this->kernelWebDir.'/../web'.$this->imgPath;
+
+        if (!is_dir($destination)) {
+            mkdir($destination);
+        }
+
+        $localImg = $destination.$localFileName;
+
+        $fp = fopen($localImg, "w");
+        fwrite($fp, $content);
+        fclose($fp);
+
+        return $this->imgPath.$localFileName;
     }
 }

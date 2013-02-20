@@ -17,6 +17,8 @@ services:
     abstract_social_network_provider:
         class: "%abstact_social_network_provider.class%"
         arguments: [@fos_user.user_manager]
+        calls:
+            - [ setKernelWebDir, [ %kernel.root_dir% ] ]
 
     vkontakte_user_provider:
         class: "%vkontakte_user_provider.class%"
