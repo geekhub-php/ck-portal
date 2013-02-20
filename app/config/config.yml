@@ -94,6 +94,7 @@ hwi_oauth:
             # these properties will be used/redefined later in the custom FOSUBUserProvider service.
             vkontakte: vkontakteId
             facebook:  facebookId
+            odnoklassniki: odnoklassnikiId
     resource_owners:
         facebook:
             type:                facebook
@@ -105,4 +106,10 @@ hwi_oauth:
             client_id:           "%vkontakte_app_id%"
             client_secret:       "%vkontakte_app_secret%"
             scope:               "photos"
+        odnoklassniki:
+            type:                odnoklassniki
+            client_id:           "%odnoklassniki_app_id%"
+            client_secret:       "%odnoklassniki_app_secret%"
+            scope:               "VALUABLE_ACCESS;PHOTO CONTENT"
     # here you will add one (or more) configurations for resource owners
+

@@ -12,6 +12,8 @@ class FOSUBUserProvider extends BaseClass
 
     private $facebookProvider;
 
+    private $odnoklassnikiProvider;
+
     /**
      * {@inheritDoc}
      */
@@ -77,6 +79,11 @@ class FOSUBUserProvider extends BaseClass
     public function setFacebookProvider(FacebookUserProvider $facebookProvider)
     {
         $this->facebookProvider = $facebookProvider;
+    }
+
+    public function setOdnoklassnikiProvider(OdnoklassnikiUserProvider $odnoklassnikiProvider)
+    {
+        $this->odnoklassnikiProvider = $odnoklassnikiProvider;
     }
 
 

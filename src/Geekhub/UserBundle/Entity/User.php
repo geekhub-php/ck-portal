@@ -55,10 +55,10 @@ class User extends BaseUser
     /** @ORM\Column(name="vkontakte_profile", type="string", length=255, nullable=true) */
     private $vkontakteProfile;
 
-    /** @ORM\Column(name="google_id", type="string", length=255, nullable=true) */
+    /** @ORM\Column(name="odnoklassniki_id", type="string", length=255, nullable=true) */
     private  $odnoklassnikiId;
 
-    /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
+    /** @ORM\Column(name="odnoklassniki_access_token", type="string", length=255, nullable=true) */
     private  $odnoklassnikiAccessToken;
 
     /** @ORM\Column(name="odnoklassniki_profile", type="string", length=255, nullable=true) */

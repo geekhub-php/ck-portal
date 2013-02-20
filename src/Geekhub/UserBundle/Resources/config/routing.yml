@@ -38,4 +38,4 @@ vkontakte_login:
     pattern: /login/check-vkontakte
 
 google_login:
-    pattern: /login/check-google
+    pattern: /login/check-odnoklassniki
