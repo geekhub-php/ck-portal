@@ -24,6 +24,9 @@ class FacebookUserProvider extends AbstractSocialNetworkUserProvider
 
         $user = $this->userManager->createUser();
 
+        $remoteImg = 'http://graph.facebook.com/'.$username.'/picture?width=200&height=200';
+        $profilePicture = $this->copyImgFromRemote($remoteImg, md5('fb'.$uid).'.jpg');
+
         $user->setName($name);
         $user->setGender($gender);
         $user->setFacebookId($uid);
@@ -35,7 +38,7 @@ class FacebookUserProvider extends AbstractSocialNetworkUserProvider
         $user->setUsername($tokenArray[0]);
         $user->setPlainPassword($tokenArray[1]);
         isset($responseArray['website']) ? $user->setWebsite($responseArray['website']) : $user->setWebsite('');
-        $user->setProfilePicture('http://graph.facebook.com/'.$username.'/picture?width=200&height=200');
+        $user->setProfilePicture($profilePicture);
         $user->setEnabled(true);
 
         $this->userManager->updateUser($user);

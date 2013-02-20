@@ -18,6 +18,11 @@ class VkontakteUserProvider extends AbstractSocialNetworkUserProvider
 
         $user = $this->userManager->createUser();
 
+        $profilePicture = null;
+        if ($remoteImg = $this->callUsersGet($uid, $token, 'photo_big')) {
+            $profilePicture = $this->copyImgFromRemote($remoteImg, md5('fb'.$uid).'.jpg');
+        }
+
         $user->setName($name);
         $user->setGender($gender);
         $user->setvkontakteId($uid);
@@ -30,7 +35,7 @@ class VkontakteUserProvider extends AbstractSocialNetworkUserProvider
 
         $user->setFirstName($this->callUsersGet($uid, $token, 'first_name'));
         $user->setLastName($this->callUsersGet($uid, $token, 'last_name'));
-        $user->setProfilePicture($this->callUsersGet($uid, $token, 'photo_big'));
+        $user->setProfilePicture($profilePicture);
 
         $this->userManager->updateUser($user);
     }
