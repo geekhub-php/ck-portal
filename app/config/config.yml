@@ -92,11 +92,32 @@ hwi_oauth:
         username_iterations: 30
         properties:
             # these properties will be used/redefined later in the custom FOSUBUserProvider service.
-            facebook: facebookId
+            vkontakte: vkontakteId
+            facebook:  facebookId
+            odnoklassniki: odnoklassnikiId
     resource_owners:
         facebook:
             type:                facebook
             client_id:           "%facebook_app_id%"
             client_secret:       "%facebook_app_secret%"
             scope:               "email, user_photos, user_website"
+        vkontakte:
+            type:                vkontakte
+            client_id:           "%vkontakte_app_id%"
+            client_secret:       "%vkontakte_app_secret%"
+            scope:               "photos"
+        odnoklassniki:
+            type:                odnoklassniki
+            client_id:           "%odnoklassniki_app_id%"
+            client_secret:       "%odnoklassniki_app_secret%"
+            scope:               "VALUABLE_ACCESS;PHOTO CONTENT"
     # here you will add one (or more) configurations for resource owners
+
+liip_imagine:
+    web_root: %kernel.root_dir%/../web
+    data_root: %kernel.root_dir%/../web
+    filter_sets:
+        profile_avatar:
+            quality: 75
+            filters:
+                thumbnail: { size: [200, 200], mode: outbound }

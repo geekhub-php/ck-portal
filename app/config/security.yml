@@ -25,7 +25,8 @@ security:
             oauth:
                 resource_owners:
                     facebook:           "/login/check-facebook"
-                    google:             "/login/check-google"
+                    vkontakte:           "/login/check-vkontakte"
+                    odnoklassniki:             "/login/check-odnoklassniki"
                 login_path:        /login
                 failure_path:      /login
 

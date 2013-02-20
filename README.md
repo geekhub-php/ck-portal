@@ -12,6 +12,9 @@ The project is developed through the efforts of the project [Geekhub][1]
 2) Road map
 -------------------------------------
 
+ToDo
+-------------------------------------
+- Give opportunity for user to merge accounts other social network
 
 
 [1]:  http://geekhub.ck.ua/

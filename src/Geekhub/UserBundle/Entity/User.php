@@ -22,6 +22,12 @@ class User extends BaseUser
     /** @ORM\Column(name="name", type="string", length=255, nullable=true) */
     private $name;
 
+    /** @ORM\Column(name="first_name", type="string", length=255, nullable=true) */
+    private $firstName;
+
+    /** @ORM\Column(name="last_name", type="string", length=255, nullable=true) */
+    private $lastName;
+
     /** @ORM\Column(name="gender", type="string", length=255, nullable=true) */
     private  $gender;
 
@@ -40,13 +46,23 @@ class User extends BaseUser
     /** @ORM\Column(name="facebook_profile", type="string", length=255, nullable=true) */
     private $facebookProfile;
 
-    /** @ORM\Column(name="google_id", type="string", length=255, nullable=true) */
-    private  $googleId;
+    /** @ORM\Column(name="vkontakte_id", type="string", length=255, nullable=true) */
+    private $vkontakteId;
 
-    /** @ORM\Column(name="google_access_token", type="string", length=255, nullable=true) */
-    private  $googleAccessToken;
+    /** @ORM\Column(name="vkontakte_access_token", type="string", length=255, nullable=true) */
+    private $vkontakteAccessToken;
 
+    /** @ORM\Column(name="vkontakte_profile", type="string", length=255, nullable=true) */
+    private $vkontakteProfile;
 
+    /** @ORM\Column(name="odnoklassniki_id", type="string", length=255, nullable=true) */
+    private  $odnoklassnikiId;
+
+    /** @ORM\Column(name="odnoklassniki_access_token", type="string", length=255, nullable=true) */
+    private  $odnoklassnikiAccessToken;
+
+    /** @ORM\Column(name="odnoklassniki_profile", type="string", length=255, nullable=true) */
+    private $odnoklassnikiProfile;
 
     /**
      * Get id
@@ -79,6 +95,52 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set firstName
+     *
+     * @param string $firstName
+     * @return User
+     */
+    public function setFirstName($firstName)
+    {
+        $this->firstName = $firstName;
+    
+        return $this;
+    }
+
+    /**
+     * Get firstName
+     *
+     * @return string 
+     */
+    public function getFirstName()
+    {
+        return $this->firstName;
+    }
+
+    /**
+     * Set lastName
+     *
+     * @param string $lastName
+     * @return User
+     */
+    public function setLastName($lastName)
+    {
+        $this->lastName = $lastName;
+    
+        return $this;
+    }
+
+    /**
+     * Get lastName
+     *
+     * @return string 
+     */
+    public function getLastName()
+    {
+        return $this->lastName;
     }
 
     /**
@@ -197,52 +259,6 @@ class User extends BaseUser
     }
 
     /**
-     * Set googleId
-     *
-     * @param string $googleId
-     * @return User
-     */
-    public function setGoogleId($googleId)
-    {
-        $this->googleId = $googleId;
-    
-        return $this;
-    }
-
-    /**
-     * Get googleId
-     *
-     * @return string 
-     */
-    public function getGoogleId()
-    {
-        return $this->googleId;
-    }
-
-    /**
-     * Set googleAccessToken
-     *
-     * @param string $googleAccessToken
-     * @return User
-     */
-    public function setGoogleAccessToken($googleAccessToken)
-    {
-        $this->googleAccessToken = $googleAccessToken;
-    
-        return $this;
-    }
-
-    /**
-     * Get googleAccessToken
-     *
-     * @return string 
-     */
-    public function getGoogleAccessToken()
-    {
-        return $this->googleAccessToken;
-    }
-
-    /**
      * Set facebookProfile
      *
      * @param string $facebookProfile
@@ -263,5 +279,143 @@ class User extends BaseUser
     public function getFacebookProfile()
     {
         return $this->facebookProfile;
+    }
+
+    /**
+     * Set vkontakteId
+     *
+     * @param string $vkontakteId
+     * @return User
+     */
+    public function setVkontakteId($vkontakteId)
+    {
+        $this->vkontakteId = $vkontakteId;
+    
+        return $this;
+    }
+
+    /**
+     * Get vkontakteId
+     *
+     * @return string 
+     */
+    public function getVkontakteId()
+    {
+        return $this->vkontakteId;
+    }
+
+    /**
+     * Set vkontakteAccessToken
+     *
+     * @param string $vkontakteAccessToken
+     * @return User
+     */
+    public function setVkontakteAccessToken($vkontakteAccessToken)
+    {
+        $this->vkontakteAccessToken = $vkontakteAccessToken;
+    
+        return $this;
+    }
+
+    /**
+     * Get vkontakteAccessToken
+     *
+     * @return string 
+     */
+    public function getVkontakteAccessToken()
+    {
+        return $this->vkontakteAccessToken;
+    }
+
+    /**
+     * Set vkontakteProfile
+     *
+     * @param string $vkontakteProfile
+     * @return User
+     */
+    public function setVkontakteProfile($vkontakteProfile)
+    {
+        $this->vkontakteProfile = $vkontakteProfile;
+    
+        return $this;
+    }
+
+    /**
+     * Get vkontakteProfile
+     *
+     * @return string 
+     */
+    public function getVkontakteProfile()
+    {
+        return $this->vkontakteProfile;
+    }
+
+    /**
+     * Set odnoklassnikiId
+     *
+     * @param string $odnoklassnikiId
+     * @return User
+     */
+    public function setOdnoklassnikiId($odnoklassnikiId)
+    {
+        $this->odnoklassnikiId = $odnoklassnikiId;
+    
+        return $this;
+    }
+
+    /**
+     * Get odnoklassnikiId
+     *
+     * @return string 
+     */
+    public function getOdnoklassnikiId()
+    {
+        return $this->odnoklassnikiId;
+    }
+
+    /**
+     * Set odnoklassnikiAccessToken
+     *
+     * @param string $odnoklassnikiAccessToken
+     * @return User
+     */
+    public function setOdnoklassnikiAccessToken($odnoklassnikiAccessToken)
+    {
+        $this->odnoklassnikiAccessToken = $odnoklassnikiAccessToken;
+    
+        return $this;
+    }
+
+    /**
+     * Get odnoklassnikiAccessToken
+     *
+     * @return string 
+     */
+    public function getOdnoklassnikiAccessToken()
+    {
+        return $this->odnoklassnikiAccessToken;
+    }
+
+    /**
+     * Set odnoklassnikiProfile
+     *
+     * @param string $odnoklassnikiProfile
+     * @return User
+     */
+    public function setOdnoklassnikiProfile($odnoklassnikiProfile)
+    {
+        $this->odnoklassnikiProfile = $odnoklassnikiProfile;
+    
+        return $this;
+    }
+
+    /**
+     * Get odnoklassnikiProfile
+     *
+     * @return string 
+     */
+    public function getOdnoklassnikiProfile()
+    {
+        return $this->odnoklassnikiProfile;
     }
 }
