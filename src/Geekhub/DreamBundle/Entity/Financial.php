@@ -1,6 +1,6 @@
 <?php
 
-namespace Geekhub\PointBundle\Entity;
+namespace Geekhub\DreamBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
