@@ -37,8 +37,7 @@ class User extends BaseUser
     private $contributions;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="usersWhoFavorites")
-     * @ORM\JoinTable(name="favorite")
+     * @ORM\ManyToMany(targetEntity="Geekhub\DreamBundle\Entity\Dream", mappedBy="usersWhoFavorites")
      */
     private $favoriteDreams;
 
