@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="dream")
  * @ORM\Entity
+ * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Dream implements Taggable
 {
@@ -30,6 +31,21 @@ class Dream implements Taggable
      * @ORM\Column(name="title", type="string", length=255)
      */
     private $title;
+
+    /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="userDreams") */
+    private $owner;
+
+    /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
+    private $contributions;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="favoriteDreams")
+     * @ORM\JoinTable(name="favorite")
+     */
+    private $usersWhoFavorites;
+
+    /** @ORM\OneToMany(targetEntity="Geekhub\UserBundle\Entity\Notify", mappedBy="dream") */
+    private $notices;
 
     /**
      * @var string
@@ -76,8 +92,10 @@ class Dream implements Taggable
      */
     private $onFront;
 
-
-    private $deleted;
+    /**
+     * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
+     */
+    private $deletedAt;
 
     /**
      * @var datetime
@@ -94,6 +112,29 @@ class Dream implements Taggable
      * @ORM\Column(name="updated", type="datetime")
      */
     private $updated;
+
+    public function __construct()
+    {
+        $this->usersWhoFavorites = new ArrayCollection();
+        $this->contributions = new ArrayCollection();
+    }
+
+    public function getTags()
+    {
+        $this->tags = $this->tags ?: new ArrayCollection();
+
+        return $this->tags;
+    }
+
+    public function getTaggableType()
+    {
+        return 'dream_tag';
+    }
+
+    public function getTaggableId()
+    {
+        return $this->getId();
+    }
 
     /**
      * Get id
@@ -129,7 +170,22 @@ class Dream implements Taggable
     }
 
     /**
-     * @return string
+     * Set slug
+     *
+     * @param string $slug
+     * @return Dream
+     */
+    public function setSlug($slug)
+    {
+        $this->slug = $slug;
+    
+        return $this;
+    }
+
+    /**
+     * Get slug
+     *
+     * @return string 
      */
     public function getSlug()
     {
@@ -157,23 +213,6 @@ class Dream implements Taggable
     public function getDescription()
     {
         return $this->description;
-    }
-
-    public function getTags()
-    {
-        $this->tags = $this->tags ?: new ArrayCollection();
-
-        return $this->tags;
-    }
-
-    public function getTaggableType()
-    {
-        return 'dream_tag';
-    }
-
-    public function getTaggableId()
-    {
-        return $this->getId();
     }
 
     /**
@@ -208,14 +247,14 @@ class Dream implements Taggable
     public function setPhoneAvailable($phoneAvailable)
     {
         $this->phoneAvailable = $phoneAvailable;
-
+    
         return $this;
     }
 
     /**
      * Get phoneAvailable
      *
-     * @return boolean
+     * @return boolean 
      */
     public function getPhoneAvailable()
     {
@@ -269,7 +308,45 @@ class Dream implements Taggable
     }
 
     /**
-     * @return datetime
+     * Set deletedAt
+     *
+     * @param \DateTime $deletedAt
+     * @return Dream
+     */
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    
+        return $this;
+    }
+
+    /**
+     * Get deletedAt
+     *
+     * @return \DateTime 
+     */
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    /**
+     * Set created
+     *
+     * @param \DateTime $created
+     * @return Dream
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    
+        return $this;
+    }
+
+    /**
+     * Get created
+     *
+     * @return \DateTime 
      */
     public function getCreated()
     {
@@ -277,10 +354,147 @@ class Dream implements Taggable
     }
 
     /**
-     * @return datetime
+     * Set updated
+     *
+     * @param \DateTime $updated
+     * @return Dream
+     */
+    public function setUpdated($updated)
+    {
+        $this->updated = $updated;
+    
+        return $this;
+    }
+
+    /**
+     * Get updated
+     *
+     * @return \DateTime 
      */
     public function getUpdated()
     {
         return $this->updated;
+    }
+
+    /**
+     * Set owner
+     *
+     * @param \Geekhub\UserBundle\Entity\User $owner
+     * @return Dream
+     */
+    public function setOwner(\Geekhub\UserBundle\Entity\User $owner = null)
+    {
+        $this->owner = $owner;
+    
+        return $this;
+    }
+
+    /**
+     * Get owner
+     *
+     * @return \Geekhub\UserBundle\Entity\User 
+     */
+    public function getOwner()
+    {
+        return $this->owner;
+    }
+
+    /**
+     * Add contributions
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contributions
+     * @return Dream
+     */
+    public function addContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contributions)
+    {
+        $this->contributions[] = $contributions;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contributions
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contributions
+     */
+    public function removeContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contributions)
+    {
+        $this->contributions->removeElement($contributions);
+    }
+
+    /**
+     * Get contributions
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContributions()
+    {
+        return $this->contributions;
+    }
+
+    /**
+     * Add usersWhoFavorites
+     *
+     * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
+     * @return Dream
+     */
+    public function addUsersWhoFavorite(\Geekhub\UserBundle\Entity\User $usersWhoFavorites)
+    {
+        $this->usersWhoFavorites[] = $usersWhoFavorites;
+    
+        return $this;
+    }
+
+    /**
+     * Remove usersWhoFavorites
+     *
+     * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
+     */
+    public function removeUsersWhoFavorite(\Geekhub\UserBundle\Entity\User $usersWhoFavorites)
+    {
+        $this->usersWhoFavorites->removeElement($usersWhoFavorites);
+    }
+
+    /**
+     * Get usersWhoFavorites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsersWhoFavorites()
+    {
+        return $this->usersWhoFavorites;
+    }
+
+    /**
+     * Add notices
+     *
+     * @param \Geekhub\UserBundle\Entity\Notify $notices
+     * @return Dream
+     */
+    public function addNotice(\Geekhub\UserBundle\Entity\Notify $notices)
+    {
+        $this->notices[] = $notices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notices
+     *
+     * @param \Geekhub\UserBundle\Entity\Notify $notices
+     */
+    public function removeNotice(\Geekhub\UserBundle\Entity\Notify $notices)
+    {
+        $this->notices->removeElement($notices);
+    }
+
+    /**
+     * Get notices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotices()
+    {
+        return $this->notices;
     }
 }
