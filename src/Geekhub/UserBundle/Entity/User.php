@@ -125,6 +125,8 @@ class User extends BaseUser
         $this->contributions = new ArrayCollection();
         $this->favoriteDreams = new ArrayCollection();
         $this->notices = new ArrayCollection();
+
+        parent::__construct();
     }
 
 
