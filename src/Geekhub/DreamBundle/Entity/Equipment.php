@@ -42,13 +42,8 @@ class Equipment
      */
     private $total;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="dream_id", type="integer")
-     */
-    private $dream_id;
-
+    /** @ORM\ManyToOne(targetEntity="Point", inversedBy="equipment") */
+    private $point;
 
     /**
      * Get id
@@ -84,29 +79,6 @@ class Equipment
     }
 
     /**
-     * Set unit
-     *
-     * @param integer $unit
-     * @return Equipment
-     */
-    public function setUnit($unit)
-    {
-        $this->unit = $unit;
-    
-        return $this;
-    }
-
-    /**
-     * Get unit
-     *
-     * @return integer 
-     */
-    public function getUnit()
-    {
-        return $this->unit;
-    }
-
-    /**
      * Set total
      *
      * @param integer $total
@@ -130,25 +102,48 @@ class Equipment
     }
 
     /**
-     * Set dream_id
+     * Set unit
      *
-     * @param integer $dreamId
+     * @param \Geekhub\DreamBundle\Entity\Unit $unit
      * @return Equipment
      */
-    public function setDreamId($dreamId)
+    public function setUnit(\Geekhub\DreamBundle\Entity\Unit $unit = null)
     {
-        $this->dream_id = $dreamId;
+        $this->unit = $unit;
     
         return $this;
     }
 
     /**
-     * Get dream_id
+     * Get unit
      *
-     * @return integer 
+     * @return \Geekhub\DreamBundle\Entity\Unit 
      */
-    public function getDreamId()
+    public function getUnit()
     {
-        return $this->dream_id;
+        return $this->unit;
+    }
+
+    /**
+     * Set point
+     *
+     * @param \Geekhub\DreamBundle\Entity\Point $point
+     * @return Equipment
+     */
+    public function setPoint(\Geekhub\DreamBundle\Entity\Point $point = null)
+    {
+        $this->point = $point;
+    
+        return $this;
+    }
+
+    /**
+     * Get point
+     *
+     * @return \Geekhub\DreamBundle\Entity\Point 
+     */
+    public function getPoint()
+    {
+        return $this->point;
     }
 }

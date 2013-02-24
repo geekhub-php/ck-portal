@@ -35,6 +35,12 @@ class Dream implements Taggable
     /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="userDreams") */
     private $owner;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Point")
+     * @ORM\JoinColumn(name="point_id", referencedColumnName="id")
+     */
+    private $point;
+
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
     private $contributions;
 
@@ -117,6 +123,7 @@ class Dream implements Taggable
     {
         $this->usersWhoFavorites = new ArrayCollection();
         $this->contributions = new ArrayCollection();
+        $this->point = new ArrayCollection();
     }
 
     public function getTags()
@@ -496,5 +503,28 @@ class Dream implements Taggable
     public function getNotices()
     {
         return $this->notices;
+    }
+
+    /**
+     * Set point
+     *
+     * @param \Geekhub\DreamBundle\Entity\Point $point
+     * @return Dream
+     */
+    public function setPoint(\Geekhub\DreamBundle\Entity\Point $point = null)
+    {
+        $this->point = $point;
+    
+        return $this;
+    }
+
+    /**
+     * Get point
+     *
+     * @return \Geekhub\DreamBundle\Entity\Point 
+     */
+    public function getPoint()
+    {
+        return $this->point;
     }
 }

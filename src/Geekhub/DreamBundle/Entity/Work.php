@@ -42,13 +42,8 @@ class Work
      */
     private $day;
 
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="dream_id", type="integer")
-     */
-    private $dream_id;
-
+    /** @ORM\ManyToOne(targetEntity="Point", inversedBy="work") */
+    private $point;
 
     /**
      * Get id
@@ -130,25 +125,25 @@ class Work
     }
 
     /**
-     * Set dream_id
+     * Set point
      *
-     * @param integer $dreamId
+     * @param \Geekhub\DreamBundle\Entity\Point $point
      * @return Work
      */
-    public function setDreamId($dreamId)
+    public function setPoint(\Geekhub\DreamBundle\Entity\Point $point = null)
     {
-        $this->dream_id = $dreamId;
+        $this->point = $point;
     
         return $this;
     }
 
     /**
-     * Get dream_id
+     * Get point
      *
-     * @return integer 
+     * @return \Geekhub\DreamBundle\Entity\Point 
      */
-    public function getDreamId()
+    public function getPoint()
     {
-        return $this->dream_id;
+        return $this->point;
     }
 }
