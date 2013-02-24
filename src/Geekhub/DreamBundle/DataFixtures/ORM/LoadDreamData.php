@@ -15,15 +15,15 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
         $state = array('open', 'close', 'complete', 'success');
         $operator = array('050', '066', '063', '067');
 
-        for ($i = 1; $i <= 17; $i++) {
+        for ($i = 1; $i <= 100; $i++) {
             $dream = new Dream();
-            $dream->setTitle($info[$i]['title']);
-            $dream->setDescription($info[$i]['description']);
-            $dream->setCreated($date[$i]['created']);
-            $dream->setUpdated($date[$i]['updated']);
-            $dream->setDeletedAt($date[$i]['deleted']);
+            $dream->setTitle($info[rand(1,17)]['title']);
+            $dream->setDescription($info[rand(1,17)]['description']);
+            $dream->setCreated($date[rand(1,17)]['created']);
+            $dream->setUpdated($date[rand(1,17)]['updated']);
+            $dream->setDeletedAt($date[rand(1,17)]['deleted']);
             $dream->setOnFront(rand(0, 1));
-            $dream->setOwner($this->getReference('user' . $i));
+            $dream->setOwner($this->getReference('user' . rand(1,17)));
             $dream->setPhone('+38(' . $operator[rand(0, 3)] . ')' . rand(100, 500) . '-' . rand(10, 99) . '-' . rand(10, 99));
             $dream->setPhoneAvailable(rand(1, 0));
             $dream->setState($state[rand(0, 3)]);
