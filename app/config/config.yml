@@ -106,11 +106,11 @@ hwi_oauth:
             client_id:           "%vkontakte_app_id%"
             client_secret:       "%vkontakte_app_secret%"
             scope:               "photos"
-        odnoklassniki:
-            type:                odnoklassniki
-            client_id:           "%odnoklassniki_app_id%"
-            client_secret:       "%odnoklassniki_app_secret%"
-            scope:               "VALUABLE_ACCESS;PHOTO CONTENT"
+#        odnoklassniki:
+#            type:                odnoklassniki
+#            client_id:           "%odnoklassniki_app_id%"
+#            client_secret:       "%odnoklassniki_app_secret%"
+#            scope:               "VALUABLE_ACCESS;PHOTO CONTENT"
     # here you will add one (or more) configurations for resource owners
 
 liip_imagine:
