@@ -11,7 +11,7 @@ class LoadPointData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
-        for ($i = 1; $i <= 100; $i++)
+        for ($i = 1; $i <= 30; $i++)
         {
             $point = new Point();
 

@@ -14,13 +14,15 @@ class LoadEquipmentData extends AbstractFixture implements OrderedFixtureInterfa
 
         for ($i = 1; $i <= 100; $i++) {
             $equipment = new Equipment();
-            $equipment->setPoint($this->getReference('point' . rand(1, 17)));
+            $equipment->setPoint($this->getReference('point' . rand(1, 30)));
             $equipment->setItem($equipmentItem[rand(1, 30)]);
             $equipment->setTotal(rand(1, 25));
             $equipment->setUnit($this->getReference('unit' . rand(1, 3)));
 
             $manager->persist($equipment);
             $manager->flush();
+
+            $this->setReference('equipment'.$i, $equipment);
         }
     }
 
