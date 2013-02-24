@@ -10,22 +10,17 @@ class LoadEquipmentData extends AbstractFixture implements OrderedFixtureInterfa
 {
     public function load(ObjectManager $manager)
     {
-        $i = 1;
+        $equipmentItem = $this->getEquipmentList();
 
-        foreach ($this->getEquipmentList() as $equipmentItem){
-            $equipmentRef = 'equipment'.$i;
+        for ($i = 1; $i <= 100; $i++) {
             $equipment = new Equipment();
-            $equipment->setDreamId(10);
-            $equipment->setItem($equipmentItem);
-            $equipment->setTotal(rand(1,25));
-            $equipment->setUnit($this->getReference('unit'.rand(1,3)));
+            $equipment->setPoint($this->getReference('point' . rand(1, 17)));
+            $equipment->setItem($equipmentItem[rand(1, 30)]);
+            $equipment->setTotal(rand(1, 25));
+            $equipment->setUnit($this->getReference('unit' . rand(1, 3)));
 
             $manager->persist($equipment);
             $manager->flush();
-
-            $this->addReference($equipmentRef, $equipment);
-
-            $i++;
         }
     }
 
@@ -50,7 +45,7 @@ class LoadEquipmentData extends AbstractFixture implements OrderedFixtureInterfa
      */
     function getOrder()
     {
-        return 5;
+        return 24;
     }
 
 

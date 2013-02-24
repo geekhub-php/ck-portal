@@ -12,25 +12,21 @@ class LoadFinancialData extends AbstractFixture implements OrderedFixtureInterfa
     {
         $i = 1;
         $item = array(
-            1 => 'Затраты на построкй',
+            1 => 'Затраты на построку',
             2 => 'Затраты на перевозку',
             3 => 'Затраты на доставку мусора на свалку',
             4 => 'Форс-мажор',
             5 => 'Другие затраты'
         );
 
-        for ($i = 1; $i <= 5; $i++){
-            $financialRef = 'financial'.$i;
-
+        for ($i = 1; $i <= 100; $i++) {
             $financial = new Financial();
-            $financial->setDreamId(10);
-            $financial->setItem($item[$i]);
-            $financial->setTotal(rand(250,1250000));
+            $financial->setPoint($this->getReference('point' . rand(1, 17)));
+            $financial->setItem($item[rand(1, 5)]);
+            $financial->setTotal(rand(250, 1250000));
 
             $manager->persist($financial);
             $manager->flush();
-
-            $this->addReference($financialRef, $financial);
         }
 
     }
@@ -42,7 +38,7 @@ class LoadFinancialData extends AbstractFixture implements OrderedFixtureInterfa
      */
     function getOrder()
     {
-        return 5;
+        return 22;
     }
 
 

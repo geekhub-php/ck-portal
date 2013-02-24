@@ -14,7 +14,7 @@ class LoadUnitData extends AbstractFixture implements OrderedFixtureInterface
         $i = 1;
 
         foreach ($units as $unitName) {
-            $unitRef = 'unit'.$i;
+            $unitRef = 'unit' . $i;
 
             $unit = new Unit();
             $unit->setName($unitName);
@@ -36,7 +36,7 @@ class LoadUnitData extends AbstractFixture implements OrderedFixtureInterface
      */
     function getOrder()
     {
-        return 2;
+        return 23;
     }
 
 
