@@ -42,8 +42,9 @@ class Work
      */
     private $day;
 
-    /** @ORM\ManyToOne(targetEntity="Point", inversedBy="work") */
-    private $point;
+    /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="work") */
+    private $dream;
+
 
     /**
      * Get id
@@ -125,25 +126,25 @@ class Work
     }
 
     /**
-     * Set point
+     * Set dream
      *
-     * @param \Geekhub\DreamBundle\Entity\Point $point
+     * @param \Geekhub\DreamBundle\Entity\Dream $dream
      * @return Work
      */
-    public function setPoint(\Geekhub\DreamBundle\Entity\Point $point = null)
+    public function setDream(\Geekhub\DreamBundle\Entity\Dream $dream = null)
     {
-        $this->point = $point;
+        $this->dream = $dream;
     
         return $this;
     }
 
     /**
-     * Get point
+     * Get dream
      *
-     * @return \Geekhub\DreamBundle\Entity\Point 
+     * @return \Geekhub\DreamBundle\Entity\Dream 
      */
-    public function getPoint()
+    public function getDream()
     {
-        return $this->point;
+        return $this->dream;
     }
 }

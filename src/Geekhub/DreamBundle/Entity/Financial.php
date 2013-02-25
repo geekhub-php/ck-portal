@@ -35,8 +35,10 @@ class Financial
      */
     private $total;
 
-    /** @ORM\ManyToOne(targetEntity="Point", inversedBy="financial") */
-    private $point;
+    /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="financial") */
+    private $dream;
+
+
 
     /**
      * Get id
@@ -95,25 +97,25 @@ class Financial
     }
 
     /**
-     * Set point
+     * Set dream
      *
-     * @param \Geekhub\DreamBundle\Entity\Point $point
+     * @param \Geekhub\DreamBundle\Entity\Dream $dream
      * @return Financial
      */
-    public function setPoint(\Geekhub\DreamBundle\Entity\Point $point = null)
+    public function setDream(\Geekhub\DreamBundle\Entity\Dream $dream = null)
     {
-        $this->point = $point;
+        $this->dream = $dream;
     
         return $this;
     }
 
     /**
-     * Get point
+     * Get dream
      *
-     * @return \Geekhub\DreamBundle\Entity\Point 
+     * @return \Geekhub\DreamBundle\Entity\Dream 
      */
-    public function getPoint()
+    public function getDream()
     {
-        return $this->point;
+        return $this->dream;
     }
 }

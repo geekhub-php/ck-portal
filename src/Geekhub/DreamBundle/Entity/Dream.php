@@ -35,11 +35,14 @@ class Dream implements Taggable
     /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="userDreams") */
     private $owner;
 
-    /**
-     * @ORM\OneToOne(targetEntity="Point")
-     * @ORM\JoinColumn(name="point_id", referencedColumnName="id")
-     */
-    private $point;
+    /** @ORM\OneToMany(targetEntity="Financial", mappedBy="dream") */
+    private $financial;
+
+    /** @ORM\OneToMany(targetEntity="Equipment", mappedBy="dream") */
+    private $equipment;
+
+    /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream") */
+    private $work;
 
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
     private $contributions;
@@ -123,7 +126,9 @@ class Dream implements Taggable
     {
         $this->usersWhoFavorites = new ArrayCollection();
         $this->contributions = new ArrayCollection();
-        $this->point = new ArrayCollection();
+        $this->financial = new ArrayCollection();
+        $this->equipment = new ArrayCollection();
+        $this->work = new ArrayCollection();
     }
 
     public function getTags()
@@ -506,25 +511,101 @@ class Dream implements Taggable
     }
 
     /**
-     * Set point
+     * Add financial
      *
-     * @param \Geekhub\DreamBundle\Entity\Point $point
+     * @param \Geekhub\DreamBundle\Entity\Financial $financial
      * @return Dream
      */
-    public function setPoint(\Geekhub\DreamBundle\Entity\Point $point = null)
+    public function addFinancial(\Geekhub\DreamBundle\Entity\Financial $financial)
     {
-        $this->point = $point;
+        $this->financial[] = $financial;
     
         return $this;
     }
 
     /**
-     * Get point
+     * Remove financial
      *
-     * @return \Geekhub\DreamBundle\Entity\Point 
+     * @param \Geekhub\DreamBundle\Entity\Financial $financial
      */
-    public function getPoint()
+    public function removeFinancial(\Geekhub\DreamBundle\Entity\Financial $financial)
     {
-        return $this->point;
+        $this->financial->removeElement($financial);
+    }
+
+    /**
+     * Get financial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFinancial()
+    {
+        return $this->financial;
+    }
+
+    /**
+     * Add equipment
+     *
+     * @param \Geekhub\DreamBundle\Entity\Equipment $equipment
+     * @return Dream
+     */
+    public function addEquipment(\Geekhub\DreamBundle\Entity\Equipment $equipment)
+    {
+        $this->equipment[] = $equipment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove equipment
+     *
+     * @param \Geekhub\DreamBundle\Entity\Equipment $equipment
+     */
+    public function removeEquipment(\Geekhub\DreamBundle\Entity\Equipment $equipment)
+    {
+        $this->equipment->removeElement($equipment);
+    }
+
+    /**
+     * Get equipment
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEquipment()
+    {
+        return $this->equipment;
+    }
+
+    /**
+     * Add work
+     *
+     * @param \Geekhub\DreamBundle\Entity\Work $work
+     * @return Dream
+     */
+    public function addWork(\Geekhub\DreamBundle\Entity\Work $work)
+    {
+        $this->work[] = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Remove work
+     *
+     * @param \Geekhub\DreamBundle\Entity\Work $work
+     */
+    public function removeWork(\Geekhub\DreamBundle\Entity\Work $work)
+    {
+        $this->work->removeElement($work);
+    }
+
+    /**
+     * Get work
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWork()
+    {
+        return $this->work;
     }
 }
