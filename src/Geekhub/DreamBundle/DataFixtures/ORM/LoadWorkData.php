@@ -12,12 +12,11 @@ class LoadWorkData extends AbstractFixture implements OrderedFixtureInterface
     {
         $job = $this->getJobList();
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $work = new Work();
             $work->setDay(rand(1, 5));
             $work->setEmployee(rand(1, 10));
             $work->setJob($job[rand(1, 17)]);
-            $work->setPoint($this->getReference('point' . rand(1, 30)));
 
             $manager->persist($work);
             $manager->flush();

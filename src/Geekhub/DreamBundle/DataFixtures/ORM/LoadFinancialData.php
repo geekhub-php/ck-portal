@@ -19,9 +19,8 @@ class LoadFinancialData extends AbstractFixture implements OrderedFixtureInterfa
             5 => 'Другие затраты'
         );
 
-        for ($i = 1; $i <= 200; $i++) {
+        for ($i = 0; $i < 200; $i++) {
             $financial = new Financial();
-            $financial->setPoint($this->getReference('point' . rand(1, 30)));
             $financial->setItem($item[rand(1, 5)]);
             $financial->setTotal(rand(250, 1250000));
 

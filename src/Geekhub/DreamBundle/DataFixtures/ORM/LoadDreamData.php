@@ -15,7 +15,8 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
         $state = array('open', 'close', 'complete', 'success');
         $operator = array('050', '066', '063', '067');
 
-        for ($i = 1; $i <= 30; $i++) {
+
+        for ($i = 0; $i < 30; $i++) {
             $dream = new Dream();
             $dream->setTitle($info[rand(1,17)]['title']);
             $dream->setDescription($info[rand(1,17)]['description']);
@@ -27,11 +28,23 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             $dream->setPhone('+38(' . $operator[rand(0, 3)] . ')' . rand(100, 500) . '-' . rand(10, 99) . '-' . rand(10, 99));
             $dream->setPhoneAvailable(rand(1, 0));
             $dream->setState($state[rand(0, 3)]);
-            $dream->setPoint($this->getReference('point' . $i));
+
+            for ($b = 3*$i; $b < 3*$i + 3; $b++) {
+                $dream->addEquipment($this->getReference('equipment'.$b));
+                $dream->addFinancial($this->getReference('financial'.$b));
+                $dream->addWork($this->getReference('work'.$b));
+
+                $this->getReference('equipment'.$b)->setDream($dream);
+                $this->getReference('financial'.$b)->setDream($dream);
+                $this->getReference('work'.$b)->setDream($dream);
+            }
+
             $dream->addUsersWhoFavorite($this->getReference('user' . rand(1,5)));
             $dream->addUsersWhoFavorite($this->getReference('user' . rand(6,10)));
             $dream->addUsersWhoFavorite($this->getReference('user' . rand(11,15)));
             $dream->addUsersWhoFavorite($this->getReference('user' . rand(16,17)));
+
+
 
             $manager->persist($dream);
             $manager->flush();
