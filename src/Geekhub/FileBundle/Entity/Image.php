@@ -2,15 +2,14 @@
 namespace Geekhub\FileBundle\Entity;
 
 use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Uploadable\MimeType\MimeTypeGuesserInterface;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="file")
- * @Gedmo\Uploadable(filenameGenerator="ALPHANUMERIC", appendNumber=true, maxSize=52428800)
+ * @ORM\Table(name="image")
+ * @Gedmo\Uploadable(filenameGenerator="SHA1", appendNumber=true, maxSize=5242880)
  */
-class File implements MimeTypeGuesserInterface
+class Image
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -26,11 +25,10 @@ class File implements MimeTypeGuesserInterface
     private $path;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="mime_type", type="string", columnDefinition="ENUM('doc', 'xls', 'xlsx', 'pdf')", nullable=false)
+     * @ORM\Column(name="mime_type", type="string")
+     * @Gedmo\UploadableFileMimeType
      */
-    private $type;
+    private $mimeType;
 
     /**
      * @ORM\Column(name="size", type="decimal")
@@ -38,7 +36,7 @@ class File implements MimeTypeGuesserInterface
      */
     private $size;
 
-    /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="file") */
+    /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="image") */
     private $dream;
 
 
@@ -56,7 +54,7 @@ class File implements MimeTypeGuesserInterface
      * Set path
      *
      * @param string $path
-     * @return File
+     * @return Image
      */
     public function setPath($path)
     {
@@ -76,33 +74,33 @@ class File implements MimeTypeGuesserInterface
     }
 
     /**
-     * Set type
+     * Set mimeType
      *
-     * @param string $type
-     * @return File
+     * @param string $mimeType
+     * @return Image
      */
-    public function setType($type)
+    public function setMimeType($mimeType)
     {
-        $this->type = $type;
+        $this->mimeType = $mimeType;
     
         return $this;
     }
 
     /**
-     * Get type
+     * Get mimeType
      *
      * @return string 
      */
-    public function getType()
+    public function getMimeType()
     {
-        return $this->type;
+        return $this->mimeType;
     }
 
     /**
      * Set size
      *
      * @param float $size
-     * @return File
+     * @return Image
      */
     public function setSize($size)
     {
@@ -125,7 +123,7 @@ class File implements MimeTypeGuesserInterface
      * Set dream
      *
      * @param \Geekhub\DreamBundle\Entity\Dream $dream
-     * @return File
+     * @return Image
      */
     public function setDream(\Geekhub\DreamBundle\Entity\Dream $dream = null)
     {
@@ -142,10 +140,5 @@ class File implements MimeTypeGuesserInterface
     public function getDream()
     {
         return $this->dream;
-    }
-
-    public function guess($filePath)
-    {
-        // TODO: Implement guess() method.
     }
 }
