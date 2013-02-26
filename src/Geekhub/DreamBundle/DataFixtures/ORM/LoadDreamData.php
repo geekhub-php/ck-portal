@@ -17,33 +17,57 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
 
 
         for ($i = 0; $i < 30; $i++) {
+            $owner = rand(1, 17);
+
             $dream = new Dream();
-            $dream->setTitle($info[rand(1,17)]['title']);
-            $dream->setDescription($info[rand(1,17)]['description']);
-            $dream->setCreated($date[rand(1,17)]['created']);
-            $dream->setUpdated($date[rand(1,17)]['updated']);
-            $dream->setDeletedAt($date[rand(1,17)]['deleted']);
+            $dream->setTitle($info[rand(1, 17)]['title']);
+            $dream->setDescription($info[rand(1, 17)]['description']);
+            $dream->setCreated($date[rand(1, 17)]['created']);
+            $dream->setUpdated($date[rand(1, 17)]['updated']);
+            $dream->setDeletedAt($date[rand(1, 17)]['deleted']);
             $dream->setOnFront(rand(0, 1));
-            $dream->setOwner($this->getReference('user' . rand(1,17)));
+            $dream->setOwner($this->getReference('user' . $owner));
             $dream->setPhone('+38(' . $operator[rand(0, 3)] . ')' . rand(100, 500) . '-' . rand(10, 99) . '-' . rand(10, 99));
             $dream->setPhoneAvailable(rand(1, 0));
             $dream->setState($state[rand(0, 3)]);
 
-            for ($b = 3*$i; $b < 3*$i + 3; $b++) {
-                $dream->addEquipment($this->getReference('equipment'.$b));
-                $dream->addFinancial($this->getReference('financial'.$b));
-                $dream->addWork($this->getReference('work'.$b));
+            for ($b = 3 * $i; $b < 3 * $i + 3; $b++) {
+                $dream->addEquipment($this->getReference('equipment' . $b));
+                $dream->addFinancial($this->getReference('financial' . $b));
+                $dream->addWork($this->getReference('work' . $b));
 
-                $this->getReference('equipment'.$b)->setDream($dream);
-                $this->getReference('financial'.$b)->setDream($dream);
-                $this->getReference('work'.$b)->setDream($dream);
+                $this->getReference('equipment' . $b)->setDream($dream);
+                $this->getReference('financial' . $b)->setDream($dream);
+                $this->getReference('work' . $b)->setDream($dream);
             }
 
-            $dream->addUsersWhoFavorite($this->getReference('user' . rand(1,5)));
-            $dream->addUsersWhoFavorite($this->getReference('user' . rand(6,10)));
-            $dream->addUsersWhoFavorite($this->getReference('user' . rand(11,15)));
-            $dream->addUsersWhoFavorite($this->getReference('user' . rand(16,17)));
+            for ($b = 1; $b <= rand(5, 17); $b++) {
+                if ($owner != $b) {
+                    $dream->addUsersWhoFavorite($this->getReference('user' . $b));
+                }
+            }
 
+            for ($b = 0; $b < 5; $b++) {
+                $file = rand(0, 99);
+                $dream->addFile($this->getReference('file' . $file));
+                $this->getReference('file' . $file)->setDream($dream);
+            }
+
+            if (rand(0, 1) == rand(0, 1)) {
+                for ($b = 0; $b < rand(3, 7); $b++) {
+                    $videoNumber = rand(0, 2) * $i + rand(1, 3) * $b + rand(1, 3) * 4;
+                    $dream->addVideo($this->getReference('video' . $videoNumber));
+                    $this->getReference('video' . $videoNumber)->setDream($dream);
+                }
+            }
+
+            if (rand(0, 1) == rand(0, 1)) {
+                for ($b = 0; $b < rand(3, 7); $b++) {
+                    $imageNumber = rand(0, 2) * $i + rand(1, 3) * $b + rand(1, 5) * 4;
+                    $dream->addImage($this->getReference('image' . $imageNumber));
+                    $this->getReference('image' . $imageNumber)->setDream($dream);
+                }
+            }
 
 
             $manager->persist($dream);
