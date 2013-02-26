@@ -44,6 +44,15 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream") */
     private $work;
 
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\File", mappedBy="dream") */
+    private $file;
+
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream") */
+    private $image;
+
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream") */
+    private $video;
+
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
     private $contributions;
 
@@ -607,5 +616,104 @@ class Dream implements Taggable
     public function getWork()
     {
         return $this->work;
+    }
+
+    /**
+     * Add file
+     *
+     * @param \Geekhub\FileBundle\Entity\File $file
+     * @return Dream
+     */
+    public function addFile(\Geekhub\FileBundle\Entity\File $file)
+    {
+        $this->file[] = $file;
+    
+        return $this;
+    }
+
+    /**
+     * Remove file
+     *
+     * @param \Geekhub\FileBundle\Entity\File $file
+     */
+    public function removeFile(\Geekhub\FileBundle\Entity\File $file)
+    {
+        $this->file->removeElement($file);
+    }
+
+    /**
+     * Get file
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFile()
+    {
+        return $this->file;
+    }
+
+    /**
+     * Add image
+     *
+     * @param \Geekhub\FileBundle\Entity\Image $image
+     * @return Dream
+     */
+    public function addImage(\Geekhub\FileBundle\Entity\Image $image)
+    {
+        $this->image[] = $image;
+    
+        return $this;
+    }
+
+    /**
+     * Remove image
+     *
+     * @param \Geekhub\FileBundle\Entity\Image $image
+     */
+    public function removeImage(\Geekhub\FileBundle\Entity\Image $image)
+    {
+        $this->image->removeElement($image);
+    }
+
+    /**
+     * Get image
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getImage()
+    {
+        return $this->image;
+    }
+
+    /**
+     * Add video
+     *
+     * @param \Geekhub\FileBundle\Entity\Video $video
+     * @return Dream
+     */
+    public function addVideo(\Geekhub\FileBundle\Entity\Video $video)
+    {
+        $this->video[] = $video;
+    
+        return $this;
+    }
+
+    /**
+     * Remove video
+     *
+     * @param \Geekhub\FileBundle\Entity\Video $video
+     */
+    public function removeVideo(\Geekhub\FileBundle\Entity\Video $video)
+    {
+        $this->video->removeElement($video);
+    }
+
+    /**
+     * Get video
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getVideo()
+    {
+        return $this->video;
     }
 }
