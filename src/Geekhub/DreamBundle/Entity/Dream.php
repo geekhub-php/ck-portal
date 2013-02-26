@@ -56,6 +56,9 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
     private $contributions;
 
+    /** @ORM\Column(name="dream_like", type="integer") */
+    private $like;
+
     /**
      * @ORM\ManyToMany(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="favoriteDreams")
      * @ORM\JoinTable(name="favorite")
@@ -451,6 +454,16 @@ class Dream implements Taggable
     public function getContributions()
     {
         return $this->contributions;
+    }
+
+    public function setLike($like)
+    {
+        $this->like = $like;
+    }
+
+    public function getLike()
+    {
+        return $this->like;
     }
 
     /**

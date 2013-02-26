@@ -30,6 +30,7 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             $dream->setPhone('+38(' . $operator[rand(0, 3)] . ')' . rand(100, 500) . '-' . rand(10, 99) . '-' . rand(10, 99));
             $dream->setPhoneAvailable(rand(1, 0));
             $dream->setState($state[rand(0, 3)]);
+            $dream->setLike(rand(0, 100));
 
             for ($b = 3 * $i; $b < 3 * $i + 3; $b++) {
                 $dream->addEquipment($this->getReference('equipment' . $b));
