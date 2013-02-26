@@ -1,0 +1,48 @@
+<header id="header" class="">
+    <h1 id="logo" class="">
+        <a href="{{ path('dream_homepage') }}">
+            <img src="" alt="" />Chedream
+        </a>
+    </h1>
+    <nav id="nav" class="">
+        <ul id="navigation" class="">
+            <li>
+                <a href="#">Мрії</a>
+            </li>
+            <li>
+                <a href="#">FAQ</a>
+            </li>
+            <li>
+                <a href="#">Контакти</a>
+            </li>
+            <li>
+                <a href="#">Підписатись</a>
+            </li>
+            <li>
+                <a href="#">+ Додати мрію</a>
+            </li>
+        </ul><!-- /navigation -->
+    </nav><!-- /nav -->
+    <div id="sign-in">
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            Вітаю, {{ user.name }} | notify = {{ user.notices | length }} | <a href="#">Мої мрії</a>
+        {% else %}
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">
+                Фб
+            </a>
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte'}) }}" class="social-sign-in">
+                Вк
+            </a>
+            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'odnoklassniki'}) }}" class="social-sign-in">
+                Ок
+            </a>
+        {% endif %}
+    </div>
+    <div id="search">
+        <form>
+            <input type="text">
+            <button type="submit">Знайти</button>
+        </form>
+    </div>
+</header><!-- /header -->
+

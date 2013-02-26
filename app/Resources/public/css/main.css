@@ -1,0 +1,11 @@
+.container { position: relative; width: 1100px; margin: 0 auto; padding: 0; }
+
+#logo { float: left; margin: 0; padding-right: 30px; }
+#navigation li { list-style: none; float: left; padding-right: 10px; padding-top: 15px; }
+#header a { text-decoration: none; }
+#header a:hover { text-decoration: underline; }
+#sign-in { padding-top: 15px; padding-right: 10px; float: left; }
+#search { padding-top: 15px; }
+.social-sign-in { padding-right: 5px; }
+
+.front-dream { float: left; width: 30%; border: 4px double black; margin: 5px; padding: 5px;}
