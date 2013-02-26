@@ -12,7 +12,7 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
     {
         $point = array('work', 'financial', 'equipment');
 
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 0; $i < 100; $i++) {
             $contribution = new ContributorSupport();
             $contribution->setDream($this->getReference('dream'.rand(0,29)));
             //$contribution->setPoint($this->getReference($point[rand(0,2)].$i));
