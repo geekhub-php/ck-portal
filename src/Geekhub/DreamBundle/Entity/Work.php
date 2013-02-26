@@ -19,31 +19,31 @@ class Work
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="job", type="string", length=255)
      */
-    private $job;
+    protected $job;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="employee", type="integer")
      */
-    private $employee;
+    protected $employee;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="day", type="integer")
      */
-    private $day;
+    protected $day;
 
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="work") */
-    private $dream;
+    protected $dream;
 
 
     /**

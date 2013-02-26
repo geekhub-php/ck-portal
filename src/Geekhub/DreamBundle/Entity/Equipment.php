@@ -19,31 +19,31 @@ class Equipment
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="item", type="string", length=255)
      */
-    private $item;
+    protected $item;
 
     /**
      * @var integer
      *
      * @ORM\ManyToOne(targetEntity="Unit")
      */
-    private $unit;
+    protected $unit;
 
     /**
      * @var integer
      *
      * @ORM\Column(name="total", type="integer")
      */
-    private $total;
+    protected $total;
 
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="equipment") */
-    private $dream;
+    protected $dream;
 
 
     /**
