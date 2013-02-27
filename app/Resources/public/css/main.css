@@ -9,3 +9,4 @@
 .social-sign-in { padding-right: 5px; }
 
 .front-dream { float: left; width: 30%; border: 4px double black; margin: 5px; padding: 5px;}
+.front-dream .like { border-top: 1px solid #000000; border-bottom: 1px solid #000000; }

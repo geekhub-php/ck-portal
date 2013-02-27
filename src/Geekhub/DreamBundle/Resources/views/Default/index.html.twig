@@ -1,5 +1,18 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    Hello World!
+    {% for dream in dreams %}
+        <div class="front-dream">
+            <h3>{{ dream.title }}</h3>Додати до обраного.
+            <img src="{{ dream.owner.profilePicture }}" />{{ dream.owner.name }}
+            <img src="" class="dream-main-image" />
+            <div class="like">
+                Підтримали: {{ dream.contributions | length }} Рейтинг: {{ dream.like }}
+            </div>
+            <div>
+                Зібрано:
+            </div>
+        </div>
+
+    {% endfor %}
 {% endblock %}
 
