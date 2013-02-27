@@ -35,13 +35,13 @@ class Dream implements Taggable
     /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="userDreams") */
     private $owner;
 
-    /** @ORM\OneToMany(targetEntity="Financial", mappedBy="dream") */
+    /** @ORM\OneToMany(targetEntity="Financial", mappedBy="dream", cascade={"persist", "remove"}) */
     private $financial;
 
-    /** @ORM\OneToMany(targetEntity="Equipment", mappedBy="dream") */
+    /** @ORM\OneToMany(targetEntity="Equipment", mappedBy="dream", cascade={"persist", "remove"}) */
     private $equipment;
 
-    /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream") */
+    /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream", cascade={"persist", "remove"}) */
     private $work;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\File", mappedBy="dream") */
@@ -56,7 +56,7 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
     private $contributions;
 
-    /** @ORM\Column(name="dream_like", type="integer") */
+    /** @ORM\Column(name="dream_like", type="integer", nullable=true) */
     private $like;
 
     /**
