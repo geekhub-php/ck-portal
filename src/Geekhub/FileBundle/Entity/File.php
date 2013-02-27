@@ -20,6 +20,21 @@ class File implements MimeTypeGuesserInterface
     private $id;
 
     /**
+     * @return string
+     */
+    public function getName()
+    {
+        return $this->name;
+    }
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="name", type="string")
+     */
+    private $name;
+
+    /**
      * @ORM\Column(name="path", type="string")
      * @Gedmo\UploadableFilePath
      */
@@ -41,6 +56,11 @@ class File implements MimeTypeGuesserInterface
     /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="file") */
     private $dream;
 
+    public function guess($filePath)
+    {
+        // TODO: Implement guess() method.
+    }
+
 
     /**
      * Get id
@@ -50,6 +70,19 @@ class File implements MimeTypeGuesserInterface
     public function getId()
     {
         return $this->id;
+    }
+
+    /**
+     * Set name
+     *
+     * @param string $name
+     * @return File
+     */
+    public function setName($name)
+    {
+        $this->name = $name;
+    
+        return $this;
     }
 
     /**
@@ -142,10 +175,5 @@ class File implements MimeTypeGuesserInterface
     public function getDream()
     {
         return $this->dream;
-    }
-
-    public function guess($filePath)
-    {
-        // TODO: Implement guess() method.
     }
 }

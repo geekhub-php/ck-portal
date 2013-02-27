@@ -36,6 +36,7 @@ class LoadFileData extends AbstractFixture implements OrderedFixtureInterface, C
             $file->setPath($this->getUploadDir() . '/' . $destinationFileName);
             $file->setSize($binFileSize);
             $file->setType($binFileExt);
+            $file->setName($currentFile);
 
             $this->addReference('file' . $i, $file);
 
