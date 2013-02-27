@@ -20,14 +20,6 @@ class File implements MimeTypeGuesserInterface
     private $id;
 
     /**
-     * @return string
-     */
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    /**
      * @var string
      *
      * @ORM\Column(name="name", type="string")
@@ -83,6 +75,16 @@ class File implements MimeTypeGuesserInterface
         $this->name = $name;
     
         return $this;
+    }
+
+    /**
+     * Get name
+     *
+     * @return string 
+     */
+    public function getName()
+    {
+        return $this->name;
     }
 
     /**
