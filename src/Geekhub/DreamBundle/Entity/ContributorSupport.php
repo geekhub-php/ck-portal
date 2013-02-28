@@ -19,19 +19,19 @@ class ContributorSupport
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /** @ORM\Column(name="point", type="object") */
-    private $point;
+    protected $point;
 
     /** @ORM\Column(name="hide", type="boolean") */
-    private $hide;
+    protected $hide;
 
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="contributions") */
-    private $dream;
+    protected $dream;
 
     /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="contributions") */
-    private $user;
+    protected $user;
 
     /**
      * Get id

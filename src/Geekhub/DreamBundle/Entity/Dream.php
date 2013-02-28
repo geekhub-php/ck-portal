@@ -23,50 +23,50 @@ class Dream implements Taggable
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="AUTO")
      */
-    private $id;
+    protected $id;
 
     /**
      * @var string
      *
      * @ORM\Column(name="title", type="string", length=255)
      */
-    private $title;
+    protected $title;
 
     /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="userDreams") */
-    private $owner;
+    protected $owner;
 
     /** @ORM\OneToMany(targetEntity="Financial", mappedBy="dream", cascade={"persist", "remove"}) */
-    private $financial;
+    protected $financial;
 
     /** @ORM\OneToMany(targetEntity="Equipment", mappedBy="dream", cascade={"persist", "remove"}) */
-    private $equipment;
+    protected $equipment;
 
     /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream", cascade={"persist", "remove"}) */
-    private $work;
+    protected $work;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\File", mappedBy="dream") */
-    private $file;
+    protected $file;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream") */
-    private $image;
+    protected $image;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream") */
-    private $video;
+    protected $video;
 
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
-    private $contributions;
+    protected $contributions;
 
     /** @ORM\Column(name="dream_like", type="integer", nullable=true) */
-    private $like;
+    protected $like;
 
     /**
      * @ORM\ManyToMany(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="favoriteDreams")
      * @ORM\JoinTable(name="favorite")
      */
-    private $usersWhoFavorites;
+    protected $usersWhoFavorites;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\UserBundle\Entity\Notify", mappedBy="dream") */
-    private $notices;
+    protected $notices;
 
     /**
      * @var string
@@ -74,49 +74,49 @@ class Dream implements Taggable
      * @Gedmo\Slug(fields={"title"})
      * @ORM\Column(length=255, unique=true)
      */
-    private $slug;
+    protected $slug;
 
     /**
      * @var string
      *
      * @ORM\Column(name="description", type="text")
      */
-    private $description;
+    protected $description;
 
-    private $tags;
+    protected $tags;
 
     /**
      * @var string
      *
      * @ORM\Column(name="phone", type="string", length=255, nullable=true)
      */
-    private $phone;
+    protected $phone;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="phone_available", type="boolean")
      */
-    private $phoneAvailable;
+    protected $phoneAvailable;
 
     /**
      * @var string
      *
      * @ORM\Column(name="state", type="string", columnDefinition="ENUM('open', 'close', 'complete', 'success')", nullable=false)
      */
-    private $state;
+    protected $state;
 
     /**
      * @var boolean
      *
      * @ORM\Column(name="on_front", type="boolean")
      */
-    private $onFront;
+    protected $onFront;
 
     /**
      * @ORM\Column(name="deletedAt", type="datetime", nullable=true)
      */
-    private $deletedAt;
+    protected $deletedAt;
 
     /**
      * @var datetime
@@ -124,7 +124,7 @@ class Dream implements Taggable
      * @Gedmo\Timestampable(on="create")
      * @ORM\Column(name="created", type="datetime")
      */
-    private $created;
+    protected $created;
 
     /**
      * @var datetime
@@ -132,7 +132,7 @@ class Dream implements Taggable
      * @Gedmo\Timestampable(on="update")
      * @ORM\Column(name="updated", type="datetime")
      */
-    private $updated;
+    protected $updated;
 
     public function __construct()
     {
