@@ -45,6 +45,8 @@ class Work
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="work") */
     protected $dream;
 
+    /** @ORM\ManyToOne(targetEntity="ContributorSupport", inversedBy="work") */
+    protected $contribution;
 
     /**
      * Get id
@@ -146,5 +148,28 @@ class Work
     public function getDream()
     {
         return $this->dream;
+    }
+
+    /**
+     * Set contribution
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
+     * @return Work
+     */
+    public function setContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution = null)
+    {
+        $this->contribution = $contribution;
+    
+        return $this;
+    }
+
+    /**
+     * Get contribution
+     *
+     * @return \Geekhub\DreamBundle\Entity\ContributorSupport 
+     */
+    public function getContribution()
+    {
+        return $this->contribution;
     }
 }

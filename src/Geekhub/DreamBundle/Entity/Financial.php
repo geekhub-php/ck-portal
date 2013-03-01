@@ -38,7 +38,8 @@ class Financial
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="financial") */
     protected $dream;
 
-
+    /** @ORM\ManyToOne(targetEntity="ContributorSupport", inversedBy="financial") */
+    protected $contribution;
 
     /**
      * Get id
@@ -117,5 +118,28 @@ class Financial
     public function getDream()
     {
         return $this->dream;
+    }
+
+    /**
+     * Set contribution
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
+     * @return Financial
+     */
+    public function setContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution = null)
+    {
+        $this->contribution = $contribution;
+    
+        return $this;
+    }
+
+    /**
+     * Get contribution
+     *
+     * @return \Geekhub\DreamBundle\Entity\ContributorSupport 
+     */
+    public function getContribution()
+    {
+        return $this->contribution;
     }
 }

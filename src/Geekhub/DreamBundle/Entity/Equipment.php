@@ -45,6 +45,8 @@ class Equipment
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="equipment") */
     protected $dream;
 
+    /** @ORM\ManyToOne(targetEntity="ContributorSupport", inversedBy="equipment") */
+    protected $contribution;
 
     /**
      * Get id
@@ -146,5 +148,28 @@ class Equipment
     public function getDream()
     {
         return $this->dream;
+    }
+
+    /**
+     * Set contribution
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
+     * @return Equipment
+     */
+    public function setContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution = null)
+    {
+        $this->contribution = $contribution;
+    
+        return $this;
+    }
+
+    /**
+     * Get contribution
+     *
+     * @return \Geekhub\DreamBundle\Entity\ContributorSupport 
+     */
+    public function getContribution()
+    {
+        return $this->contribution;
     }
 }
