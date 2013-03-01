@@ -20,68 +20,82 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
 
             if ($getWorkDreamPoints) {
                 foreach ($getWorkDreamPoints as $workPoint) {
-                    $id = $workPoint->getId();
-                    $workArray[$id]['job'] = $workPoint->getJob();
-                    $workArray[$id]['employee'] = $workPoint->getEmployee();
-                    $workArray[$id]['days'] = $workPoint->getDay();
-                    $workIdArray[] = $id;
+//                    $id = $workPoint->getId();
+//                    $workArray[$id]['job'] = $workPoint->getJob();
+//                    $workArray[$id]['employee'] = $workPoint->getEmployee();
+//                    $workArray[$id]['days'] = $workPoint->getDay();
+                    $workObjArray[] = $workPoint;
                 }
 
-                $l = count($workArray);
+                $l = count($workObjArray);
+                $obj = $workObjArray[rand(0, $l - 1)];
 
-                $currentPointId = $workIdArray[rand(0, $l - 1)];
-                $workContributionPoint = new \Geekhub\DreamBundle\Entity\Work();
-                $workContributionPoint->setJob($workArray[$currentPointId]['job']);
-                $workContributionPoint->setEmployee(1);
-                $workContributionPoint->setDay(1);
-                $workContributionPoint->setDream($dream);
+                if ($obj && $obj->getJob()) {
+                    $workContributionPoint = new \Geekhub\DreamBundle\Entity\Work();
+                    $workContributionPoint->setJob($obj->getJob());
+                    $workContributionPoint->setEmployee(rand(1,3));
+                    $workContributionPoint->setDay(rand(1,3));
+                    $workContributionPoint->setDream($dream);
+                }
+
+                $workObjArray = null;
             }
 
             if ($getFinancialDreamPoints) {
                 foreach ($getFinancialDreamPoints as $financialPoint) {
-                    $id = $financialPoint->getId();
-                    $financialArray[$id]['id'] = $financialPoint->getId();
-                    $financialArray[$id]['item'] = $financialPoint->getItem();
-                    $financialArray[$id]['total'] = $financialPoint->getTotal();
-                    $financialIdArray[] = $id;
+//                    $id = $financialPoint->getId();
+//                    $financialArray[$id]['id'] = $financialPoint->getId();
+//                    $financialArray[$id]['item'] = $financialPoint->getItem();
+//                    $financialArray[$id]['total'] = $financialPoint->getTotal();
+                    $financialObjArray[] = $financialPoint;
                 }
 
-                $l = count($financialArray);
+                $l = count($financialObjArray);
+                $obj = $financialObjArray[rand(0, $l - 1)];
 
-                $currentPointId = $financialIdArray[rand(0, $l - 1)];
-                $financialContributionPoint = new \Geekhub\DreamBundle\Entity\Financial();
-                $financialContributionPoint->setItem($financialArray[$currentPointId]['item']);
-                $financialContributionPoint->setTotal(12300);
-                $financialContributionPoint->setDream($dream);
+                if ($obj && $obj->getItem()) {
+                    $financialContributionPoint = new \Geekhub\DreamBundle\Entity\Financial();
+                    $financialContributionPoint->setItem($obj->getItem());
+                    $financialContributionPoint->setTotal(rand(12345,256456));
+                    $financialContributionPoint->setDream($dream);
+                }
+
+                $financialObjArray = null;
             }
 
             if ($getEquipmentDreamPoints) {
                 foreach ($getEquipmentDreamPoints as $equipmentPoint) {
-                    $id = $equipmentPoint->getId();
-                    $equipmentArray[$id]['item'] = $equipmentPoint->getItem();
-                    $equipmentArray[$id]['unit'] = $equipmentPoint->getUnit();
-                    $equipmentArray[$id]['total'] = $equipmentPoint->getTotal();
-                    $equipmentIdArray[] = $id;
+//                    $id = $equipmentPoint->getId();
+//                    $equipmentArray[$id]['item'] = $equipmentPoint->getItem();
+//                    $equipmentArray[$id]['unit'] = $equipmentPoint->getUnit();
+//                    $equipmentArray[$id]['total'] = $equipmentPoint->getTotal();
+                    $equipmentObjArray[] = $equipmentPoint;
                 }
-                
-                $l = count($equipmentIdArray);
 
-                $currentPointId = $equipmentIdArray[rand(0, $l - 1)];
-                $equipmentContributionPoint = new \Geekhub\DreamBundle\Entity\Equipment();
-                $equipmentContributionPoint->setItem($equipmentArray[$currentPointId]['item']);
-                $equipmentContributionPoint->setUnit($equipmentArray[$currentPointId]['unit']);
-                $equipmentContributionPoint->setTotal(1);
-                $equipmentContributionPoint->setDream($dream);
+                $l = count($equipmentObjArray);
+                $obj = $equipmentObjArray[rand(0, $l - 1)];
+
+                if ($obj && $obj->getItem()) {
+                    $equipmentContributionPoint = new \Geekhub\DreamBundle\Entity\Equipment();
+                    $equipmentContributionPoint->setItem($obj->getItem());
+                    $equipmentContributionPoint->setUnit($obj->getUnit());
+                    $equipmentContributionPoint->setTotal(rand(1,3));
+                    $equipmentContributionPoint->setDream($dream);
+                }
+
+                $equipmentObjArray = null;
             }
 
 
             $user = $this->getReference('user' . rand(1, 17));
 
             $contribution = new ContributorSupport();
-            $contribution->setDream($dream);
-            $contribution->setPoint($financialContributionPoint)->setPoint($equipmentContributionPoint)->setPoint($workContributionPoint);
+            $contribution->addFinancial($financialContributionPoint->setContribution($contribution));
+            $contribution->addEquipment($equipmentContributionPoint->setContribution($contribution));
+            $contribution->addWork($workContributionPoint->setContribution($contribution));
             $contribution->setHide(rand(0, 1));
             $contribution->setUser($user);
+            $contribution->setDream($dream);
 
             $manager->persist($contribution);
             $manager->flush();
