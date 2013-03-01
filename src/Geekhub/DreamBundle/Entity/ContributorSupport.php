@@ -21,18 +21,33 @@ class ContributorSupport
      */
     protected $id;
 
-    /** @ORM\Column(name="point", type="object") */
-    protected $point;
+    /** @ORM\OneToMany(targetEntity="Financial", mappedBy="contribution", cascade={"persist", "remove"}) */
+    protected $financial;
+
+    /** @ORM\OneToMany(targetEntity="Equipment", mappedBy="contribution", cascade={"persist", "remove"}) */
+    protected $equipment;
+
+    /** @ORM\OneToMany(targetEntity="Work", mappedBy="contribution", cascade={"persist", "remove"}) */
+    protected $work;
 
     /** @ORM\Column(name="hide", type="boolean") */
     protected $hide;
 
-    /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="contributions") */
+    /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="contribution") */
     protected $dream;
 
     /** @ORM\ManyToOne(targetEntity="Geekhub\UserBundle\Entity\User", inversedBy="contributions") */
     protected $user;
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->financial = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipment = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->work = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -41,29 +56,6 @@ class ContributorSupport
     public function getId()
     {
         return $this->id;
-    }
-
-    /**
-     * Set point
-     *
-     * @param \stdClass $point
-     * @return ContributorSupport
-     */
-    public function setPoint($point)
-    {
-        $this->point = $point;
-    
-        return $this;
-    }
-
-    /**
-     * Get point
-     *
-     * @return \stdClass 
-     */
-    public function getPoint()
-    {
-        return $this->point;
     }
 
     /**
@@ -87,6 +79,105 @@ class ContributorSupport
     public function getHide()
     {
         return $this->hide;
+    }
+
+    /**
+     * Add financial
+     *
+     * @param \Geekhub\DreamBundle\Entity\Financial $financial
+     * @return ContributorSupport
+     */
+    public function addFinancial(\Geekhub\DreamBundle\Entity\Financial $financial)
+    {
+        $this->financial[] = $financial;
+    
+        return $this;
+    }
+
+    /**
+     * Remove financial
+     *
+     * @param \Geekhub\DreamBundle\Entity\Financial $financial
+     */
+    public function removeFinancial(\Geekhub\DreamBundle\Entity\Financial $financial)
+    {
+        $this->financial->removeElement($financial);
+    }
+
+    /**
+     * Get financial
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getFinancial()
+    {
+        return $this->financial;
+    }
+
+    /**
+     * Add equipment
+     *
+     * @param \Geekhub\DreamBundle\Entity\Equipment $equipment
+     * @return ContributorSupport
+     */
+    public function addEquipment(\Geekhub\DreamBundle\Entity\Equipment $equipment)
+    {
+        $this->equipment[] = $equipment;
+    
+        return $this;
+    }
+
+    /**
+     * Remove equipment
+     *
+     * @param \Geekhub\DreamBundle\Entity\Equipment $equipment
+     */
+    public function removeEquipment(\Geekhub\DreamBundle\Entity\Equipment $equipment)
+    {
+        $this->equipment->removeElement($equipment);
+    }
+
+    /**
+     * Get equipment
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getEquipment()
+    {
+        return $this->equipment;
+    }
+
+    /**
+     * Add work
+     *
+     * @param \Geekhub\DreamBundle\Entity\Work $work
+     * @return ContributorSupport
+     */
+    public function addWork(\Geekhub\DreamBundle\Entity\Work $work)
+    {
+        $this->work[] = $work;
+    
+        return $this;
+    }
+
+    /**
+     * Remove work
+     *
+     * @param \Geekhub\DreamBundle\Entity\Work $work
+     */
+    public function removeWork(\Geekhub\DreamBundle\Entity\Work $work)
+    {
+        $this->work->removeElement($work);
+    }
+
+    /**
+     * Get work
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getWork()
+    {
+        return $this->work;
     }
 
     /**
