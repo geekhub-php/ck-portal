@@ -53,3 +53,9 @@ security:
         - { path: ^/register, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, roles: ROLE_SUPER_ADMIN }
+        - { path: .*/new, role: ROLE_USER }
+        - { path: .*/create, role: ROLE_USER }
+        - { path: .*/update, role: ROLE_USER }
+        - { path: .*/edit, role: ROLE_USER }
+        - { path: .*/delete, role: ROLE_USER }
+
