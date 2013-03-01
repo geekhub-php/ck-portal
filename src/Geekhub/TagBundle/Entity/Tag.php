@@ -3,6 +3,7 @@
 namespace Geekhub\TagBundle\Entity;
 
 use \FPN\TagBundle\Entity\Tag as BaseTag;
+use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -23,7 +24,14 @@ class Tag extends BaseTag
     protected $id;
 
     /**
-     * @ORM\OneToMany(targetEntity="Tagging", mappedBy="tag", fetch="EAGER")
+     * @var string
+     *
+     * @Gedmo\Slug(fields={"name"})
+     */
+    protected $slug;
+
+    /**
+     * @ORM\OneToMany(targetEntity="Tagging", mappedBy="tag", fetch="EAGER", mappedBy="tag")
      **/
     protected $tagging;
 }
