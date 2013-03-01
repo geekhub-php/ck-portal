@@ -85,6 +85,8 @@ class Dream implements Taggable
 
     protected $tags;
 
+    protected $tagArray = array();
+
     /**
      * @var string
      *
@@ -150,6 +152,7 @@ class Dream implements Taggable
     {
         return $this->getId();
     }
+
     /**
      * Constructor
      */
@@ -166,6 +169,20 @@ class Dream implements Taggable
         $this->notices = new \Doctrine\Common\Collections\ArrayCollection();
     }
     
+    public function setTagArray($tagArray)
+    {
+        $array = explode(',', $tagArray);
+        foreach ($array as $tag) {
+            $this->tagArray[] = trim($tag);
+        }
+    }
+
+    public function getTagArray()
+    {
+        return $this->tagArray;
+    }
+
+
     /**
      * Get id
      *
