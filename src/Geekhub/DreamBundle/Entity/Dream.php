@@ -477,7 +477,8 @@ class Dream implements Taggable
      */
     public function addFinancial(\Geekhub\DreamBundle\Entity\Financial $financial)
     {
-        $this->financial[] = $financial;
+        $this->financial->add($financial);
+        $financial->setDream($this);
     
         return $this;
     }
@@ -510,7 +511,8 @@ class Dream implements Taggable
      */
     public function addEquipment(\Geekhub\DreamBundle\Entity\Equipment $equipment)
     {
-        $this->equipment[] = $equipment;
+        $this->equipment->add($equipment);
+        $equipment->setDream($this);
     
         return $this;
     }
@@ -543,7 +545,8 @@ class Dream implements Taggable
      */
     public function addWork(\Geekhub\DreamBundle\Entity\Work $work)
     {
-        $this->work[] = $work;
+        $this->work->add($work);
+        $work->setDream($this);
     
         return $this;
     }
