@@ -111,7 +111,7 @@ class Dream implements Taggable
     /**
      * @var boolean
      *
-     * @ORM\Column(name="on_front", type="boolean")
+     * @ORM\Column(name="on_front", type="boolean", nullable=true)
      */
     protected $onFront;
 
