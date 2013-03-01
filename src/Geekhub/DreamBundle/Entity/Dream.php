@@ -53,8 +53,8 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream") */
     protected $video;
 
-    /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream") */
-    protected $contributions;
+    /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream", cascade={"persist", "remove"}) */
+    protected $contribution;
 
     /** @ORM\Column(name="dream_like", type="integer", nullable=true) */
     protected $like;
@@ -134,15 +134,6 @@ class Dream implements Taggable
      */
     protected $updated;
 
-    public function __construct()
-    {
-        $this->usersWhoFavorites = new ArrayCollection();
-        $this->contributions = new ArrayCollection();
-        $this->financial = new ArrayCollection();
-        $this->equipment = new ArrayCollection();
-        $this->work = new ArrayCollection();
-    }
-
     public function getTags()
     {
         $this->tags = $this->tags ?: new ArrayCollection();
@@ -159,7 +150,22 @@ class Dream implements Taggable
     {
         return $this->getId();
     }
-
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->financial = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->equipment = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->work = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->file = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->video = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->contribution = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->usersWhoFavorites = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->notices = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+    
     /**
      * Get id
      *
@@ -191,6 +197,29 @@ class Dream implements Taggable
     public function getTitle()
     {
         return $this->title;
+    }
+
+    /**
+     * Set like
+     *
+     * @param integer $like
+     * @return Dream
+     */
+    public function setLike($like)
+    {
+        $this->like = $like;
+    
+        return $this;
+    }
+
+    /**
+     * Get like
+     *
+     * @return integer 
+     */
+    public function getLike()
+    {
+        return $this->like;
     }
 
     /**
@@ -424,115 +453,6 @@ class Dream implements Taggable
     }
 
     /**
-     * Add contributions
-     *
-     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contributions
-     * @return Dream
-     */
-    public function addContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contributions)
-    {
-        $this->contributions[] = $contributions;
-    
-        return $this;
-    }
-
-    /**
-     * Remove contributions
-     *
-     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contributions
-     */
-    public function removeContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contributions)
-    {
-        $this->contributions->removeElement($contributions);
-    }
-
-    /**
-     * Get contributions
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getContributions()
-    {
-        return $this->contributions;
-    }
-
-    public function setLike($like)
-    {
-        $this->like = $like;
-    }
-
-    public function getLike()
-    {
-        return $this->like;
-    }
-
-    /**
-     * Add usersWhoFavorites
-     *
-     * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
-     * @return Dream
-     */
-    public function addUsersWhoFavorite(\Geekhub\UserBundle\Entity\User $usersWhoFavorites)
-    {
-        $this->usersWhoFavorites[] = $usersWhoFavorites;
-    
-        return $this;
-    }
-
-    /**
-     * Remove usersWhoFavorites
-     *
-     * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
-     */
-    public function removeUsersWhoFavorite(\Geekhub\UserBundle\Entity\User $usersWhoFavorites)
-    {
-        $this->usersWhoFavorites->removeElement($usersWhoFavorites);
-    }
-
-    /**
-     * Get usersWhoFavorites
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getUsersWhoFavorites()
-    {
-        return $this->usersWhoFavorites;
-    }
-
-    /**
-     * Add notices
-     *
-     * @param \Geekhub\UserBundle\Entity\Notify $notices
-     * @return Dream
-     */
-    public function addNotice(\Geekhub\UserBundle\Entity\Notify $notices)
-    {
-        $this->notices[] = $notices;
-    
-        return $this;
-    }
-
-    /**
-     * Remove notices
-     *
-     * @param \Geekhub\UserBundle\Entity\Notify $notices
-     */
-    public function removeNotice(\Geekhub\UserBundle\Entity\Notify $notices)
-    {
-        $this->notices->removeElement($notices);
-    }
-
-    /**
-     * Get notices
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getNotices()
-    {
-        return $this->notices;
-    }
-
-    /**
      * Add financial
      *
      * @param \Geekhub\DreamBundle\Entity\Financial $financial
@@ -728,5 +648,104 @@ class Dream implements Taggable
     public function getVideo()
     {
         return $this->video;
+    }
+
+    /**
+     * Add contribution
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
+     * @return Dream
+     */
+    public function addContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution)
+    {
+        $this->contribution[] = $contribution;
+    
+        return $this;
+    }
+
+    /**
+     * Remove contribution
+     *
+     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
+     */
+    public function removeContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution)
+    {
+        $this->contribution->removeElement($contribution);
+    }
+
+    /**
+     * Get contribution
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getContribution()
+    {
+        return $this->contribution;
+    }
+
+    /**
+     * Add usersWhoFavorites
+     *
+     * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
+     * @return Dream
+     */
+    public function addUsersWhoFavorite(\Geekhub\UserBundle\Entity\User $usersWhoFavorites)
+    {
+        $this->usersWhoFavorites[] = $usersWhoFavorites;
+    
+        return $this;
+    }
+
+    /**
+     * Remove usersWhoFavorites
+     *
+     * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
+     */
+    public function removeUsersWhoFavorite(\Geekhub\UserBundle\Entity\User $usersWhoFavorites)
+    {
+        $this->usersWhoFavorites->removeElement($usersWhoFavorites);
+    }
+
+    /**
+     * Get usersWhoFavorites
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsersWhoFavorites()
+    {
+        return $this->usersWhoFavorites;
+    }
+
+    /**
+     * Add notices
+     *
+     * @param \Geekhub\UserBundle\Entity\Notify $notices
+     * @return Dream
+     */
+    public function addNotice(\Geekhub\UserBundle\Entity\Notify $notices)
+    {
+        $this->notices[] = $notices;
+    
+        return $this;
+    }
+
+    /**
+     * Remove notices
+     *
+     * @param \Geekhub\UserBundle\Entity\Notify $notices
+     */
+    public function removeNotice(\Geekhub\UserBundle\Entity\Notify $notices)
+    {
+        $this->notices->removeElement($notices);
+    }
+
+    /**
+     * Get notices
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getNotices()
+    {
+        return $this->notices;
     }
 }
