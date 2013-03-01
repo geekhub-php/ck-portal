@@ -1,0 +1,46 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/dream/css/tagit/jquery.tagit.css') }}" />
+    <link rel="stylesheet" href="{{ asset('bundles/dream/css/tagit/tagit.ui-zendesk.css') }}" />
+{% endblock stylesheets %}
+{% block body %}
+    <h1>{{ dream.title }}</h1>
+
+    <form action="{{ path('dream_update', { 'slug': dream.slug }) }}" method="post" {{ form_enctype(edit_form) }}>
+        {{ form_widget(edit_form) }}
+        <p>
+            <button type="submit">Edit</button>
+        </p>
+    </form>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('dream_show', { 'slug': dream.slug }) }}">
+                Відмінити редагування
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('dream_delete', { 'slug': dream.slug }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button type="submit">Видалити мрію</button>
+            </form>
+        </li>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('bundles/dream/js/tag-it.min.js') }}" type="text/javascript"></script>
+    <script>
+        $(function(){
+            var sampleTags = [{% for tag in tags %} ' {{ tag }}', {% endfor %}];
+
+            $('#geekhub_dreambundle_dreamtype_tagArray').tagit({
+                availableTags: sampleTags,
+                singleField: true
+            });
+        });
+    </script>
+
+{% endblock %}

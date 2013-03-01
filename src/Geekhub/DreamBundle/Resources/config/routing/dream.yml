@@ -1,0 +1,26 @@
+dream_show:
+    pattern:  /{slug}/show
+    defaults: { _controller: "DreamBundle:Dream:show" }
+
+dream_new:
+    pattern:  /new
+    defaults: { _controller: "DreamBundle:Dream:new" }
+
+dream_create:
+    pattern:  /create
+    defaults: { _controller: "DreamBundle:Dream:create" }
+    requirements: { _method: post }
+
+dream_edit:
+    pattern:  /{slug}/edit
+    defaults: { _controller: "DreamBundle:Dream:edit" }
+
+dream_update:
+    pattern:  /{slug}/update
+    defaults: { _controller: "DreamBundle:Dream:update" }
+    requirements: { _method: post }
+
+dream_delete:
+    pattern:  /{slug}/delete
+    defaults: { _controller: "DreamBundle:Dream:delete" }
+    requirements: { _method: post }

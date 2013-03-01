@@ -7,7 +7,7 @@
     <nav id="nav" class="">
         <ul id="navigation" class="">
             <li>
-                <a href="#">Мрії</a>
+                <a href="{{ path('dream_dreams') }}">Мрії</a>
             </li>
             <li>
                 <a href="#">FAQ</a>
@@ -19,12 +19,13 @@
                 <a href="#">Підписатись</a>
             </li>
             <li>
-                <a href="#">+ Додати мрію</a>
+                <a href="{{ path('dream_new') }}">+ Додати мрію</a>
             </li>
         </ul><!-- /navigation -->
     </nav><!-- /nav -->
     <div id="sign-in">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            {% set user = app.security.getToken().getUser() %}
             Вітаю, {{ user.name }} | notify = {{ user.notices | length }} | <a href="#">Мої мрії</a>
         {% else %}
             <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">

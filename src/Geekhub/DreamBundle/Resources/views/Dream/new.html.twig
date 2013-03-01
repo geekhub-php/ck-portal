@@ -1,0 +1,106 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets %}
+{{ parent() }}
+<link rel="stylesheet" href="{{ asset('bundles/dream/css/tagit/jquery.tagit.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/dream/css/tagit/tagit.ui-zendesk.css') }}" />
+{% endblock stylesheets %}
+{% block body %}
+    <h1>Нова мрія</h1>
+
+    <form action="{{ path('dream_create') }}" method="post" {{ form_enctype(form) }}>
+        {{ form_row(form.title) }}
+        {{ form_row(form.description) }}
+        <h3>Фінансові витрати</h3>
+        <ul class="financial" data-prototype="{{ form_widget(form.financial.vars.prototype)|e }}">
+            {{ form_row(form.financial) }}
+        </ul>
+        <h3>Інструменти / обладнання / техніка</h3>
+        <ul class="equipment" data-prototype="{{ form_widget(form.equipment.vars.prototype)|e }}">
+            {{ form_row(form.equipment) }}
+        </ul>
+        <h3>Роботи та ресурси</h3>
+        <ul class="work" data-prototype="{{ form_widget(form.work.vars.prototype)|e }}">
+            {{ form_row(form.work) }}
+        </ul>
+        <h3>Теги</h3>
+        {{ form_row(form.tagArray) }}
+        {{ form_rest(form) }}
+
+        <p>
+            <button type="submit">Create</button>
+        </p>
+    </form>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('dream_homepage') }}">
+                Back to the list
+            </a>
+        </li>
+    </ul>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+    <script src="{{ asset('bundles/dream/js/tag-it.min.js') }}" type="text/javascript"></script>
+    <script>
+        var collectionHolderFinancial = $('ul.financial');
+        var collectionHolderWork = $('ul.work');
+        var collectionHolderEquipment = $('ul.equipment');
+
+        var $addFinanceLink = $('<a href="#" class="add_financial_link">Додати статтю</a>');
+        var $addWorkLink = $('<a href="#" class="add_work_link">Додати статтю</a>');
+        var $addEquipmentLink = $('<a href="#" class="add_equipment_link">Додати статтю</a>');
+
+        var $newFinancialLinkLi = $('<li></li>').append($addFinanceLink);
+        var $newWorkLinkLi = $('<li></li>').append($addWorkLink);
+        var $newEquipmentLinkLi = $('<li></li>').append($addEquipmentLink);
+
+        jQuery(document).ready(function() {
+            // add the "add a tag" anchor and li to the tags ul
+            collectionHolderFinancial.append($newFinancialLinkLi);
+            collectionHolderWork.append($newWorkLinkLi);
+            collectionHolderEquipment.append($newEquipmentLinkLi);
+
+            $addFinanceLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new tag form (see next code block)
+                addForm(collectionHolderFinancial, $newFinancialLinkLi);
+            });
+            $addWorkLink.on('click', function(e) {
+                e.preventDefault();
+                addForm(collectionHolderWork, $newWorkLinkLi);
+            });
+            $addEquipmentLink.on('click', function(e) {
+                e.preventDefault();
+                addForm(collectionHolderEquipment, $newEquipmentLinkLi);
+            });
+        });
+
+        function addForm(collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = collectionHolder.attr('data-prototype');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on the current collection's length.
+            var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+            // Display the form in the page in an li, before the "Add a tag" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+    </script>
+    <script>
+        $(function(){
+            var sampleTags = [{% for tag in tags %} ' {{ tag }}', {% endfor %}];
+
+            $('#geekhub_dreambundle_dreamtype_tagArray').tagit({
+                availableTags: sampleTags,
+                singleField: true
+            });
+        });
+    </script>
+
+{% endblock %}

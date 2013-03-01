@@ -1,0 +1,44 @@
+{% extends "::base.html.twig" %}
+{% block body %}
+    <h1>{{ dream.title }}</h1>
+
+    <table class="record_properties">
+        <tbody>
+            <tr>
+                <th>Опис мрії</th>
+                <td>{{ dream.description }}</td>
+            </tr>
+            <tr>
+                <th>Телефон</th>
+                <td>{{ dream.phone }}</td>
+            </tr>
+            <tr>
+                <th>Поточний стан мрії</th>
+                <td>{{ dream.state }}</td>
+            </tr>
+            <tr>
+                <th>Теги</th>
+                <td>{% for tag in dream.tags %}{{ tag.name }} {% endfor %}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <ul class="record_actions">
+        <li>
+            <a href="{{ path('dream_homepage') }}">
+                Повернутися на головну
+            </a>
+        </li>
+        <li>
+            <a href="{{ path('dream_edit', { 'slug': dream.slug }) }}">
+                Редагувати мрію
+            </a>
+        </li>
+        <li>
+            <form action="{{ path('dream_delete', { 'slug': dream.slug }) }}" method="post">
+                {{ form_widget(delete_form) }}
+                <button type="submit">Видалити мрію</button>
+            </form>
+        </li>
+    </ul>
+{% endblock %}
