@@ -9,7 +9,7 @@
             <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" />{{ dream.owner.name }}
             <img src="" class="dream-main-image" />
             <div class="like">
-                Підтримали: {{ dream.contributions | length }} Рейтинг: {{ dream.like }}
+                Підтримали: {{ dream.contribution | length }} Рейтинг: {{ dream.like }}
             </div>
             <div>
                 Зібрано:
