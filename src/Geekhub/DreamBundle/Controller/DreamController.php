@@ -45,12 +45,12 @@ class DreamController extends Controller
 
         $dream = $em->getRepository('DreamBundle:Dream')->findOneBySlug($slug);
 
-        $tagManager = $this->get('fpn_tag.tag_manager');
-        $tagManager->loadTagging($dream);
-
         if (!$dream) {
             throw $this->createNotFoundException('Unable to find Dream entity.');
         }
+
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        $tagManager->loadTagging($dream);
 
         $deleteForm = $this->createDeleteForm($slug);
 
@@ -131,12 +131,12 @@ class DreamController extends Controller
         $dream = $em->getRepository('DreamBundle:Dream')->findOneBySlug($slug);
         $tags = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
 
-        $tagManager = $this->get('fpn_tag.tag_manager');
-        $tagManager->loadTagging($dream);
-
         if (!$dream) {
             throw $this->createNotFoundException('Unable to find Dream entity.');
         }
+
+        $tagManager = $this->get('fpn_tag.tag_manager');
+        $tagManager->loadTagging($dream);
 
         $editForm = $this->createForm(new DreamType(), $dream);
         $deleteForm = $this->createDeleteForm($slug);
