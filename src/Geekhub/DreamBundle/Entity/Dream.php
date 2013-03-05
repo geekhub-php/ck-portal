@@ -44,13 +44,13 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $work;
 
-    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\File", mappedBy="dream") */
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\File", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $file;
 
-    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream") */
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $image;
 
-    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream") */
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $video;
 
     /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream", cascade={"persist", "remove"}) */
@@ -579,7 +579,8 @@ class Dream implements Taggable
      */
     public function addFile(\Geekhub\FileBundle\Entity\File $file)
     {
-        $this->file[] = $file;
+        $this->file->add($file);
+        $file->setDream($this);
     
         return $this;
     }
@@ -612,7 +613,8 @@ class Dream implements Taggable
      */
     public function addImage(\Geekhub\FileBundle\Entity\Image $image)
     {
-        $this->image[] = $image;
+        $this->image->add($image);
+        $image->setDream($this);
     
         return $this;
     }
@@ -645,7 +647,8 @@ class Dream implements Taggable
      */
     public function addVideo(\Geekhub\FileBundle\Entity\Video $video)
     {
-        $this->video[] = $video;
+        $this->video->add($video);
+        $video->setDream($this);
     
         return $this;
     }
