@@ -4,6 +4,7 @@ namespace Geekhub\DreamBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 
 class DefaultController extends Controller
 {
@@ -16,5 +17,12 @@ class DefaultController extends Controller
             'user' => $user,
             'dreams' => $dreams
         ));
+    }
+    public function getVimeoThumbnailAction($videoId)
+    {
+        $url = "http://vimeo.com/api/v2/video/$videoId.php";
+        $result = unserialize(file_get_contents($url));
+
+        return new Response($result[0]['thumbnail_small']);
     }
 }
