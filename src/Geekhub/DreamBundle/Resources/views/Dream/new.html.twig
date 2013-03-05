@@ -3,50 +3,105 @@
 {{ parent() }}
 <link rel="stylesheet" href="{{ asset('bundles/dream/css/tagit/jquery.tagit.css') }}" />
 <link rel="stylesheet" href="{{ asset('bundles/dream/css/tagit/tagit.ui-zendesk.css') }}" />
+<link rel="stylesheet" href="{{ asset('bundles/dream/css/uploader/fineuploader.css') }}" />
 {% endblock stylesheets %}
 {% block body %}
     <h1>Нова мрія</h1>
 
     <form action="{{ path('dream_create') }}" method="post" {{ form_enctype(form) }}>
-        {{ form_row(form.title) }}
-        {{ form_row(form.description) }}
-        <h3>Фінансові витрати</h3>
-        <ul class="financial" data-prototype="{{ form_widget(form.financial.vars.prototype)|e }}">
-            {{ form_row(form.financial) }}
-        </ul>
-        <h3>Інструменти / обладнання / техніка</h3>
-        <ul class="equipment" data-prototype="{{ form_widget(form.equipment.vars.prototype)|e }}">
-            {{ form_row(form.equipment) }}
-        </ul>
-        <h3>Роботи та ресурси</h3>
-        <ul class="work" data-prototype="{{ form_widget(form.work.vars.prototype)|e }}">
-            {{ form_row(form.work) }}
-        </ul>
-        <h3>Теги</h3>
-        {{ form_row(form.tagArray) }}
+        <div style="width: 20%; float: left;">
+            <div id="main-image">
+            </div>
+            <h3>Зображення</h3>
+            <div id="thumbnail-fine-uploader"></div>
+            <div id="fine-uploader"></div>
+            <div id="video-preview"></div>
+            <a href="#" id="pop">
+                <div class="qq-upload-button" style="position: relative; overflow: hidden; direction: ltr;">
+                    + Додати відео
+                </div>
+            </a>
+            <p>
+                <button type="submit">Створити</button>
+            </p>
+            <ul class="record_actions">
+                <li>
+                    <a href="{{ path('dream_homepage') }}">
+                        Повернутися на головну
+                    </a>
+                </li>
+            </ul>
+        </div>
+        <div style="width: 50%; float: left;">
+            {{ form_row(form.title) }}
+            {{ form_row(form.description) }}
+            {{ form_row(form.phone) }}
+            {{ form_row(form.phoneAvailable) }}
+            {{ form_row(form.tagArray) }}
+            <div id="thumbnail-docs-uploader"></div>
+            <div id="docs-uploader"></div>
+        </div>
+        <div style="width: 30%; float: right;">
+            <h3>Кошторис проекту</h3>
+            <ul class="financial" data-prototype="{{ form_widget(form.financial.vars.prototype)|e }}">
+                {{ form_row(form.financial) }}
+            </ul>
+            <ul class="equipment" data-prototype="{{ form_widget(form.equipment.vars.prototype)|e }}">
+                {{ form_row(form.equipment) }}
+            </ul>
+            <ul class="work" data-prototype="{{ form_widget(form.work.vars.prototype)|e }}">
+                {{ form_row(form.work) }}
+            </ul>
+            <ul class="video" data-prototype="{{ form_widget(form.video.vars.prototype)|e }}">
+                {{ form_row(form.video) }}
+            </ul>
+            <ul class="image" data-prototype="{{ form_widget(form.image.vars.prototype)|e }}">
+                {{ form_row(form.image) }}
+            </ul>
+        </div>
+
+
+
         {{ form_rest(form) }}
 
-        <p>
-            <button type="submit">Create</button>
-        </p>
+
+
     </form>
 
-    <ul class="record_actions">
-        <li>
-            <a href="{{ path('dream_homepage') }}">
-                Back to the list
-            </a>
-        </li>
-    </ul>
+
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
     <script src="{{ asset('bundles/dream/js/tag-it.min.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/util.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/handler.base.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/handler.xhr.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/ajax.requester.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/deletefile.ajax.requester.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/button.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/uploader.basic.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/dnd.js') }}" type="text/javascript"></script>
+    <script src="{{ asset('bundles/dream/js/uploader/uploader.js') }}" type="text/javascript"></script>
+    <script type="text/javascript">
+        function dump(obj) {
+            var out = "";
+            if(obj && typeof(obj) == "object"){
+                for (var i in obj) {
+                    out += i + ": " + obj[i] + "\n";
+                }
+            } else {
+                out = obj;
+            }
+            alert(out);
+        }
+    </script>
     <script>
         var collectionHolderFinancial = $('ul.financial');
         var collectionHolderWork = $('ul.work');
         var collectionHolderEquipment = $('ul.equipment');
+        var collectionHolderVideo = $('ul.video');
+        var collectionHolderImage = $('ul.image');
 
         var $addFinanceLink = $('<a href="#" class="add_financial_link">Додати статтю</a>');
         var $addWorkLink = $('<a href="#" class="add_work_link">Додати статтю</a>');
@@ -55,18 +110,22 @@
         var $newFinancialLinkLi = $('<li></li>').append($addFinanceLink);
         var $newWorkLinkLi = $('<li></li>').append($addWorkLink);
         var $newEquipmentLinkLi = $('<li></li>').append($addEquipmentLink);
+        var $newVideoLinkLi = $('<li></li>');
+        var $newImageLinkLi = $('<li></li>');
 
         jQuery(document).ready(function() {
             // add the "add a tag" anchor and li to the tags ul
             collectionHolderFinancial.append($newFinancialLinkLi);
             collectionHolderWork.append($newWorkLinkLi);
             collectionHolderEquipment.append($newEquipmentLinkLi);
+            collectionHolderVideo.append($newVideoLinkLi);
+            collectionHolderImage.append($newImageLinkLi);
 
             $addFinanceLink.on('click', function(e) {
                 // prevent the link from creating a "#" on the URL
                 e.preventDefault();
 
-                // add a new tag form (see next code block)
+                // add a new form (see next code block)
                 addForm(collectionHolderFinancial, $newFinancialLinkLi);
             });
             $addWorkLink.on('click', function(e) {
@@ -87,7 +146,7 @@
             // instead be a number based on the current collection's length.
             var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
 
-            // Display the form in the page in an li, before the "Add a tag" link li
+            // Display the form in the page in an li, before the "Add a entity" link li
             var $newFormLi = $('<li></li>').append(newForm);
             $newLinkLi.before($newFormLi);
         }
@@ -102,5 +161,286 @@
             });
         });
     </script>
+    <script>
+        function createUploader() {
+            var uploader = new qq.FineUploader({
+                // Pass the HTML element here
+                element: document.getElementById('fine-uploader'),
+                // or, if using jQuery
+                // element: $('#fine-uploader')[0],
+                // Use the relevant server script url here
+                // if it's different from the default “/server/upload”
+                template: '<div class="qq-uploader">' +
+                        ('<div class="qq-upload-drop-area"><span>Перетащіть сюди файл</span></div>') +
+                        ('<div class="qq-upload-button">+ Додати зображення</div>') +
+                        '<span class="qq-drop-processing"><span>Працюємо</span><span class="qq-drop-processing-spinner"></span></span>' +
+                        ('<ul class="qq-upload-list"></ul>') +
+                        '</div>',
+                request: {
+                    debug: true,
+                    endpoint: '/server/php/example.php'
+                },
+                failedUploadTextDisplay: {
+                    mode: 'custom',
+                    maxChars: 400,
+                    responseProperty: 'error',
+                    enableTooltip: true
+                },
+                {# ToDo: Translate this message #}
+                messages: {
+                    typeError: "{file} has an invalid extension. Valid extension(s): {extensions}.",
+                    sizeError: "{file} is too large, maximum file size is {sizeLimit}.",
+                    minSizeError: "{file} is too small, minimum file size is {minSizeLimit}.",
+                    emptyError: "{file} is empty, please select files again without it.",
+                    noFilesError: "No files to upload.",
+                    onLeave: "The files are being uploaded, if you leave now the upload will be cancelled."
+                },
+                text: {
+                    uploadButton: 'Додати зображення',
+                    cancelButton: 'Відмінити',
+                    retryButton: 'Спробувати ще раз',
+                    deleteButton: 'Видалити',
+                    failUpload: 'Помилка завантаження файлу :(',
+                    dragZone: 'Drop files here to upload',
+                    dropProcessing: 'Processing dropped files...',
+                    formatProgress: "{percent}% of {total_size}",
+                    waitingForResponse: "Працюємо..."
+                },
+                callbacks: {
+                    onComplete: function(id, fileName, responseJSON) {
+                        if (responseJSON.success) {
+                            $('#thumbnail-fine-uploader').append('<img height="50px" src="/server/php/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
 
+                            //Insert data
+                            addForm(collectionHolderImage, $newImageLinkLi);
+                            var numberOfElement = collectionHolderImage.children().length - 1;
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_path').val(responseJSON.uploadName);
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_mimeType').val(responseJSON.mimeType);
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_size').val(responseJSON.fileSize);
+
+                            dump(responseJSON);
+
+                        }
+                    }
+                }
+            });
+            var docsUploader = new qq.FineUploader({
+                // Pass the HTML element here
+                element: document.getElementById('docs-uploader'),
+                // or, if using jQuery
+                // element: $('#fine-uploader')[0],
+                // Use the relevant server script url here
+                // if it's different from the default “/server/upload”
+                template: '<div class="qq-uploader">' +
+                        ('<div class="qq-upload-drop-area"><span>Перетащіть сюди файл</span></div>') +
+                        ('<div class="qq-upload-button">+ Додати документи<br />(*.pdf, *.doc(x), *.xls(x)</div>') +
+                        '<span class="qq-drop-processing"><span>Працюємо</span><span class="qq-drop-processing-spinner"></span></span>' +
+                        ('<ul class="qq-upload-list"></ul>') +
+                        '</div>',
+                request: {
+                    debug: true,
+                    endpoint: '/server/php/example.php'
+                },
+                failedUploadTextDisplay: {
+                    mode: 'custom',
+                    maxChars: 400,
+                    responseProperty: 'error',
+                    enableTooltip: true
+                },
+                {# ToDo: Translate this message #}
+                messages: {
+                    typeError: "{file} has an invalid extension. Valid extension(s): {extensions}.",
+                    sizeError: "{file} is too large, maximum file size is {sizeLimit}.",
+                    minSizeError: "{file} is too small, minimum file size is {minSizeLimit}.",
+                    emptyError: "{file} is empty, please select files again without it.",
+                    noFilesError: "No files to upload.",
+                    onLeave: "The files are being uploaded, if you leave now the upload will be cancelled."
+                },
+                text: {
+                    uploadButton: 'Додати зображення',
+                    cancelButton: 'Відмінити',
+                    retryButton: 'Спробувати ще раз',
+                    deleteButton: 'Видалити',
+                    failUpload: 'Помилка завантаження файлу :(',
+                    dragZone: 'Drop files here to upload',
+                    dropProcessing: 'Processing dropped files...',
+                    formatProgress: "{percent}% of {total_size}",
+                    waitingForResponse: "Працюємо..."
+                },
+                callbacks: {
+                    onComplete: function(id, fileName, responseJSON) {
+                        if (responseJSON.success) {
+                            fileNameArray = responseJSON.uploadName.split('.');
+                            docType = fileNameArray[fileNameArray.length - 1];
+                            $('#thumbnail-docs-uploader').append('<div class="doc doc-' + docType + '"></div>');
+                        }
+                    }
+                }
+            });
+            var mainImageUploader = new qq.FineUploader({
+                // Pass the HTML element here
+                element: document.getElementById('main-image'),
+                template: '<div class="qq-uploader">' +
+                        ('<div class="qq-upload-drop-area"><span>Перетащіть сюди файл</span></div>') +
+                        ('<div class="qq-upload-button main-image-upload"></div>') +
+                        '<span class="qq-drop-processing"><span>Працюємо</span><span class="qq-drop-processing-spinner"></span></span>' +
+                        ('<ul class="qq-upload-list"></ul>') +
+                        '</div>',
+                classes: {
+                    buttonHover: 'main-image-upload-hover',
+                    buttonFocus: 'qq-upload-button-focus'
+                },
+                request: {
+                    debug: true,
+                    endpoint: '/server/php/example.php'
+                },
+                failedUploadTextDisplay: {
+                    mode: 'custom',
+                    maxChars: 400,
+                    responseProperty: 'error',
+                    enableTooltip: true
+                },
+                {# ToDo: Translate this message #}
+                messages: {
+                    typeError: "{file} has an invalid extension. Valid extension(s): {extensions}.",
+                    sizeError: "{file} is too large, maximum file size is {sizeLimit}.",
+                    minSizeError: "{file} is too small, minimum file size is {minSizeLimit}.",
+                    emptyError: "{file} is empty, please select files again without it.",
+                    noFilesError: "No files to upload.",
+                    onLeave: "The files are being uploaded, if you leave now the upload will be cancelled."
+                },
+                text: {
+                    uploadButton: 'Додати зображення',
+                    cancelButton: 'Відмінити',
+                    retryButton: 'Спробувати ще раз',
+                    deleteButton: 'Видалити',
+                    failUpload: 'Помилка завантаження файлу :(',
+                    dragZone: 'Drop files here to upload',
+                    dropProcessing: 'Processing dropped files...',
+                    formatProgress: "{percent}% of {total_size}",
+                    waitingForResponse: "Працюємо..."
+                },
+                callbacks: {
+                    onComplete: function(id, fileName, responseJSON) {
+                        if (responseJSON.success) {
+                            $('.main-image-upload').css('background-image', 'none');
+                            $('#main-image-preview').remove();
+                            $('.main-image-upload').append('<img id="main-image-preview" height="200px" src="/server/php/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
+                        }
+                    }
+                }
+            });
+        }
+
+        window.onload = createUploader;
+    </script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            //open popup
+            $("#pop").on('click', function(e) {
+                e.preventDefault();
+                $("#overlay_form").fadeIn(150);
+                positionPopup();
+            });
+
+            //close popup
+            $("#close").on('click', function(e) {
+                e.preventDefault();
+                $("#overlay_form").fadeOut(150);
+            });
+            $("#submit-video-link").on('click', function(e) {
+                e.preventDefault();
+                var youtube=/youtube/g;
+                var vimeo=/vimeo/g;
+                var http=/^http:/g;
+                if (youtube.test($("#video-input").val()) && http.test($("#video-input").val())) {
+                    $("#video-input").css('border-color', 'black');
+                    videoLink = $("#video-input").val();
+                    videoId = videoLink.split('v=')[1];
+                    ampersandPosition = videoId.indexOf('&');
+                    if(ampersandPosition != -1) {
+                        videoId = videoId.substring(0, ampersandPosition);
+                    }
+                    $("#video-preview").append('<img height="50px" src="http://img.youtube.com/vi/' + videoId + '/3.jpg" />');
+
+                    //Insert data
+                    addForm(collectionHolderVideo, $newVideoLinkLi);
+                    var numberOfElement = collectionHolderVideo.children().length - 1;
+                    $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('youtube');
+                    $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val($("#video-input").val());
+
+                    $("#overlay_form").fadeOut(150);
+                    $("#video-input").val('');
+                }
+                else if (vimeo.test($("#video-input").val()) && http.test($("#video-input").val())) {
+                    $("#video-input").css('border-color', 'black');
+                    videoLink = $("#video-input").val();
+                    linkArray = videoLink.split('/');
+                    videoId = linkArray[linkArray.length - 1];
+                    $("#overlay_form").fadeOut(150);
+                    $("#video-input").val('');
+                    $("#video-preview").append('<div class="video-thumbnail qq-upload-spinner"></div>');
+
+                    $.ajax({
+                        url: "{{ url('get_vimeo_thumbnail', { 'videoId': '' }) }}" + "/" + videoId,
+                        success: function(data){
+                            $("#video-preview").append('<img height="50px" src="' + data + '" />');
+
+                            addForm(collectionHolderVideo, $newVideoLinkLi);
+                            var numberOfElement = collectionHolderVideo.children().length - 1;
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('vimeo');
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val(videoLink);
+                        },
+                        complete: function(){
+                            $('.qq-upload-spinner').remove();
+                        },
+                        error: function(){
+                            $('.qq-upload-spinner').remove();
+                            $("#video-preview").append('Помилка :(');
+                        }
+                    });
+
+                    {#$.get("{{ url('get_vimeo_thumbnail', { 'videoId': '' }) }}" + "/" + videoId, function(data){#}
+                        {#$("#video-preview").append('<img height="50px" src="' + data + '" />');#}
+
+                        {#addForm(collectionHolderVideo, $newVideoLinkLi);#}
+                        {#var numberOfElement = collectionHolderVideo.children().length - 1;#}
+                        {#$('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('vimeo');#}
+                        {#$('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val(videoLink);#}
+                        {#$('.qq-upload-spinner').remove();#}
+                    {#});#}
+
+                }
+                else {
+                    $("#video-input").css('border-color', 'red');
+                }
+
+            });
+        });
+
+        //position the popup at the center of the page
+        function positionPopup(){
+            if(!$("#overlay_form").is(':visible')){
+                return;
+            }
+            $("#overlay_form").css({
+                left: ($(window).width() - $('#overlay_form').width()) / 2,
+                top: ($(window).width() - $('#overlay_form').width()) / 7,
+                position:'absolute'
+            });
+        }
+
+        //maintain the popup at center of the page when browser resized
+        $(window).bind('resize',positionPopup);
+
+    </script>
+
+    <form id="overlay_form" style="display:none">
+        <p>Відео лінк</p>
+        <input type="text" name="video" id="video-input" /><br />
+        <a  href="#" id="submit-video-link">Додати відео</a>
+        <a href="#" id="close" >Відмінити</a><br />
+        <span class="note">Можете скопіювати лінк на відеохостінги youtube, vimeo</span>
+    </form>
 {% endblock %}

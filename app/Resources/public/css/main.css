@@ -10,3 +10,20 @@
 
 .front-dream { float: left; width: 30%; border: 4px double black; margin: 5px; padding: 5px;}
 .front-dream .like { border-top: 1px solid #000000; border-bottom: 1px solid #000000; }
+li { list-style-type: none }
+
+#overlay_form {
+    position: absolute;
+    border: 5px solid gray;
+    padding: 10px;
+    background: white;
+    width: 550px;
+    height: 120px;
+}
+#overlay_form input {
+    width: 450px;
+}
+#pop {
+    text-decoration: none;
+}
+
