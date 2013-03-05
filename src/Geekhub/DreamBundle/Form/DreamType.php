@@ -16,34 +16,68 @@ class DreamType extends AbstractType
         }
 
         $builder
-            ->add('title')
-            ->add('description')
+            ->add('title', 'text', array(
+                'label' => 'Нава мрії',
+            ))
+            ->add('description', 'textarea', array(
+                'label' => 'Опис мрії',
+            ))
             ->add('financial', 'collection', array(
                 'type' => new FinancialType(),
 
                 'allow_add' => true,
                 'allow_delete' => true,
                 'by_reference' => false,
+
+                'label' => 'Фінансові витрати',
             ))
             ->add('equipment', 'collection', array(
-            'type' => new EquipmentType(),
+                'type' => new EquipmentType(),
 
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+
+                'label' => 'Інструменти / обладнання / техніка',
             ))
             ->add('work', 'collection', array(
-            'type' => new WorkType(),
+                'type' => new WorkType(),
 
-            'allow_add' => true,
-            'allow_delete' => true,
-            'by_reference' => false,
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+
+                'label' => 'Роботи та ресурси',
             ))
             ->add('tagArray', 'text', array(
                 'data' => $stringTags,
+                'label' => 'Теги',
             ))
-            ->add('phone')
-            ->add('phoneAvailable')
+            ->add('phone', 'text', array(
+                'label' => 'Телефон',
+            ))
+            ->add('phoneAvailable', 'checkbox', array(
+                'data' => true,
+                'label' => 'Для всіх користувачів'
+            ))
+            ->add('video', 'collection', array(
+                'type' => new \Geekhub\FileBundle\Form\VideoType(),
+
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+
+                'label' => 'Відео',
+            ))
+            ->add('image', 'collection', array(
+                'type' => new \Geekhub\FileBundle\Form\ImageType(),
+
+                'allow_add' => true,
+                'allow_delete' => true,
+                'by_reference' => false,
+
+                'label' => 'Зображення',
+            ))
         ;
     }
 
