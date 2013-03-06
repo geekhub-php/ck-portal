@@ -6,6 +6,10 @@ user_bundle:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /
 
+file_bundle:
+    resource: "@FileBundle/Resources/config/routing.yml"
+    prefix:   /file
+
 _imagine:
     resource: .
     type:     imagine

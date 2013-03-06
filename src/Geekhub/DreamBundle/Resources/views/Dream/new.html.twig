@@ -184,7 +184,7 @@
                         '</div>',
                 request: {
                     debug: true,
-                    endpoint: '/server/php/example.php'
+                    endpoint: '{{ url('file_upload_file') }}'
                 },
                 failedUploadTextDisplay: {
                     mode: 'custom',
@@ -215,7 +215,7 @@
                 callbacks: {
                     onComplete: function(id, fileName, responseJSON) {
                         if (responseJSON.success) {
-                            $('#thumbnail-fine-uploader').append('<img height="50px" src="/server/php/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
+                            $('#thumbnail-fine-uploader').append('<img height="50px" src="{{app.request.baseurl}}/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
 
                             //Insert data
                             addForm(collectionHolderImage, $newImageLinkLi);
@@ -242,7 +242,7 @@
                         '</div>',
                 request: {
                     debug: true,
-                    endpoint: '/server/php/example.php'
+                    endpoint: '{{ url('file_upload_file') }}'
                 },
                 failedUploadTextDisplay: {
                     mode: 'custom',
@@ -302,7 +302,7 @@
                 },
                 request: {
                     debug: true,
-                    endpoint: '/server/php/example.php'
+                    endpoint: '{{ url('file_upload_file') }}'
                 },
                 failedUploadTextDisplay: {
                     mode: 'custom',
@@ -335,7 +335,7 @@
                         if (responseJSON.success) {
                             $('.main-image-upload').css('background-image', 'none');
                             $('#main-image-preview').remove();
-                            $('.main-image-upload').append('<img id="main-image-preview" height="200px" src="/server/php/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
+                            $('.main-image-upload').append('<img id="main-image-preview" height="200px" src="{{app.request.baseurl}}/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
                         }
                     }
                 }
@@ -410,17 +410,6 @@
                             $("#video-preview").append('Помилка :(');
                         }
                     });
-
-                    {#$.get("{{ url('get_vimeo_thumbnail', { 'videoId': '' }) }}" + "/" + videoId, function(data){#}
-                        {#$("#video-preview").append('<img height="50px" src="' + data + '" />');#}
-
-                        {#addForm(collectionHolderVideo, $newVideoLinkLi);#}
-                        {#var numberOfElement = collectionHolderVideo.children().length - 1;#}
-                        {#$('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('vimeo');#}
-                        {#$('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val(videoLink);#}
-                        {#$('.qq-upload-spinner').remove();#}
-                    {#});#}
-
                 }
                 else {
                     $("#video-input").css('border-color', 'red');

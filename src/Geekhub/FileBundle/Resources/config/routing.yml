@@ -1,0 +1,3 @@
+file_upload_file:
+    pattern:  /upload-file
+    defaults: { _controller: "FileBundle:Default:uploadFile" }
