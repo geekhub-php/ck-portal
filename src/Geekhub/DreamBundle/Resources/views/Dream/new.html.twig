@@ -58,6 +58,9 @@
             <ul class="image" data-prototype="{{ form_widget(form.image.vars.prototype)|e }}">
                 {{ form_row(form.image) }}
             </ul>
+            <ul class="file" data-prototype="{{ form_widget(form.file.vars.prototype)|e }}">
+                {{ form_row(form.file) }}
+            </ul>
         </div>
 
 
@@ -102,6 +105,7 @@
         var collectionHolderEquipment = $('ul.equipment');
         var collectionHolderVideo = $('ul.video');
         var collectionHolderImage = $('ul.image');
+        var collectionHolderFile = $('ul.file');
 
         var $addFinanceLink = $('<a href="#" class="add_financial_link">Додати статтю</a>');
         var $addWorkLink = $('<a href="#" class="add_work_link">Додати статтю</a>');
@@ -112,6 +116,7 @@
         var $newEquipmentLinkLi = $('<li></li>').append($addEquipmentLink);
         var $newVideoLinkLi = $('<li></li>');
         var $newImageLinkLi = $('<li></li>');
+        var $newFileLinkLi = $('<li></li>');
 
         jQuery(document).ready(function() {
             // add the "add a tag" anchor and li to the tags ul
@@ -120,6 +125,7 @@
             collectionHolderEquipment.append($newEquipmentLinkLi);
             collectionHolderVideo.append($newVideoLinkLi);
             collectionHolderImage.append($newImageLinkLi);
+            collectionHolderFile.append($newFileLinkLi);
 
             $addFinanceLink.on('click', function(e) {
                 // prevent the link from creating a "#" on the URL
@@ -217,9 +223,6 @@
                             $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_path').val(responseJSON.uploadName);
                             $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_mimeType').val(responseJSON.mimeType);
                             $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_size').val(responseJSON.fileSize);
-
-                            dump(responseJSON);
-
                         }
                     }
                 }
@@ -273,6 +276,13 @@
                             fileNameArray = responseJSON.uploadName.split('.');
                             docType = fileNameArray[fileNameArray.length - 1];
                             $('#thumbnail-docs-uploader').append('<div class="doc doc-' + docType + '"></div>');
+
+                            //Insert data
+                            addForm(collectionHolderFile, $newFileLinkLi);
+                            var numberOfElement = collectionHolderFile.children().length - 1;
+                            $('#geekhub_dreambundle_dreamtype_file_' + numberOfElement + '_name').val(responseJSON.uploadName);
+                            $('#geekhub_dreambundle_dreamtype_file_' + numberOfElement + '_path').val(responseJSON.uploadName);
+                            $('#geekhub_dreambundle_dreamtype_file_' + numberOfElement + '_type').val(responseJSON.mimeType);
                         }
                     }
                 }
@@ -353,7 +363,7 @@
                 e.preventDefault();
                 var youtube=/youtube/g;
                 var vimeo=/vimeo/g;
-                var http=/^http:/g;
+                var http=/^https?:/g;
                 if (youtube.test($("#video-input").val()) && http.test($("#video-input").val())) {
                     $("#video-input").css('border-color', 'black');
                     videoLink = $("#video-input").val();
