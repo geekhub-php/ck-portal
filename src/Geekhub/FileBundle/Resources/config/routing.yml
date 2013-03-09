@@ -1,3 +1,7 @@
-file_upload_file:
-    pattern:  /upload-file
-    defaults: { _controller: "FileBundle:Default:uploadFile" }
+file_upload_image:
+    pattern:  /upload-image
+    defaults: { _controller: "GeekhubFileBundle:Default:uploadImage" }
+
+file_upload_document:
+    pattern:  /upload-document
+    defaults: { _controller: "GeekhubFileBundle:Default:uploadDocument" }
