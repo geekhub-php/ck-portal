@@ -1,181 +1,222 @@
 <?php
+
 namespace Geekhub\FileBundle\Entity;
 
-use Gedmo\Mapping\Annotation as Gedmo;
-use Gedmo\Uploadable\MimeType\MimeTypeGuesserInterface;
 use Doctrine\ORM\Mapping as ORM;
+use Gedmo\Mapping\Annotation as Gedmo;
+use JMS\Serializer\Annotation\Exclude;
+use JMS\Serializer\Annotation\Type;
 
-/**
- * @ORM\Entity
- * @ORM\Table(name="file")
- * @Gedmo\Uploadable(filenameGenerator="ALPHANUMERIC", appendNumber=true, maxSize=52428800)
+/** @ORM\MappedSuperclass
+ *  @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
-class File implements MimeTypeGuesserInterface
+abstract class File
 {
     /**
      * @ORM\Column(name="id", type="integer")
      * @ORM\Id
      * @ORM\GeneratedValue(strategy="IDENTITY")
      */
-    private $id;
+    protected $id;
+
+    /** @ORM\Column(name="original_name", type="decimal") */
+    protected $originalName;
 
     /**
-     * @var string
-     *
-     * @ORM\Column(name="name", type="string")
+     * @ORM\Column(name="mime_type", type="string")
      */
-    private $name;
-
-    /**
-     * @ORM\Column(name="path", type="string")
-     * @Gedmo\UploadableFilePath
-     */
-    private $path;
-
-    /**
-     * @var string
-     *
-     * @ORM\Column(name="mime_type", type="string", columnDefinition="ENUM('doc', 'xls', 'xlsx', 'pdf')", nullable=false)
-     */
-    private $type;
+    protected $mimeType;
 
     /**
      * @ORM\Column(name="size", type="decimal")
-     * @Gedmo\UploadableFileSize
      */
-    private $size;
-
-    /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="file") */
-    private $dream;
-
-    public function guess($filePath)
-    {
-        // TODO: Implement guess() method.
-    }
-
+    protected $size;
 
     /**
-     * Get id
-     *
-     * @return integer 
+     * @ORM\Column(name="path", type="string")
      */
+    protected $path;
+
+    /**
+     * @var file for move file
+     * @Exclude
+     */
+    protected $uploadDir;
+
+    /** @var boolean fix for fine uploader - it require this parameter for ajax */
+    protected $success = true;
+
+    /** @var string for fine uploader */
+    protected $error;
+
+    /**
+     * @var array configurable value
+     * @Exclude
+     */
+    protected $allowedMimeType;
+
+    /**
+     * @var string configurable value
+     * @Exclude
+     */
+    protected $sizeLimit;
+
+    /**
+     * @var datetime
+     *
+     * @Gedmo\Timestampable(on="create")
+     * @ORM\Column(name="created", type="datetime")
+     */
+    protected $created;
+
+    /** @ORM\Column(name="deletedAt", type="datetime", nullable=true) */
+    protected $deletedAt;
+
     public function getId()
     {
         return $this->id;
     }
 
-    /**
-     * Set name
-     *
-     * @param string $name
-     * @return File
-     */
-    public function setName($name)
+    public function setOriginalName($originalName)
     {
-        $this->name = $name;
-    
-        return $this;
+        $this->originalName = $originalName;
     }
 
-    /**
-     * Get name
-     *
-     * @return string 
-     */
-    public function getName()
+    public function getOriginalName()
     {
-        return $this->name;
+        return $this->originalName;
     }
 
-    /**
-     * Set path
-     *
-     * @param string $path
-     * @return File
-     */
-    public function setPath($path)
+    public function setMimeType($mimeType)
     {
-        $this->path = $path;
-    
-        return $this;
+        $this->mimeType = $mimeType;
     }
 
-    /**
-     * Get path
-     *
-     * @return string 
-     */
-    public function getPath()
+    public function getMimeType()
     {
-        return $this->path;
+        return $this->mimeType;
     }
 
-    /**
-     * Set type
-     *
-     * @param string $type
-     * @return File
-     */
-    public function setType($type)
-    {
-        $this->type = $type;
-    
-        return $this;
-    }
-
-    /**
-     * Get type
-     *
-     * @return string 
-     */
-    public function getType()
-    {
-        return $this->type;
-    }
-
-    /**
-     * Set size
-     *
-     * @param float $size
-     * @return File
-     */
     public function setSize($size)
     {
         $this->size = $size;
-    
-        return $this;
     }
 
-    /**
-     * Get size
-     *
-     * @return float 
-     */
     public function getSize()
     {
         return $this->size;
     }
 
-    /**
-     * Set dream
-     *
-     * @param \Geekhub\DreamBundle\Entity\Dream $dream
-     * @return File
-     */
-    public function setDream(\Geekhub\DreamBundle\Entity\Dream $dream = null)
+    public function setPath($path)
     {
-        $this->dream = $dream;
-    
-        return $this;
+        $this->path = $path;
+    }
+
+    public function getPath()
+    {
+        return $this->path;
+    }
+
+    public function setUploadDir($uploadDir) {
+        $this->uploadDir = $uploadDir;
+    }
+
+    public function getUploadDir() {
+        return rtrim($this->uploadDir, '/').'/';
     }
 
     /**
-     * Get dream
-     *
-     * @return \Geekhub\DreamBundle\Entity\Dream 
+     * @param boolean $success
      */
-    public function getDream()
+    public function setSuccess($success)
     {
-        return $this->dream;
+        $this->success = $success;
     }
+
+    /**
+     * @return boolean
+     */
+    public function getSuccess()
+    {
+        return $this->success;
+    }
+
+    public function setError($error)
+    {
+        $this->error = $error;
+    }
+
+    public function getError()
+    {
+        return $this->error;
+    }
+
+    public function setAllowedMimeType($allowedMimeType)
+    {
+        $this->allowedMimeType = $allowedMimeType;
+    }
+
+    public function getAllowedMimeType()
+    {
+        return $this->allowedMimeType;
+    }
+
+    public function setSizeLimit($sizeLimit)
+    {
+        $this->sizeLimit = $sizeLimit;
+    }
+
+    public function getSizeLimit()
+    {
+        return $this->sizeLimit;
+    }
+
+    /**
+     * @param datetime $created
+     */
+    public function setCreated($created)
+    {
+        $this->created = $created;
+    }
+
+    /**
+     * @return datetime
+     */
+    public function getCreated()
+    {
+        return $this->created;
+    }
+
+    public function setDeletedAt($deletedAt)
+    {
+        $this->deletedAt = $deletedAt;
+    }
+
+    public function getDeletedAt()
+    {
+        return $this->deletedAt;
+    }
+
+    public function getAbsolutePath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadRootDir().'/'.$this->path;
+    }
+
+    public function getWebPath()
+    {
+        return null === $this->path
+            ? null
+            : $this->getUploadDir().'/'.$this->path;
+    }
+
+    public function getUploadRootDir()
+    {
+        // the absolute directory path where uploaded
+        // documents should be saved
+        return __DIR__.'/../../../../web/'.$this->getUploadDir();
+    }
+
+
 }

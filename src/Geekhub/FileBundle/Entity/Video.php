@@ -7,7 +7,7 @@ use Doctrine\ORM\Mapping as ORM;
  * @ORM\Entity
  * @ORM\Table(name="video")
  */
-class Video
+class Video extends Link
 {
     /**
      * @ORM\Column(name="id", type="integer")
@@ -21,7 +21,7 @@ class Video
      *
      * @ORM\Column(name="path", type="string")
      */
-    private $link;
+    protected $link;
 
     /**
      * @var string

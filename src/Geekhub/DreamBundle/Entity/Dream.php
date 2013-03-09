@@ -44,11 +44,14 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $work;
 
-    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\File", mappedBy="dream", cascade={"persist", "remove"}) */
-    protected $file;
+    /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Document", mappedBy="dream", cascade={"persist", "remove"}) */
+    protected $document;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $image;
+
+    /** @ORM\Column(name="main_image", type="string", length=255) */
+    protected $mainImage;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $video;
@@ -161,7 +164,7 @@ class Dream implements Taggable
         $this->financial = new \Doctrine\Common\Collections\ArrayCollection();
         $this->equipment = new \Doctrine\Common\Collections\ArrayCollection();
         $this->work = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->file = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->document = new \Doctrine\Common\Collections\ArrayCollection();
         $this->image = new \Doctrine\Common\Collections\ArrayCollection();
         $this->video = new \Doctrine\Common\Collections\ArrayCollection();
         $this->contribution = new \Doctrine\Common\Collections\ArrayCollection();
@@ -577,10 +580,10 @@ class Dream implements Taggable
      * @param \Geekhub\FileBundle\Entity\File $file
      * @return Dream
      */
-    public function addFile(\Geekhub\FileBundle\Entity\File $file)
+    public function addDocument(\Geekhub\FileBundle\Entity\Document $document)
     {
-        $this->file->add($file);
-        $file->setDream($this);
+        $this->document->add($document);
+        $document->setDream($this);
     
         return $this;
     }
@@ -590,9 +593,9 @@ class Dream implements Taggable
      *
      * @param \Geekhub\FileBundle\Entity\File $file
      */
-    public function removeFile(\Geekhub\FileBundle\Entity\File $file)
+    public function removeDocument(\Geekhub\FileBundle\Entity\Document $document)
     {
-        $this->file->removeElement($file);
+        $this->document->removeElement($document);
     }
 
     /**
@@ -600,9 +603,9 @@ class Dream implements Taggable
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getFile()
+    public function getDocument()
     {
-        return $this->file;
+        return $this->document;
     }
 
     /**
@@ -637,6 +640,16 @@ class Dream implements Taggable
     public function getImage()
     {
         return $this->image;
+    }
+
+    public function setMainImage($mainImage)
+    {
+        $this->mainImage = $mainImage;
+    }
+
+    public function getMainImage()
+    {
+        return $this->mainImage;
     }
 
     /**
