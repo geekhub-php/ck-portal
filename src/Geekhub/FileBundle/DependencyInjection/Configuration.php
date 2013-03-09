@@ -18,11 +18,59 @@ class Configuration implements ConfigurationInterface
     public function getConfigTreeBuilder()
     {
         $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('file_bundle');
+        $rootNode = $treeBuilder->root('geekhub_file');
 
-        // Here you should define the parameters that are allowed to
-        // configure your bundle. See the documentation linked above for
-        // more information on that topic.
+        $rootNode
+            ->children()
+                ->arrayNode('image')
+                    ->children()
+                        ->arrayNode('allowed_mime_type')
+                            ->prototype('scalar')->end()
+                            ->info('Array of allowed mime type files that can be approve at uploading at the server')
+                            ->example('[ jpg, png ]')
+                        ->end()
+                        ->scalarNode('size_limit')
+                            ->defaultValue('10485760')
+                            ->info('Max size for uploading files in bytes. By default 10485760 its 10Mb')
+                            ->example('102400')
+                        ->end()
+                        ->scalarNode('upload_directory')
+                            ->defaultValue('uploads/')
+                            ->info('The upload directory at web/ directory')
+                            ->example('uploads/images/')
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('document')
+                    ->children()
+                        ->arrayNode('allowed_mime_type')
+                            ->prototype('scalar')->end()
+                            ->info('Array of allowed mime type files that can be approve at uploading at the server')
+                            ->example('[ jpg, png ]')
+                        ->end()
+                        ->scalarNode('size_limit')
+                            ->defaultValue('10485760')
+                            ->info('Max size for uploading files in bytes. By default 10485760 its 10Mb')
+                            ->example('102400')
+                        ->end()
+                        ->scalarNode('upload_directory')
+                            ->defaultValue('uploads/')
+                            ->info('The upload directory at web/ directory')
+                            ->example('uploads/images/')
+                        ->end()
+                    ->end()
+                ->end()
+                ->arrayNode('video')
+                    ->children()
+                        ->arrayNode('allowed_providers')
+                            ->prototype('scalar')->end()
+                            ->info('Allowed domen for insert link')
+                            ->example('{ youtube.com, vimeo.com }')
+                        ->end()
+                    ->end()
+                ->end()
+            ->end()
+        ;
 
         return $treeBuilder;
     }

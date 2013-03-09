@@ -125,3 +125,14 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [25, 25], mode: outbound }
+geekhub_file:
+    image:
+        allowed_mime_type:   [ image/jpeg, image/pjpeg, image/png ]
+        size_limit:           5085760
+        upload_directory:     uploads/images/
+    document:
+        allowed_mime_type:   [ application/pdf, application/msword, application/microsoft_word, application/doc, application/rtf, application/xls, application/msexcel ]
+        size_limit:           10485760
+        upload_directory:     uploads/documents/
+    video:
+        allowed_providers:    [ youtube.com, vimeo.com ]
