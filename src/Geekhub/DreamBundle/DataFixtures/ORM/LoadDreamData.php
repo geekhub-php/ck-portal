@@ -31,6 +31,7 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             $dream->setPhoneAvailable(rand(1, 0));
             $dream->setState($state[rand(0, 3)]);
             $dream->setLike(rand(0, 100));
+            $dream->setMainImage($this->getReference('image' . rand(0, 99))->getPath());
 
             for ($b = 3 * $i; $b < 3 * $i + 3; $b++) {
                 $dream->addEquipment($this->getReference('equipment' . $b));
@@ -50,7 +51,7 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
 
             for ($b = 0; $b < 5; $b++) {
                 $file = rand(0, 99);
-                $dream->addFile($this->getReference('file' . $file));
+                $dream->addDocument($this->getReference('file' . $file));
                 $this->getReference('file' . $file)->setDream($dream);
             }
 

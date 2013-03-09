@@ -7,10 +7,11 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
-use Geekhub\FileBundle\Entity\File as DreamFile;
+use Geekhub\FileBundle\Entity\Document as DreamFile;
 
-class LoadFileData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
+    /** @var ContainerInterface */
     private $container;
 
     public function load(ObjectManager $manager)
@@ -25,9 +26,9 @@ class LoadFileData extends AbstractFixture implements OrderedFixtureInterface, C
             $binFile = new File(__DIR__ . '/file/' . $currentFile);
             $binFileName = $this->transliterate($binFile->getFilename(), null);
             $binFileSize = $binFile->getSize();
-            $binFileExt = $binFile->getExtension();
+            $binFileMimeType = $binFile->getMimeType();
 
-            $destinationFileName = $this->getSlug($binFileName) . '___' . md5(uniqid() . $binFileName) . '.' . $binFileExt;
+            $destinationFileName = $this->getSlug($binFileName) . '___' . md5(uniqid() . $binFileName) . '.' . $binFile->getExtension();
 
             $binFile->move($this->getUploadRootDir(), $destinationFileName);
 
@@ -35,8 +36,8 @@ class LoadFileData extends AbstractFixture implements OrderedFixtureInterface, C
 
             $file->setPath($this->getUploadDir() . '/' . $destinationFileName);
             $file->setSize($binFileSize);
-            $file->setType($binFileExt);
-            $file->setName($currentFile);
+            $file->setMimeType($binFileMimeType);
+            $file->setOriginalName($binFile->getFilename());
 
             $this->addReference('file' . $i, $file);
 
@@ -58,7 +59,7 @@ class LoadFileData extends AbstractFixture implements OrderedFixtureInterface, C
 
     protected function getUploadDir()
     {
-        return 'uploads/documents';
+        return $this->container->getParameter('geekhub_file.document.upload_directory');
     }
 
     protected function getSlug($name)
@@ -85,7 +86,7 @@ class LoadFileData extends AbstractFixture implements OrderedFixtureInterface, C
      */
     function getOrder()
     {
-        return 12;
+        return 10;
     }
 
 

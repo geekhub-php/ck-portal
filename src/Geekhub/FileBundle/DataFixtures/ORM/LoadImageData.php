@@ -11,12 +11,14 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface
     public function load(ObjectManager $manager)
     {
         $type = array('jpeg', 'jpg', 'png');
+        $mimeType = array('image/jpeg', 'image/pjpeg', 'image/png');
 
         for ($i = 0; $i < 100; $i++) {
             $image = new Image();
             $image->setPath($this->getUploadDir());
             $image->setSize(rand(123456,654321));
-            $image->setMimeType($type[rand(0,2)]);
+            $image->setMimeType($mimeType[rand(0,2)]);
+            $image->setOriginalName(rand(123456,654321).$type[rand(0,2)]);
 
             $this->addReference('image' . $i, $image);
 
