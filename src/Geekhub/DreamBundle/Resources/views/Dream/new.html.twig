@@ -52,15 +52,20 @@
             <ul class="work" data-prototype="{{ form_widget(form.work.vars.prototype)|e }}">
                 {{ form_row(form.work) }}
             </ul>
-            <ul class="video" data-prototype="{{ form_widget(form.video.vars.prototype)|e }}">
-                {{ form_row(form.video) }}
-            </ul>
-            <ul class="image" data-prototype="{{ form_widget(form.image.vars.prototype)|e }}">
-                {{ form_row(form.image) }}
-            </ul>
-            <ul class="file" data-prototype="{{ form_widget(form.file.vars.prototype)|e }}">
-                {{ form_row(form.file) }}
-            </ul>
+            <div style="visibility: hidden">
+                <ul class="video" data-prototype="{{ form_widget(form.video.vars.prototype)|e }}">
+                    {{ form_row(form.video) }}
+                </ul>
+                <ul class="mainImage">
+                    {{ form_row(form.mainImage) }}
+                </ul>
+                <ul class="image" data-prototype="{{ form_widget(form.image.vars.prototype)|e }}">
+                    {{ form_row(form.image) }}
+                </ul>
+                <ul class="document" data-prototype="{{ form_widget(form.document.vars.prototype)|e }}">
+                    {{ form_row(form.document) }}
+                </ul>
+            </div>
         </div>
 
 
@@ -70,7 +75,10 @@
 
 
     </form>
-
+<form action="http://spolischook.dyndns.org/chedream2/web/file/upload-document" method="post" enctype="multipart/form-data">
+    <input type="file" name="qqfile"><br>
+    <input type="submit" value="Загрузить"><br>
+</form>
 
 {% endblock %}
 {% block javascripts %}
@@ -86,6 +94,7 @@
     <script src="{{ asset('bundles/dream/js/uploader/uploader.basic.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/dream/js/uploader/dnd.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/dream/js/uploader/uploader.js') }}" type="text/javascript"></script>
+    <script type="text/javascript" src="{{ asset('bundles/dream/js/stacktrace.js') }}"></script>
     <script type="text/javascript">
         function dump(obj) {
             var out = "";
@@ -105,7 +114,7 @@
         var collectionHolderEquipment = $('ul.equipment');
         var collectionHolderVideo = $('ul.video');
         var collectionHolderImage = $('ul.image');
-        var collectionHolderFile = $('ul.file');
+        var collectionHolderDocument = $('ul.document');
 
         var $addFinanceLink = $('<a href="#" class="add_financial_link">Додати статтю</a>');
         var $addWorkLink = $('<a href="#" class="add_work_link">Додати статтю</a>');
@@ -116,7 +125,7 @@
         var $newEquipmentLinkLi = $('<li></li>').append($addEquipmentLink);
         var $newVideoLinkLi = $('<li></li>');
         var $newImageLinkLi = $('<li></li>');
-        var $newFileLinkLi = $('<li></li>');
+        var $newDocumentLinkLi = $('<li></li>');
 
         jQuery(document).ready(function() {
             // add the "add a tag" anchor and li to the tags ul
@@ -125,7 +134,7 @@
             collectionHolderEquipment.append($newEquipmentLinkLi);
             collectionHolderVideo.append($newVideoLinkLi);
             collectionHolderImage.append($newImageLinkLi);
-            collectionHolderFile.append($newFileLinkLi);
+            collectionHolderDocument.append($newDocumentLinkLi);
 
             $addFinanceLink.on('click', function(e) {
                 // prevent the link from creating a "#" on the URL
@@ -184,7 +193,7 @@
                         '</div>',
                 request: {
                     debug: true,
-                    endpoint: '{{ url('file_upload_file') }}'
+                    endpoint: '{{ url('file_upload_image') }}'
                 },
                 failedUploadTextDisplay: {
                     mode: 'custom',
@@ -214,16 +223,23 @@
                 },
                 callbacks: {
                     onComplete: function(id, fileName, responseJSON) {
-                        if (responseJSON.success) {
-                            $('#thumbnail-fine-uploader').append('<img height="50px" src="{{app.request.baseurl}}/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
+                        if (!responseJSON.error) {
+                            $('#thumbnail-fine-uploader').append('<img height="50px" src="{{app.request.baseurl}}/' + responseJSON.path + '" alt="' + fileName + '">');
 
                             //Insert data
                             addForm(collectionHolderImage, $newImageLinkLi);
                             var numberOfElement = collectionHolderImage.children().length - 1;
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_path').val(responseJSON.uploadName);
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_mimeType').val(responseJSON.mimeType);
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_size').val(responseJSON.fileSize);
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_originalName').val(responseJSON.original_name);
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_mimeType').val(responseJSON.mime_type);
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_size').val(responseJSON.size);
+                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_path').val(responseJSON.path);
                         }
+                        if (responseJSON.error) {
+                            $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + responseJSON.error + '</li></ul></dd>')
+                        }
+                    },
+                    onError: function(id, name, errorReason) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
                     }
                 }
             });
@@ -242,7 +258,7 @@
                         '</div>',
                 request: {
                     debug: true,
-                    endpoint: '{{ url('file_upload_file') }}'
+                    endpoint: '{{ url('file_upload_document') }}'
                 },
                 failedUploadTextDisplay: {
                     mode: 'custom',
@@ -272,18 +288,26 @@
                 },
                 callbacks: {
                     onComplete: function(id, fileName, responseJSON) {
-                        if (responseJSON.success) {
-                            fileNameArray = responseJSON.uploadName.split('.');
+                        if (!responseJSON.error) {
+                            fileNameArray = responseJSON.original_name.split('.');
                             docType = fileNameArray[fileNameArray.length - 1];
                             $('#thumbnail-docs-uploader').append('<div class="doc doc-' + docType + '"></div>');
 
                             //Insert data
-                            addForm(collectionHolderFile, $newFileLinkLi);
-                            var numberOfElement = collectionHolderFile.children().length - 1;
-                            $('#geekhub_dreambundle_dreamtype_file_' + numberOfElement + '_name').val(responseJSON.uploadName);
-                            $('#geekhub_dreambundle_dreamtype_file_' + numberOfElement + '_path').val(responseJSON.uploadName);
-                            $('#geekhub_dreambundle_dreamtype_file_' + numberOfElement + '_type').val(responseJSON.mimeType);
+                            addForm(collectionHolderDocument, $newDocumentLinkLi);
+                            var numberOfElement = collectionHolderDocument.children().length - 1;
+                            $('#geekhub_dreambundle_dreamtype_document_' + numberOfElement + '_originalName').val(responseJSON.original_name);
+                            $('#geekhub_dreambundle_dreamtype_document_' + numberOfElement + '_mimeType').val(responseJSON.mime_type);
+                            $('#geekhub_dreambundle_dreamtype_document_' + numberOfElement + '_size').val(responseJSON.size);
+                            $('#geekhub_dreambundle_dreamtype_document_' + numberOfElement + '_path').val(responseJSON.path);
+
                         }
+                        if (responseJSON.error) {
+                            $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + responseJSON.error + '</li></ul></dd>')
+                        }
+                    },
+                    onError: function(id, name, errorReason) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
                     }
                 }
             });
@@ -302,7 +326,7 @@
                 },
                 request: {
                     debug: true,
-                    endpoint: '{{ url('file_upload_file') }}'
+                    endpoint: '{{ url('file_upload_image') }}'
                 },
                 failedUploadTextDisplay: {
                     mode: 'custom',
@@ -332,11 +356,15 @@
                 },
                 callbacks: {
                     onComplete: function(id, fileName, responseJSON) {
-                        if (responseJSON.success) {
+                        if (!responseJSON.error) {
                             $('.main-image-upload').css('background-image', 'none');
                             $('#main-image-preview').remove();
-                            $('.main-image-upload').append('<img id="main-image-preview" height="200px" src="{{app.request.baseurl}}/uploads/' + responseJSON.uploadName + '" alt="' + fileName + '">');
+                            $('.main-image-upload').append('<img id="main-image-preview" height="200px" src="{{app.request.baseurl}}/' + responseJSON.path + '" alt="' + fileName + '">');
+                            $('#geekhub_dreambundle_dreamtype_mainImage').val(responseJSON.path);
                         }
+                    },
+                    onError: function(id, name, errorReason) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
                     }
                 }
             });
