@@ -58,18 +58,18 @@ class OdnoklassnikiUserProvider extends AbstractSocialNetworkUserProvider
     private function doApiRequest($method, $token, $parameters = array())
     {
         $odnoklassniki_app_secret = $this->appKeys['odnoklassniki_app_secret'];
-        $odnoklassniki_app_public = $this->appKeys['odnoklassniki_app_public'];
+        $odnoklassniki_app_key = $this->appKeys['odnoklassniki_app_key'];
 
         $url = 'http://api.odnoklassniki.ru/fb.do?method='.$method;
         $sig = md5(
-            'application_key=' . $odnoklassniki_app_public .
+            'application_key=' . $odnoklassniki_app_key .
             'method=' . $method .
             md5($token . $odnoklassniki_app_secret)
         );
 
         $arrayParameters = array(
             'access_token' => $token,
-            'application_key' => $odnoklassniki_app_public,
+            'application_key' => $odnoklassniki_app_key,
             'sig' => $sig,
         );
 

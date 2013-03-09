@@ -30,5 +30,5 @@ services:
         class: "%odnoklassniki_user_provider.class%"
         parent: abstract_social_network_provider
         calls:
-            - [setAppKeys, [{odnoklassniki_app_public: %odnoklassniki_app_public%, odnoklassniki_app_secret: %odnoklassniki_app_secret%}]]
+            - [setAppKeys, [{odnoklassniki_app_key: %odnoklassniki_app_key%, odnoklassniki_app_secret: %odnoklassniki_app_secret%}]]
 
