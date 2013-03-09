@@ -27,3 +27,34 @@ li { list-style-type: none }
     text-decoration: none;
 }
 
+#system-message dd {
+    padding: 0!important;
+    background: none!important;
+    font-weight: bold;
+    text-indent: 30px;
+}
+
+#system-message dd.error ul {
+    background: #CF052B;
+    color: #fff;
+    border: none;
+    border-bottom: 1px solid #b40110;
+    border-top: 1px solid #b40110;
+}
+
+#system-message dd.message ul, #system-message dd.notice ul {
+    background: #fefff0;
+    color: #666;
+    border: none;
+    border-bottom: 1px solid #eae8cc;
+    border-top: 1px solid #eae8cc;
+}
+
+#system-message dd.notice ul li {
+    background: none;
+    margin: 0;
+    padding: 8px 16px;
+    text-indent: 0;
+    text-align: center;
+}
+

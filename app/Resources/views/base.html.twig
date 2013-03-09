@@ -13,6 +13,11 @@
         <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
+        <div id="system-message-container">
+            <dl id="system-message">
+
+            </dl>
+        </div>
         <div class="container">
             {% block header %}
                 {% include '::header.html.twig' %}
