@@ -78,8 +78,9 @@ class DreamType extends AbstractType
 
                 'label' => 'Зображення',
             ))
-            ->add('file', 'collection', array(
-                'type' => new \Geekhub\FileBundle\Form\FileType(),
+            ->add('mainImage')
+            ->add('document', 'collection', array(
+                'type' => new \Geekhub\FileBundle\Form\DocumentType(),
 
                 'allow_add' => true,
                 'allow_delete' => true,

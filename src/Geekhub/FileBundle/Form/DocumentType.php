@@ -6,19 +6,22 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
 
-class FileType extends AbstractType
+class DocumentType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('name', 'text', array(
+            ->add('originalName', 'text', array(
                 'label' => 'Ім’я файлу',
+            ))
+            ->add('mimeType', 'text', array(
+                'label' => 'Формат',
+            ))
+            ->add('size', 'text', array(
+                'label' => 'Розмір файла'
             ))
             ->add('path', 'text', array(
                 'label' => 'Лінк',
-            ))
-            ->add('type', 'text', array(
-                'label' => 'Формат',
             ))
         ;
     }
@@ -26,12 +29,12 @@ class FileType extends AbstractType
     public function setDefaultOptions(OptionsResolverInterface $resolver)
     {
         $resolver->setDefaults(array(
-            'data_class' => 'Geekhub\FileBundle\Entity\File'
+            'data_class' => 'Geekhub\FileBundle\Entity\Document'
         ));
     }
 
     public function getName()
     {
-        return 'geekhub_filebundle_filetype';
+        return 'geekhub_filebundle_documenttype';
     }
 }

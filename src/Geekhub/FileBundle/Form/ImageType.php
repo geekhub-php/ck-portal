@@ -11,15 +11,18 @@ class ImageType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('path', 'text', array(
-                'label' => 'Лінк',
-            ))
+            ->add('originalName', 'text', array(
+            'label' => 'Ім’я файлу',
+        ))
             ->add('mimeType', 'text', array(
-                'label' => 'Формат',
-            ))
+            'label' => 'Формат',
+        ))
             ->add('size', 'text', array(
-                'label' => 'Розмір',
-            ))
+            'label' => 'Розмір файла'
+        ))
+            ->add('path', 'text', array(
+            'label' => 'Лінк',
+        ))
         ;
     }
 
