@@ -7,7 +7,7 @@ user_bundle:
     prefix:   /
 
 file_bundle:
-    resource: "@FileBundle/Resources/config/routing.yml"
+    resource: "@GeekhubFileBundle/Resources/config/routing.yml"
     prefix:   /file
 
 _imagine:

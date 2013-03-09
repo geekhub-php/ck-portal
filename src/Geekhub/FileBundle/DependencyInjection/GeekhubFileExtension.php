@@ -12,7 +12,7 @@ use Symfony\Component\DependencyInjection\Loader;
  *
  * To learn more see {@link http://symfony.com/doc/current/cookbook/bundles/extension.html}
  */
-class FileExtension extends Extension
+class GeekhubFileExtension extends Extension
 {
     /**
      * {@inheritDoc}
@@ -21,8 +21,16 @@ class FileExtension extends Extension
     {
         $configuration = new Configuration();
         $config = $this->processConfiguration($configuration, $configs);
+        $rootNode = $configuration->getConfigTreeBuilder()->buildTree()->getName();
+
+        foreach ($config as $node => $nodeValue) {
+            foreach ($nodeValue as $parameter => $parameterValue) {
+                $container->setParameter(sprintf('%s.%s.%s',$rootNode,$node,$parameter), $parameterValue);
+            }
+        }
 
         $loader = new Loader\XmlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.xml');
     }
+
 }

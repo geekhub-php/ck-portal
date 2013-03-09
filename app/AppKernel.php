@@ -28,7 +28,7 @@ class AppKernel extends Kernel
             new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
             new Liip\ImagineBundle\LiipImagineBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
-            new Geekhub\FileBundle\FileBundle()
+            new Geekhub\FileBundle\GeekhubFileBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
         );
 
