@@ -2,6 +2,30 @@
 {% block body %}
     <h1>{{ dream.title }}</h1>
 
+    <div style="width: 250px; float: left;">
+        <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" />
+        <ul class="gallery clearfix">
+            {% for image in dream.images %}
+                <li>
+                    <a href="{{app.request.baseurl ~ '/' ~ image.path }}"
+                       rel="geekhub_dreamview[gallery1]">
+                        <img src="{{ image.path | imagine_filter('dream_create_image_thumbnail') }}" width="50" height="50" alt="{{ dream.title }} {{ loop.index }}" />
+                    </a>
+                </li>
+            {% endfor %}
+            {% for video in dream.video %}
+                <li>
+                    <a href="{{ video.link }}"
+                       rel="geekhub_dreamview[gallery1]">
+                        <img src="{{ video.thumbnail | imagine_filter('dream_create_image_thumbnail') }}" width="50" height="50" alt="{{ dream.title }} {{ loop.index }}" />
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    </div>
+    <div style="float: left;">
+
+    </div>
     <table class="record_properties">
         <tbody>
             <tr>
@@ -41,4 +65,12 @@
             </form>
         </li>
     </ul>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" charset="utf-8">
+        $(document).ready(function(){
+            $("a[rel^='geekhub_dreamview']").prettyPhoto({theme:'light_square'});
+        });
+    </script>
 {% endblock %}

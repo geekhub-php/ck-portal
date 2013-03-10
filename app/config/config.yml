@@ -117,6 +117,7 @@ liip_imagine:
     web_root: %kernel.root_dir%/../web
     data_root: %kernel.root_dir%/../web
     filter_sets:
+#    profile
         profile_avatar:
             quality: 75
             filters:
@@ -125,6 +126,16 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [25, 25], mode: outbound }
+#    dream
+        dream_create_image_thumbnail:
+            quality: 75
+            filters:
+                thumbnail: { size: [50, 50], mode: outbound }
+        dream_main_image:
+            quality: 75
+            filters:
+                thumbnail: { size: [200, 200], mode: outbound }
+
 geekhub_file:
     image:
         allowed_mime_type:   [ image/jpeg, image/pjpeg, image/png ]
