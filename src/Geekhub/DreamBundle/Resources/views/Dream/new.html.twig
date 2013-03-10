@@ -400,16 +400,31 @@
                     if(ampersandPosition != -1) {
                         videoId = videoId.substring(0, ampersandPosition);
                     }
-                    $("#video-preview").append('<img height="50px" src="http://img.youtube.com/vi/' + videoId + '/3.jpg" />');
-
-                    //Insert data
-                    addForm(collectionHolderVideo, $newVideoLinkLi);
-                    var numberOfElement = collectionHolderVideo.children().length - 1;
-                    $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('youtube');
-                    $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val($("#video-input").val());
-
                     $("#overlay_form").fadeOut(150);
                     $("#video-input").val('');
+                    $("#video-preview").append('<div class="video-thumbnail qq-upload-spinner"></div>');
+
+                    $.ajax({
+                        url: "{{ url('file_get_youtube_thumbnail', { 'videoId': '' }) }}" + "/" + videoId,
+                        success: function(data){
+                            var response = JSON.parse( data );
+                            $("#video-preview").append('<img height="50px" src="' + response.remoteThumbnail + '" />');
+
+                            addForm(collectionHolderVideo, $newVideoLinkLi);
+                            var numberOfElement = collectionHolderVideo.children().length - 1;
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val(videoLink);
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('vimeo');
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_remoteThumbnail').val(response.remoteThumbnail);
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_thumbnail').val(response.thumbnail);
+                        },
+                        complete: function(){
+                            $('.qq-upload-spinner').remove();
+                        },
+                        error: function(){
+                            $('.qq-upload-spinner').remove();
+                            $("#video-preview").append('Помилка :(');
+                        }
+                    });
                 }
                 else if (vimeo.test($("#video-input").val()) && http.test($("#video-input").val())) {
                     $("#video-input").css('border-color', 'black');
@@ -421,14 +436,17 @@
                     $("#video-preview").append('<div class="video-thumbnail qq-upload-spinner"></div>');
 
                     $.ajax({
-                        url: "{{ url('get_vimeo_thumbnail', { 'videoId': '' }) }}" + "/" + videoId,
+                        url: "{{ url('file_get_vimeo_thumbnail', { 'videoId': '' }) }}" + "/" + videoId,
                         success: function(data){
-                            $("#video-preview").append('<img height="50px" src="' + data + '" />');
+                            var response = JSON.parse( data );
+                            $("#video-preview").append('<img height="50px" src="' + response.remoteThumbnail + '" />');
 
                             addForm(collectionHolderVideo, $newVideoLinkLi);
                             var numberOfElement = collectionHolderVideo.children().length - 1;
-                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('vimeo');
                             $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_link').val(videoLink);
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_type').val('vimeo');
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_remoteThumbnail').val(response.remoteThumbnail);
+                            $('#geekhub_dreambundle_dreamtype_video_' + numberOfElement + '_thumbnail').val(response.thumbnail);
                         },
                         complete: function(){
                             $('.qq-upload-spinner').remove();

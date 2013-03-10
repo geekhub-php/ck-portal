@@ -33,6 +33,12 @@ class Video extends Link
     /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="video") */
     private $dream;
 
+    /** @ORM\Column(name="thumbnail", type="string") */
+    private $thumbnail;
+
+    /** @ORM\Column(name="remote_thumbnail", type="string") */
+    private $remoteThumbnail;
+
 
     /**
      * Get id
@@ -111,5 +117,26 @@ class Video extends Link
     public function getDream()
     {
         return $this->dream;
+    }
+
+    public function setRemoteThumbnail($remoteThumbnail)
+    {
+        $this->remoteThumbnail = $remoteThumbnail;
+
+    }
+
+    public function getRemoteThumbnail()
+    {
+        return $this->remoteThumbnail;
+    }
+
+    public function setThumbnail($thumbnail)
+    {
+        $this->thumbnail = $thumbnail;
+    }
+
+    public function getThumbnail()
+    {
+        return $this->thumbnail;
     }
 }

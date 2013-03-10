@@ -17,6 +17,12 @@ class VideoType extends AbstractType
             ->add('type', 'text', array(
                 'label' => 'Формат',
             ))
+            ->add('remoteThumbnail', 'text' ,array(
+                'label' => 'Мініатюра відео на сервері провайдера'
+            ))
+            ->add('thumbnail', 'text' ,array(
+                'label' => 'Мініатюра на сервері Мрії'
+            ))
         ;
     }
 
