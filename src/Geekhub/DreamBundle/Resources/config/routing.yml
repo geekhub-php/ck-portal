@@ -9,8 +9,3 @@ dream_entity:
 dream_dreams:
     pattern:  /dreams
     defaults: { _controller: "DreamBundle:Dream:index" }
-
-get_vimeo_thumbnail:
-    pattern:  /get-vimeo-thumbnail/{videoId}
-    defaults: { _controller: "DreamBundle:Default:getVimeoThumbnail" }
-

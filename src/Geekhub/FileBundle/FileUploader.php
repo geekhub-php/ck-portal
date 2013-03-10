@@ -37,6 +37,22 @@ class FileUploader
         return true;
     }
 
+    public function copyRemoteImage($remoteImage, $destination)
+    {
+        if (!file_exists($destination)) {
+            mkdir($destination);
+        }
+
+        $ext = explode('.', $remoteImage);
+        $uniqueName = md5(microtime(1).$ext[count($ext)-2]) .'.'. $ext[count($ext)-1];
+        $dest = fopen($destination.$uniqueName, "wb");
+        $src = file_get_contents($remoteImage);
+        fwrite($dest, $src, strlen($src));
+        fclose($dest);
+
+        return $videoThumbnail = $destination.$uniqueName;
+    }
+
     protected function isValid(File $file, UploadedFile $uploadedFile)
     {
         if (!isset($_SERVER['CONTENT_TYPE'])) {

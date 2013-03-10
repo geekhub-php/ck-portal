@@ -5,3 +5,11 @@ file_upload_image:
 file_upload_document:
     pattern:  /upload-document
     defaults: { _controller: "GeekhubFileBundle:Default:uploadDocument" }
+
+file_get_vimeo_thumbnail:
+    pattern:  /get-vimeo-thumbnail/{videoId}
+    defaults: { _controller: "GeekhubFileBundle:Default:getVimeoThumbnail" }
+
+file_get_youtube_thumbnail:
+    pattern:  /get-youtube-thumbnail/{videoId}
+    defaults: { _controller: "GeekhubFileBundle:Default:getYoutubeThumbnail" }
