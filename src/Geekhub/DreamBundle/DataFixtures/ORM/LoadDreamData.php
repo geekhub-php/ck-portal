@@ -66,7 +66,7 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             if (rand(0, 1) == rand(0, 1)) {
                 for ($b = 0; $b < rand(3, 7); $b++) {
                     $imageNumber = rand(0, 2) * $i + rand(1, 3) * $b + rand(1, 5) * 4;
-                    $dream->addImages($this->getReference('image' . $imageNumber));
+                    $dream->addImage($this->getReference('image' . $imageNumber));
                     $this->getReference('image' . $imageNumber)->setDream($dream);
                 }
             }

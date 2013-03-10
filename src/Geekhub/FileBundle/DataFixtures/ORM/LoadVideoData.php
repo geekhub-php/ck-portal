@@ -16,8 +16,13 @@ class LoadVideoData extends AbstractFixture implements OrderedFixtureInterface, 
     public function load(ObjectManager $manager)
     {
         $destDir = $this->container->getParameter('geekhub_file.video.upload_directory');
-        $currentFile = $this->container->get('kernel')->getRootDir() . '/../web/' .
-            $destDir . 'video.jpg';
+        $webDir = $this->container->get('kernel')->getRootDir() . '/../web/';
+        $currentFile = $webDir . $destDir . 'video.jpg';
+
+        if (!file_exists($webDir . $destDir)) {
+            mkdir($webDir . $destDir);
+        }
+
         copy(__DIR__ . '/srcFile/video.jpg', $currentFile);
         $list = $this->getVideoList();
         $type = array('vimeo', 'youtube');
