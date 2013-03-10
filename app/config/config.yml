@@ -136,3 +136,4 @@ geekhub_file:
         upload_directory:     uploads/documents/
     video:
         allowed_providers:    [ youtube.com, vimeo.com ]
+        upload_directory:     uploads/video-thumbnails/
