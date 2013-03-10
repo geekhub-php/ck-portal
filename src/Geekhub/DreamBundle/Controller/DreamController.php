@@ -87,17 +87,10 @@ class DreamController extends Controller
 
         $user= $this->get('security.context')->getToken()->getUser();
         $dream->setOwner($user);
-
         $form = $this->createForm(new DreamType(), $dream);
         $form->bind($request);
 
         if ($form->isValid()) {
-//            var_dump($dream->getTagArray());
-//            var_dump($dream->getFinancial());
-//            var_dump($dream->getEquipment());
-//            var_dump($dream->getWork());
-//            exit;
-
             //Set Tags
             $tagManager = $this->get('fpn_tag.tag_manager');
             foreach ($dream->getTagArray() as $tag) {
