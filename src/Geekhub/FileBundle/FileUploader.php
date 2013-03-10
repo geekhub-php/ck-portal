@@ -82,11 +82,10 @@ class FileUploader
 
         // Check that the max upload size specified in class configuration does not
         // exceed size allowed by server config
-        if ($this->toBytes(ini_get('post_max_size')) < $file->getSizeLimit() ||
-            $this->toBytes(ini_get('upload_max_filesize')) < $file->getSizeLimit()
+        if ($uploadedFile->getMaxFilesize() < $file->getSizeLimit()
         ) {
             $size = max(1, $file->getSizeLimit() / 1024 / 1024) . 'M';
-            $file->setError("Server error. Increase post_max_size and upload_max_filesize to " . $size);
+            $file->setError("Server error. Increase upload_max_filesize to " . $size . "Now it is - " . $uploadedFile->getMaxFilesize());
             return false;
         }
 
