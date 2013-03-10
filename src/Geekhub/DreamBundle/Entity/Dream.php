@@ -48,7 +48,7 @@ class Dream implements Taggable
     protected $document;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream", cascade={"persist", "remove"}) */
-    protected $image;
+    protected $images;
 
     /** @ORM\Column(name="main_image", type="string", length=255) */
     protected $mainImage;
@@ -165,7 +165,7 @@ class Dream implements Taggable
         $this->equipment = new \Doctrine\Common\Collections\ArrayCollection();
         $this->work = new \Doctrine\Common\Collections\ArrayCollection();
         $this->document = new \Doctrine\Common\Collections\ArrayCollection();
-        $this->image = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->images = new \Doctrine\Common\Collections\ArrayCollection();
         $this->video = new \Doctrine\Common\Collections\ArrayCollection();
         $this->contribution = new \Doctrine\Common\Collections\ArrayCollection();
         $this->usersWhoFavorites = new \Doctrine\Common\Collections\ArrayCollection();
@@ -616,7 +616,7 @@ class Dream implements Taggable
      */
     public function addImage(\Geekhub\FileBundle\Entity\Image $image)
     {
-        $this->image->add($image);
+        $this->images->add($image);
         $image->setDream($this);
     
         return $this;
@@ -629,7 +629,7 @@ class Dream implements Taggable
      */
     public function removeImage(\Geekhub\FileBundle\Entity\Image $image)
     {
-        $this->image->removeElement($image);
+        $this->images->removeElement($image);
     }
 
     /**
@@ -637,9 +637,9 @@ class Dream implements Taggable
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getImage()
+    public function getImages()
     {
-        return $this->image;
+        return $this->images;
     }
 
     public function setMainImage($mainImage)

@@ -59,8 +59,8 @@
                 <ul class="mainImage">
                     {{ form_row(form.mainImage) }}
                 </ul>
-                <ul class="image" data-prototype="{{ form_widget(form.image.vars.prototype)|e }}">
-                    {{ form_row(form.image) }}
+                <ul class="image" data-prototype="{{ form_widget(form.images.vars.prototype)|e }}">
+                    {{ form_row(form.images) }}
                 </ul>
                 <ul class="document" data-prototype="{{ form_widget(form.document.vars.prototype)|e }}">
                     {{ form_row(form.document) }}
@@ -229,10 +229,10 @@
                             //Insert data
                             addForm(collectionHolderImage, $newImageLinkLi);
                             var numberOfElement = collectionHolderImage.children().length - 1;
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_originalName').val(responseJSON.original_name);
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_mimeType').val(responseJSON.mime_type);
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_size').val(responseJSON.size);
-                            $('#geekhub_dreambundle_dreamtype_image_' + numberOfElement + '_path').val(responseJSON.path);
+                            $('#geekhub_dreambundle_dreamtype_images_' + numberOfElement + '_originalName').val(responseJSON.original_name);
+                            $('#geekhub_dreambundle_dreamtype_images_' + numberOfElement + '_mimeType').val(responseJSON.mime_type);
+                            $('#geekhub_dreambundle_dreamtype_images_' + numberOfElement + '_size').val(responseJSON.size);
+                            $('#geekhub_dreambundle_dreamtype_images_' + numberOfElement + '_path').val(responseJSON.path);
                         }
                         if (responseJSON.error) {
                             $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + responseJSON.error + '</li></ul></dd>')

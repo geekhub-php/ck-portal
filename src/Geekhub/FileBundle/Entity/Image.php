@@ -10,7 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Image extends File
 {
-    /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="image") */
+    /** @ORM\ManyToOne(targetEntity="Geekhub\DreamBundle\Entity\Dream", inversedBy="images") */
     protected $dream;
 
 

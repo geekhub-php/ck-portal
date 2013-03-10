@@ -69,7 +69,7 @@ class DreamType extends AbstractType
 
                 'label' => 'Відео',
             ))
-            ->add('image', 'collection', array(
+            ->add('images', 'collection', array(
                 'type' => new \Geekhub\FileBundle\Form\ImageType(),
 
                 'allow_add' => true,
