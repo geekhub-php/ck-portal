@@ -18,11 +18,4 @@ class DefaultController extends Controller
             'dreams' => $dreams
         ));
     }
-    public function getVimeoThumbnailAction($videoId)
-    {
-        $url = "http://vimeo.com/api/v2/video/$videoId.php";
-        $result = unserialize(file_get_contents($url));
-
-        return new Response($result[0]['thumbnail_small']);
-    }
 }
