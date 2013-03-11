@@ -11,12 +11,8 @@ class EquipmentType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item')
-            ->add('unit', 'entity', array(
-                'class' => 'DreamBundle:Unit',
-                'property' => 'name'
-            ))
-            ->add('total')
+            ->add('name')
+            ->add('quantity')
         ;
     }
 

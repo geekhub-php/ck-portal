@@ -11,8 +11,8 @@ class FinancialType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('item')
-            ->add('total')
+            ->add('name')
+            ->add('quantity')
         ;
     }
 
