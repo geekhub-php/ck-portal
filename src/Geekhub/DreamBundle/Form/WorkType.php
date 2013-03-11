@@ -11,9 +11,9 @@ class WorkType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('job')
-            ->add('employee')
-            ->add('day')
+            ->add('name')
+            ->add('worker')
+            ->add('quantity')
         ;
     }
 

@@ -43,6 +43,13 @@
         <table class="record_properties">
             <tbody>
             <tr>
+                <th>Автор</th>
+                <td>
+                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
+                    - {{ dream.owner.name }}
+                </td>
+            </tr>
+            <tr>
                 <th>Опис мрії</th>
                 <td>{{ dream.description }}</td>
             </tr>
@@ -63,38 +70,47 @@
         <div id="tabs">
             <ul>
                 <li><a href="#tabs-1">Кошторис мрії</a></li>
-                <li><a href="#tabs-2">Учасники ({{ dream.contribution | length }})</a></li>
+                <li><a href="#tabs-2">Учасники ({{ contributorsArray | length }})</a></li>
                 <li><a href="#tabs-3">Коментарі та пропозиції</a></li>
             </ul>
             <div id="tabs-1">
                 <h4>Грошові витрати</h4>
                 <ul>
                     {% for item in dream.financial %}
-                        <li>{{ item.item }} - {{ item.total }} грн.</li>
+                        <li>{{ item.name }} - {{ item.quantity }} грн.</li>
                     {% endfor %}
                 </ul>
                 <h4>Інструменти та обладнання</h4>
                 <ul>
                     {% for item in dream.equipment %}
-                        <li>{{ item.item }} - {{ item.total }} {{ item.unit.name }}</li>
+                        <li>{{ item.name }} - {{ item.quantity }} шт.</li>
                     {% endfor %}
                 </ul>
                 <h4>Роботи та ресурси</h4>
                 <ul>
                     {% for item in dream.work %}
-                        <li>{{ item.job }} - {{ item.employee }}</li>
+                        <li>{{ item.name }} - {{ item.quantity }}</li>
                     {% endfor %}
                 </ul>
             </div>
             <div id="tabs-2">
                 <ul>
-                    {% for item in dream.contribution %}
+                    {% for contribution in contributorsArray %}
                         <li style="height: 50px">
-                            <img src="{{ item.user.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
-                            {{ item.user.name }}&nbsp
+                            <img src="{{ contribution.user.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
+                            {{ contribution.user.name }}&nbsp
                             обіцяє
-                            {% for contributeItem in item.user.contributions %}
-                                item
+                            {% for item in contribution.contributions %}
+                                {% if item.contributeItem == 'Work' %}
+                                    {{ item.contributeItem.name }} - {{ item.contributeItem.quantity }} днів
+                                {% elseif item.contributeItem == 'Equipment' %}
+                                    {{ item.contributeItem.name }} - {{ item.contributeItem.quantity }} шт
+                                {% elseif item.contributeItem == 'Financial' %}
+                                    {{ item.contributeItem.quantity }} грн
+                                {% endif %}
+                                {% if not loop.last %}
+                                    ,&nbsp
+                                {% endif %}
                             {% endfor %}
                         </li>
                     {% endfor %}

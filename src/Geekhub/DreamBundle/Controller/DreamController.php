@@ -52,11 +52,15 @@ class DreamController extends Controller
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($dream);
 
+        $contributions = $em->getRepository('DreamBundle:ContributorSupport')->findByDream($dream);
+        $contributorsArray = $this->get('geekhub.dream_bundle.dream_manager')->getContributorsArray($contributions);
+
         $deleteForm = $this->createDeleteForm($slug);
 
         return $this->render('DreamBundle:Dream:show.html.twig', array(
-            'dream'      => $dream,
-            'delete_form' => $deleteForm->createView(),
+            'dream'                 => $dream,
+            'contributorsArray'     => $contributorsArray,
+            'delete_form'           => $deleteForm->createView(),
         ));
     }
 

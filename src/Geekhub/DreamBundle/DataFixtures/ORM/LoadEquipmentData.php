@@ -14,9 +14,8 @@ class LoadEquipmentData extends AbstractFixture implements OrderedFixtureInterfa
 
         for ($i = 0; $i < 100; $i++) {
             $equipment = new Equipment();
-            $equipment->setItem($equipmentItem[rand(1, 30)]);
-            $equipment->setTotal(rand(1, 25));
-            $equipment->setUnit($this->getReference('unit' . rand(1, 3)));
+            $equipment->setName($equipmentItem[rand(1, 30)]);
+            $equipment->setQuantity(rand(1, 25));
 
             $manager->persist($equipment);
             $manager->flush();
