@@ -21,4 +21,7 @@ show_run("fixtures:load", "app/console doctrine:fixtures:load --no-interaction")
 show_run("assets:install", "app/console assets:install");
 show_run("Changing permissions", "chmod -R 777 app/cache app/logs web/uploads");
 
+//fix
+show_run("Warming up dev cache", "php app/console --env=dev cache:clear --no-warmup");
+
 exit(0);
