@@ -4,6 +4,7 @@ namespace Geekhub\DreamBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Geekhub\DreamBundle\Entity\Dream;
 use Geekhub\DreamBundle\Form\DreamType;
@@ -87,6 +88,11 @@ class DreamController extends Controller
      */
     public function createAction(Request $request)
     {
+        $securityContext = $this->container->get('security.context');
+        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+            throw new AccessDeniedException('Only authenticated user can create a dream');
+        }
+
         $dream  = new Dream();
 
         $user= $this->get('security.context')->getToken()->getUser();
@@ -126,10 +132,15 @@ class DreamController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $dream = $em->getRepository('DreamBundle:Dream')->findOneBySlug($slug);
+        $user= $this->get('security.context')->getToken()->getUser();
+
         $tags = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
 
         if (!$dream) {
             throw $this->createNotFoundException('Unable to find Dream entity.');
+        }
+        elseif ($user->getUsernameCanonical() != $dream->getOwner()->getUsernameCanonical()) {
+            throw new AccessDeniedException('Edit this dream can only it owner');
         }
 
         $tagManager = $this->get('fpn_tag.tag_manager');
@@ -155,9 +166,13 @@ class DreamController extends Controller
         $em = $this->getDoctrine()->getManager();
 
         $dream = $em->getRepository('DreamBundle:Dream')->findOneBySlug($slug);
+        $user= $this->get('security.context')->getToken()->getUser();
 
         if (!$dream) {
             throw $this->createNotFoundException('Unable to find Dream entity.');
+        }
+        elseif ($user->getUsernameCanonical() != $dream->getOwner()->getUsernameCanonical()) {
+            throw  new AccessDeniedException('Edit this dream can only it owner');
         }
 
         $deleteForm = $this->createDeleteForm($slug);
@@ -201,9 +216,13 @@ class DreamController extends Controller
         if ($form->isValid()) {
             $em = $this->getDoctrine()->getManager();
             $dream = $em->getRepository('DreamBundle:Dream')->findOneBy($slug);
+            $user= $this->get('security.context')->getToken()->getUser();
 
             if (!$dream) {
                 throw $this->createNotFoundException('Unable to find Dream entity.');
+            }
+            elseif ($user->getUsernameCanonical() != $dream->getOwner()->getUsernameCanonical()) {
+                throw  new AccessDeniedException('Edit this dream can only it owner');
             }
 
             $em->remove($dream);
