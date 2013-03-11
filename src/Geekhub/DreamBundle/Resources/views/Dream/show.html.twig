@@ -1,4 +1,20 @@
 {% extends "::base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+<style type="text/css">
+    .ui-tabs-anchor {
+        float: left;
+        padding: 5px;
+    }
+    .ui-tabs-nav {
+        height: 30px;
+    }
+    #tabs {
+        float: right;
+        width: 850px;
+    }
+</style>
+{% endblock %}
 {% block body %}
     <h1>{{ dream.title }}</h1>
 
@@ -23,11 +39,9 @@
             {% endfor %}
         </ul>
     </div>
-    <div style="float: left;">
-
-    </div>
-    <table class="record_properties">
-        <tbody>
+    <div>
+        <table class="record_properties">
+            <tbody>
             <tr>
                 <th>Опис мрії</th>
                 <td>{{ dream.description }}</td>
@@ -44,8 +58,42 @@
                 <th>Теги</th>
                 <td>{% for tag in dream.tags %}{{ tag.name }} {% endfor %}</td>
             </tr>
-        </tbody>
-    </table>
+            </tbody>
+        </table>
+        <div id="tabs">
+            <ul>
+                <li><a href="#tabs-1">Кошторис мрії</a></li>
+                <li><a href="#tabs-2">Учасники ({{ dream.contribution | length }})</a></li>
+                <li><a href="#tabs-3">Коментарі та пропозиції</a></li>
+            </ul>
+            <div id="tabs-1">
+                <h4>Грошові витрати</h4>
+                <ul>
+                    {% for item in dream.financial %}
+                        <li>{{ item.item }} - {{ item.total }} грн.</li>
+                    {% endfor %}
+                </ul>
+                <h4>Інструменти та обладнання</h4>
+                <ul>
+                    {% for item in dream.equipment %}
+                        <li>{{ item.item }} - {{ item.total }} {{ item.unit.name }}</li>
+                    {% endfor %}
+                </ul>
+                <h4>Роботи та ресурси</h4>
+                <ul>
+                    {% for item in dream.work %}
+                        <li>{{ item.job }} - {{ item.employee }}</li>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div id="tabs-2">
+                <p>Morbi tincidunt, dui sit amet facilisis feugiat, odio metus gravida ante, ut pharetra massa metus id nunc. Duis scelerisque molestie turpis. Sed fringilla, massa eget luctus malesuada, metus eros molestie lectus, ut tempus eros massa ut dolor. Aenean aliquet fringilla sem. Suspendisse sed ligula in ligula suscipit aliquam. Praesent in eros vestibulum mi adipiscing adipiscing. Morbi facilisis. Curabitur ornare consequat nunc. Aenean vel metus. Ut posuere viverra nulla. Aliquam erat volutpat. Pellentesque convallis. Maecenas feugiat, tellus pellentesque pretium posuere, felis lorem euismod felis, eu ornare leo nisi vel felis. Mauris consectetur tortor et purus.</p>
+            </div>
+            <div id="tabs-3">
+                <p>Тут будуть коментарі від Дискас!</p>
+            </div>
+        </div>
+    </div>
 
     <ul class="record_actions">
         <li>
@@ -68,9 +116,18 @@
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
+
     <script type="text/javascript" charset="utf-8">
         $(document).ready(function(){
             $("a[rel^='geekhub_dreamview']").prettyPhoto({theme:'light_square'});
         });
     </script>
+
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script>
+        $(function() {
+            $( "#tabs" ).tabs();
+        });
+    </script>
+
 {% endblock %}
