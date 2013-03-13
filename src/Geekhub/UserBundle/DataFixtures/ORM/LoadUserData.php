@@ -21,6 +21,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             $user->setUsername($userRef);
             $user->setEmail($userRef.'@ex.com.ua');
             $user->setPassword($userRef);
+            $user->setProfilePicture($this->getReference('image' . $i)->getPath());
             $manager->persist($user);
             $manager->flush();
 
