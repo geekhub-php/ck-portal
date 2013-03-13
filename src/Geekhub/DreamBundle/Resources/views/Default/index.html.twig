@@ -3,8 +3,12 @@
     {% for dream in dreams %}
         <div class="front-dream">
             <h3>{{ dream.title }}</h3>Додати до обраного.
-            <img src="{{ dream.owner.profilePicture }}" />{{ dream.owner.name }}
-            <img src="" class="dream-main-image" />
+            <div>
+                <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}
+            </div>
+            <div style="margin: 15px;">
+                <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />
+            </div>
             <div class="like">
                 Підтримали: {{ dream.contribution | length }} Рейтинг: {{ dream.like }}
             </div>
