@@ -1,0 +1,7 @@
+cbsupport_ajax_donate:
+    pattern:  /donate
+    defaults: { _controller: "DreamBundle:ContributorSupport:setAjaxDonate" }
+
+cbsupport_ajax_tabs:
+    pattern:  /tabs/{dreamId}
+    defaults: { _controller: "DreamBundle:ContributorSupport:getAjaxTabs" }

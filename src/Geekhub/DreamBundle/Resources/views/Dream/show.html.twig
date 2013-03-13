@@ -38,6 +38,99 @@
                 </li>
             {% endfor %}
         </ul>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+            <ul id="contribute-actions">
+                <li>
+                    <a class="contribute" href="#">
+                        <span><span>Підтримати мрію фінансово</span></span>
+                    </a>
+                    <div class="block">
+                        <label for="financial-quantity">Сума допомоги
+                            <input id="financial-quantity" class="quantity" size="6" />грн.
+                        </label><br />
+                        <label for="financial-hide">
+                            <input type="checkbox" id="financial-hide" class="hide" /> Приховати мою допомогу
+                        </label>
+                        <input type="hidden" class="entity" value="financial">
+                        <a href="#" class="submit">Підтримати</a>
+                        <a href="#" class="reset-contribute">Вихід</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="contribute" href="#">
+                        <span style="top: 0%;"><span>Допомогти обладнанням/технікою</span></span>
+                    </a>
+                    <div class="block">
+                        {% for item in dream.equipment %}
+                            <label>{{ item.name }}</label>
+                            <select class="equipment" name="{{ item.id }}">
+                                {% for number in 0..item.quantity %}
+                                    <option value="{{ number }}">{{ number }}</option>
+                                {% endfor %}
+                            </select>шт. <br />
+                        {% endfor %}
+                        <label for="equipment-hide">
+                            <input type="checkbox" id="equipment-hide" class="hide" /> Приховати мою допомогу
+                        </label>
+                        <input type="hidden" class="entity" value="equipment">
+                        <a href="#" class="submit">Підтримати</a>
+                        <a href="#" class="reset-contribute">Вихід</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="contribute" href="#">
+                        <span><span>Допомогти провести роботи</span></span>
+                    </a>
+                    <div class="block">
+                        {% for item in dream.work %}
+                            <label>{{ item.name }}</label>
+                            <select class="work" name="{{ item.id }}">
+                                {% for number in 0..item.quantity %}
+                                    <option value="{{ number }}">{{ number }}</option>
+                                {% endfor %}
+                            </select> днів.<br />
+                        {% endfor %}
+                        <label for="work-hide">
+                            <input type="checkbox" id="work-hide" class="hide" /> Приховати мою допомогу
+                        </label>
+                        <input type="hidden" class="entity" value="work">
+                        <a href="#" class="submit">Підтримати</a>
+                        <a href="#" class="reset-contribute">Вихід</a>
+                    </div>
+                </li>
+                <li>
+                    <a class="contribute" href="#">
+                        <span><span>Інша допомога</span></span>
+                    </a>
+                    <div class="block">
+                        <label for="other-quantity">Як саме
+                            <input id="other-quantity" class="quantity" size="18" />
+                        </label><br />
+                        <label for="other-hide">
+                            <input type="checkbox" id="other-hide" class="hide" /> Приховати мою допомогу
+                        </label>
+                        <input type="hidden" class="entity" value="other">
+                        <a href="#" class="submit">Підтримати</a>
+                        <a href="#" class="reset-contribute">Вихід</a>
+                    </div>
+                </li>
+            </ul>
+            <input type="hidden" id="dream-id" value="{{ dream.id }}" />
+            <input type="hidden" id="tabs-url" value="{{ path('cbsupport_ajax_tabs', { 'dreamId': dream.id }) }}" />
+        {% else %}
+            <div style="clear: both">
+                Щоб прийняти участь у реалізації мрії, будь-ласка, авторизуйтесь.<br />
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">
+                    Фб
+                </a>
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte'}) }}" class="social-sign-in">
+                    Вк
+                </a>
+                <a href="{{ path('hwi_oauth_service_redirect', {'service': 'odnoklassniki'}) }}" class="social-sign-in">
+                    Ок
+                </a>
+            </div>
+        {% endif %}
     </div>
     <div>
         <table class="record_properties">
@@ -68,57 +161,6 @@
             </tbody>
         </table>
         <div id="tabs">
-            <ul>
-                <li><a href="#tabs-1">Кошторис мрії</a></li>
-                <li><a href="#tabs-2">Учасники ({{ contributorsArray | length }})</a></li>
-                <li><a href="#tabs-3">Коментарі та пропозиції</a></li>
-            </ul>
-            <div id="tabs-1">
-                <h4>Грошові витрати</h4>
-                <ul>
-                    {% for item in dream.financial %}
-                        <li>{{ item.name }} - {{ item.quantity }} грн.</li>
-                    {% endfor %}
-                </ul>
-                <h4>Інструменти та обладнання</h4>
-                <ul>
-                    {% for item in dream.equipment %}
-                        <li>{{ item.name }} - {{ item.quantity }} шт.</li>
-                    {% endfor %}
-                </ul>
-                <h4>Роботи та ресурси</h4>
-                <ul>
-                    {% for item in dream.work %}
-                        <li>{{ item.name }} - {{ item.quantity }}</li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="tabs-2">
-                <ul>
-                    {% for contribution in contributorsArray %}
-                        <li style="height: 50px">
-                            <img src="{{ contribution.user.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
-                            {{ contribution.user.name }}&nbsp
-                            обіцяє
-                            {% for item in contribution.contributions %}
-                                {% if item.contributeItem == 'Work' %}
-                                    {{ item.contributeItem.name }} - {{ item.contributeItem.quantity }} днів
-                                {% elseif item.contributeItem == 'Equipment' %}
-                                    {{ item.contributeItem.name }} - {{ item.contributeItem.quantity }} шт
-                                {% elseif item.contributeItem == 'Financial' %}
-                                    {{ item.contributeItem.quantity }} грн
-                                {% endif %}
-                                {% if not loop.last %}
-                                    ,&nbsp
-                                {% endif %}
-                            {% endfor %}
-                        </li>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div id="tabs-3">
-                <p>Тут будуть коментарі від Дискас!</p>
-            </div>
         </div>
     </div>
 
@@ -145,6 +187,7 @@
     {{ parent() }}
 
     <script type="text/javascript" charset="utf-8">
+
         $(document).ready(function(){
             $("a[rel^='geekhub_dreamview']").prettyPhoto({theme:'light_square'});
         });
@@ -152,9 +195,70 @@
 
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script>
-        $(function() {
-            $( "#tabs" ).tabs();
+        $(document).ready(function(){
+            $('#tabs').load($('#tabs-url').val(), {}, function(){
+                $('#tabs').tabs();
+            });
         });
     </script>
-
+    <script>
+        jQuery('a.contribute').on('click', function(e){
+            e.preventDefault();
+            jQuery('a.contribute').show(0).parent().find('.block').hide(0);
+            jQuery(this).hide(0);
+            jQuery(this).parent().find('.block').show();
+        });
+        jQuery('.reset-contribute').on('click', function(e){
+            jQuery('a.contribute').show(0).parent().find('.block').hide(0);
+        });
+        jQuery('.submit').on('click', function(e){
+            e.preventDefault();
+            divData = jQuery(this).parent();
+            equipmentArray = {};
+            divData.find('.equipment').each(function() {
+                equipmentArray[this.name] = this.value;
+            });
+            workArray = {};
+            divData.find('.work').each(function() {
+                workArray[this.name] = this.value;
+            });
+            $.ajax({
+                url: "{{ url('cbsupport_ajax_donate') }}",
+                type: 'POST',
+                data: {
+                    quantity: divData.find('.quantity').val(),
+                    hide: divData.find('.hide').is(':checked'),
+                    equipment: equipmentArray,
+                    work: workArray,
+                    entity: divData.find('.entity').val(),
+                    dreamId: $('#dream-id').val()
+                },
+                success: function(data){
+                    alert('Дякуємо за ваш внесок!');
+                    $('#tabs').load($('#tabs-url').val(), {}, function(){
+                        $('#tabs').tabs("destroy").tabs();
+                    });
+                },
+                complete: function(){
+                },
+                error: function(){
+                },
+                beforeSend: function(request){
+                }
+            });
+        });
+    </script>
+    <script type="text/javascript">
+        function dump(obj) {
+            var out = "";
+            if(obj && typeof(obj) == "object"){
+                for (var i in obj) {
+                    out += i + ": " + obj[i] + "\n";
+                }
+            } else {
+                out = obj;
+            }
+            alert(out);
+        }
+    </script>
 {% endblock %}

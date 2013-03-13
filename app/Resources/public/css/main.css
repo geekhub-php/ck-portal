@@ -57,4 +57,34 @@ li { list-style-type: none }
     text-indent: 0;
     text-align: center;
 }
-
+.contribute {
+    clear: both;
+    height: 40px;
+    border: 1px solid #c6c6c6;
+    margin: 7px;
+    text-align: center;
+}
+a.contribute {
+    position: relative;
+    display: block;
+}
+a.contribute span {
+    display: block;
+    position: absolute;
+    top: 30%;
+    left: 0%;
+    width: 100%;
+}
+a.contribute span span {
+    position: relative;
+    top: -50%;
+}
+#contribute-actions {
+    padding: 0;
+}
+#contribute-actions div.block {
+    display: none;
+    clear: both;
+    margin: 7px;
+    text-align: center;
+}

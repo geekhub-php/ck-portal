@@ -25,15 +25,6 @@ class DreamManager
             $contributorsArray[$user->getId()]['contributions'][] = $item;
         }
 
-//        foreach ($contributorsArray as $contribution) {
-//            echo $contribution['user']->getName();
-//
-//            foreach ($contribution['contributions'] as $item) {
-//                echo get_class($item->getContributeItem());
-//                echo $item->getContributeItem()->getName().' - '.$item->getContributeItem()->getQuantity().'<br />';
-//            }
-//        }
-//        exit;
         return $contributorsArray;
     }
 }
