@@ -30,6 +30,7 @@ class LoadImageData extends AbstractFixture implements OrderedFixtureInterface, 
 
             copy(__DIR__ . '/srcImage/' . $currentImage, __DIR__ . '/image/' . $currentImage);
 
+            $image->setOriginalName($currentImage);
             $image->setPath($this->getUploadDir() . '/' . $destinationImageName);
             $image->setSize($binImageSize);
             $image->setMimeType($binImageMime);
