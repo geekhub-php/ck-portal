@@ -7,7 +7,7 @@
             <a href="{{ path('dream_show', { 'slug': dream.slug }) }}"><h3>{{ dream.title }}</h3></a>
             Додати до обраного.
             <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" />{{ dream.owner.name }}
-            <img src="" class="dream-main-image" />
+            <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />
             <div class="like">
                 Підтримали: {{ dream.contribution | length }} Рейтинг: {{ dream.like }}
             </div>
