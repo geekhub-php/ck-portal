@@ -23,7 +23,7 @@
         <ul class="gallery clearfix">
             {% for image in dream.images %}
                 <li>
-                    <a href="{{app.request.baseurl ~ '/' ~ image.path }}"
+                    <a href="{{ image.path | imagine_filter('dream_popup') }}"
                        rel="geekhub_dreamview[gallery1]">
                         <img src="{{ image.path | imagine_filter('dream_create_image_thumbnail') }}" width="50" height="50" alt="{{ dream.title }} {{ loop.index }}" />
                     </a>

@@ -2,7 +2,9 @@
 {% block body %}
     {% for dream in dreams %}
         <div class="front-dream">
-            <h3>{{ dream.title }}</h3>Додати до обраного.
+            <a href="{{ path('dream_show', { 'slug': dream.slug }) }}">
+                <h3>{{ dream.title }}</h3>
+            </a>Додати до обраного.
             <div>
                 <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}
             </div>
