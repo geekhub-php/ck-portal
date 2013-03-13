@@ -2,10 +2,14 @@ dream_homepage:
     pattern:  /
     defaults: { _controller: DreamBundle:Default:index }
 
+dream_dreams:
+    pattern:  /dreams
+    defaults: { _controller: "DreamBundle:Dream:index" }
+
 dream_entity:
     resource: "@DreamBundle/Resources/config/routing/dream.yml"
     prefix:   /dream
 
-dream_dreams:
-    pattern:  /dreams
-    defaults: { _controller: "DreamBundle:Dream:index" }
+DreamBundle_cbsupport:
+    resource: "@DreamBundle/Resources/config/routing/cbsupport.yml"
+    prefix:   /cbsupport
