@@ -27,6 +27,18 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             $this->addReference($userRef, $user);
 
         }
+
+        //Demo user
+        $user = new User();
+        $user->setName('Demo');
+        $user->setFirstName('Demo');
+        $user->setUsername('Demo');
+        $user->setEmail('demo@gmail.com');
+        $user->setPassword('demo');
+        $manager->persist($user);
+        $manager->flush();
+
+        $this->addReference('userdemo', $user);
     }
 
     function setNameAndSurnameList()
