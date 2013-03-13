@@ -6,12 +6,12 @@
 
     <parameters>
         <parameter key="geekhub.dream_bundle.dream_manager.class">Geekhub\DreamBundle\DreamManager</parameter>
+        <parameter key="geekhub.dream_bundle.point_manager.class">Geekhub\DreamBundle\PointManager</parameter>
     </parameters>
     
     <services>
-        <service id="geekhub.dream_bundle.dream_manager" class="%geekhub.dream_bundle.dream_manager.class%">
-
-        </service>
+        <service id="geekhub.dream_bundle.dream_manager" class="%geekhub.dream_bundle.dream_manager.class%" />
+        <service id="geekhub.dream_bundle.point_manager" class="%geekhub.dream_bundle.point_manager.class%" />
     </services>
     
     
