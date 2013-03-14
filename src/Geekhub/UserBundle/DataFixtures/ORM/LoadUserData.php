@@ -20,7 +20,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
             $user->setFirstName($info[$i]['surname']);
             $user->setUsername($userRef);
             $user->setEmail($userRef.'@ex.com.ua');
-            $user->setPassword($userRef);
+            $user->setPlainPassword($userRef);
             $user->setProfilePicture($this->getReference('image' . $i)->getPath());
             $manager->persist($user);
             $manager->flush();
@@ -35,7 +35,10 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setFirstName('Demo');
         $user->setUsername('Demo');
         $user->setEmail('demo@gmail.com');
-        $user->setPassword('demo');
+        $user->setPlainPassword('demo');
+        $user->setLocked(false);
+        $user->setEnabled(true);
+        $user->setExpired(false);
         $manager->persist($user);
         $manager->flush();
 
