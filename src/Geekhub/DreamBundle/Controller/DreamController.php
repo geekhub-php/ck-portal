@@ -89,7 +89,7 @@ class DreamController extends Controller
     public function createAction(Request $request)
     {
         $securityContext = $this->container->get('security.context');
-        if( $securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
+        if( !$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED') ){
             throw new AccessDeniedException('Only authenticated user can create a dream');
         }
 
