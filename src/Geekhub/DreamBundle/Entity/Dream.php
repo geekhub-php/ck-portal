@@ -44,6 +44,9 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="Work", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $work;
 
+    /** @ORM\OneToMany(targetEntity="OtherDonate", mappedBy="dream", cascade={"persist", "remove"}) */
+    protected $otherDonate;
+
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Document", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $document;
 
@@ -572,6 +575,40 @@ class Dream implements Taggable
     public function getWork()
     {
         return $this->work;
+    }
+
+    /**
+     * Add otherDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\OtherDonate $work
+     * @return Dream
+     */
+    public function addOtherDonate(\Geekhub\DreamBundle\Entity\OtherDonate $otherDonate)
+    {
+        $this->otherDonate->add($otherDonate);
+        $otherDonate->setDream($this);
+
+        return $this;
+    }
+
+    /**
+     * Remove otherDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\OtherDonate $otherDonate
+     */
+    public function removeOtherDonate(\Geekhub\DreamBundle\Entity\OtherDonate $otherDonate)
+    {
+        $this->work->removeElement($otherDonate);
+    }
+
+    /**
+     * Get otherDonate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOtherDonate()
+    {
+        return $this->otherDonate;
     }
 
     /**

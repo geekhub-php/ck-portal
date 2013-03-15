@@ -20,6 +20,12 @@ abstract class AbstractPoint
     /** @ORM\Column(name="quantity", type="integer") */
     protected $quantity;
 
+    /** @ORM\Column(name="hide", type="boolean") */
+    protected $hide = 0;
+
+    /** @ORM\Column(name="is_donate", type="boolean") */
+    protected $isDonate = 0;
+
     public function getId()
     {
         return $this->id;
@@ -43,5 +49,25 @@ abstract class AbstractPoint
     public function getQuantity()
     {
         return $this->quantity;
+    }
+
+    public function setHide($hide)
+    {
+        $this->hide = $hide;
+    }
+
+    public function getHide()
+    {
+        return $this->hide;
+    }
+
+    public function setIsDonate($isDonate)
+    {
+        $this->isDonate = $isDonate;
+    }
+
+    public function getIsDonate()
+    {
+        return $this->isDonate;
     }
 }

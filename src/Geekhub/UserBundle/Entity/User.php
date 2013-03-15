@@ -33,8 +33,17 @@ class User extends BaseUser
     /** @ORM\Column(name="about_me", type="text", nullable=true) */
     private $aboutMe;
 
-    /** @ORM\OneToMany(targetEntity="Geekhub\DreamBundle\Entity\ContributorSupport", mappedBy="user") */
-    private $contributions;
+    /** @ORM\OneToMany(targetEntity="Geekhub\DreamBundle\Entity\Financial", mappedBy="user", cascade={"persist", "remove"}) */
+    private $financialDonates;
+
+    /** @ORM\OneToMany(targetEntity="Geekhub\DreamBundle\Entity\Equipment", mappedBy="user", cascade={"persist", "remove"}) */
+    private $equipmentDonates;
+
+    /** @ORM\OneToMany(targetEntity="Geekhub\DreamBundle\Entity\Work", mappedBy="user", cascade={"persist", "remove"}) */
+    private $workDonates;
+
+    /** @ORM\OneToMany(targetEntity="Geekhub\DreamBundle\Entity\OtherDonate", mappedBy="user", cascade={"persist", "remove"}) */
+    private $otherDonates;
 
     /**
      * @ORM\ManyToMany(targetEntity="Geekhub\DreamBundle\Entity\Dream", mappedBy="usersWhoFavorites")
@@ -122,7 +131,10 @@ class User extends BaseUser
     public function __construct()
     {
         $this->userDreams = new ArrayCollection();
-        $this->contributions = new ArrayCollection();
+        $this->financialDonates = new ArrayCollection();
+        $this->equipmentDonates = new ArrayCollection();
+        $this->workDonates = new ArrayCollection();
+        $this->otherDonates = new ArrayCollection();
         $this->favoriteDreams = new ArrayCollection();
         $this->notices = new ArrayCollection();
 
@@ -670,36 +682,135 @@ class User extends BaseUser
     }
 
     /**
-     * Add contributions
+     * Add financialDonate
      *
-     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contributions
+     * @param \Geekhub\DreamBundle\Entity\Financial $financial
      * @return User
      */
-    public function addContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contributions)
+    public function addFinancialDonate(\Geekhub\DreamBundle\Entity\Financial $financial)
     {
-        $this->contributions[] = $contributions;
+        $this->financialDonates[] = $financial;
+
+        return $this;
+    }
+
+    /**
+     * Remove financialDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\Financial $financial
+     */
+    public function removeFinancialDonate(\Geekhub\DreamBundle\Entity\Financial $financial)
+    {
+        $this->financialDonates->removeElement($financial);
+    }
+
+    /**
+     * Get financialDonate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getFinancialDonates()
+    {
+        return $this->financialDonates;
+    }
+
+    /**
+     * Add equipmentDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\Equipment $equipment
+     * @return User
+     */
+    public function addEquipmentDonate(\Geekhub\DreamBundle\Entity\Equipment $equipment)
+    {
+        $this->equipmentDonates[] = $equipment;
     
         return $this;
     }
 
     /**
-     * Remove contributions
+     * Remove equipmentDonate
      *
-     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contributions
+     * @param \Geekhub\DreamBundle\Entity\Equipment $equipment
      */
-    public function removeContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contributions)
+    public function removeEquipmentDonate(\Geekhub\DreamBundle\Entity\Equipment $equipment)
     {
-        $this->contributions->removeElement($contributions);
+        $this->equipmentDonates->removeElement($equipment);
     }
 
     /**
-     * Get contributions
+     * Get equipmentDonates
      *
      * @return \Doctrine\Common\Collections\Collection 
      */
-    public function getContributions()
+    public function getEquipmentDonates()
     {
-        return $this->contributions;
+        return $this->equipmentDonates;
+    }
+
+    /**
+     * Add workDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\Work $work
+     * @return User
+     */
+    public function addWorkDonate(\Geekhub\DreamBundle\Entity\Work $work)
+    {
+        $this->workDonates[] = $work;
+
+        return $this;
+    }
+
+    /**
+     * Remove workDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\Work $work
+     */
+    public function removeWorkDonate(\Geekhub\DreamBundle\Entity\Work $work)
+    {
+        $this->workDonates->removeElement($work);
+    }
+
+    /**
+     * Get workDonate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWorkDonates()
+    {
+        return $this->workDonates;
+    }
+
+    /**
+     * Add otherDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\OtherDonate $otherDonate
+     * @return User
+     */
+    public function addOtherDonate(\Geekhub\DreamBundle\Entity\OtherDonate $otherDonate)
+    {
+        $this->otherDonates[] = $otherDonate;
+
+        return $this;
+    }
+
+    /**
+     * Remove otherDonate
+     *
+     * @param \Geekhub\DreamBundle\Entity\otherDonate $otherDonate
+     */
+    public function removeOtherDonate(\Geekhub\DreamBundle\Entity\otherDonate $otherDonate)
+    {
+        $this->otherDonates->removeElement($otherDonate);
+    }
+
+    /**
+     * Get otherDonate
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getOtherDonates()
+    {
+        return $this->otherDonates;
     }
 
     /**
