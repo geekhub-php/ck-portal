@@ -7,11 +7,47 @@
     <parameters>
         <parameter key="geekhub.dream_bundle.dream_manager.class">Geekhub\DreamBundle\DreamManager</parameter>
         <parameter key="geekhub.dream_bundle.point_manager.class">Geekhub\DreamBundle\PointManager</parameter>
+        <parameter key="geekhub.dream_bundle.financial.class">Geekhub\DreamBundle\Entity\Financial</parameter>
+        <parameter key="geekhub.dream_bundle.equipment.class">Geekhub\DreamBundle\Entity\Equipment</parameter>
+        <parameter key="geekhub.dream_bundle.work.class">Geekhub\DreamBundle\Entity\Work</parameter>
+        <parameter key="geekhub.dream_bundle.other_donate.class">Geekhub\DreamBundle\Entity\OtherDonate</parameter>
     </parameters>
     
     <services>
-        <service id="geekhub.dream_bundle.dream_manager" class="%geekhub.dream_bundle.dream_manager.class%" />
-        <service id="geekhub.dream_bundle.point_manager" class="%geekhub.dream_bundle.point_manager.class%" />
+        <service id="geekhub.dream_bundle.dream_manager" class="%geekhub.dream_bundle.dream_manager.class%">
+            <argument type="service" id="security.context" />
+        </service>
+        <service id="geekhub.dream_bundle.point_manager" class="%geekhub.dream_bundle.point_manager.class%">
+            <argument type="service" id="security.context" />
+            <argument type="service">
+                <service factory-service="doctrine.orm.entity_manager"
+                         class="this.is.required.attribute"
+                         factory-method="getRepository">
+                    <argument>%geekhub.dream_bundle.financial.class%</argument>
+                </service>
+            </argument>
+            <argument type="service">
+                <service factory-service="doctrine.orm.entity_manager"
+                         class="this.is.required.attribute"
+                         factory-method="getRepository">
+                    <argument>%geekhub.dream_bundle.equipment.class%</argument>
+                </service>
+            </argument>
+            <argument type="service">
+                <service factory-service="doctrine.orm.entity_manager"
+                         class="this.is.required.attribute"
+                         factory-method="getRepository">
+                    <argument>%geekhub.dream_bundle.work.class%</argument>
+                </service>
+            </argument>
+            <argument type="service">
+                <service factory-service="doctrine.orm.entity_manager"
+                         class="this.is.required.attribute"
+                         factory-method="getRepository">
+                    <argument>%geekhub.dream_bundle.other_donate.class%</argument>
+                </service>
+            </argument>
+        </service>
     </services>
     
     

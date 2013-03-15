@@ -7,7 +7,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Response;
 
 use Geekhub\DreamBundle\Entity\ContributorSupport;
-use Geekhub\DreamBundle\Form\ContributorSupportType;
 
 /**
  * ContributorSupport controller.
@@ -31,28 +30,23 @@ class ContributorSupportController extends Controller
             return new Response(array('error' => 'Only authenticated user can make donate'));
         }
 
-        $cb  = new ContributorSupport();
         $dream = $this->getDoctrine()->getRepository('DreamBundle:Dream')->findOneById($request->get('dreamId'));
-        $point = $this->get('geekhub.dream_bundle.point_manager')->getPointEntityFromRequest($request, $dream);
+        $points = $this->get('geekhub.dream_bundle.point_manager')->getPointEntityFromRequest($request, $dream);
 
-        $cb->setDream($dream);
-        $cb->setContributeItem($point);
-        $cb->setHide($request->get('hide'));
-        $cb->setUser($securityContext->getToken()->getUser());
+        foreach ($points as $point) {
+            $validator = $this->get('validator');
+            $errors = $validator->validate($point);
 
-        $validator = $this->get('validator');
-        $errors = $validator->validate($cb);
-
-        if (count($errors) > 0) {
-            return new Response(print_r($errors, true));
-        } else {
-            $em = $this->getDoctrine()->getManager();
-            $em->persist($cb);
-            $em->flush();
+            if (count($errors) > 0) {
+                return new Response(print_r($errors, true));
+            } else {
+                $em = $this->getDoctrine()->getManager();
+                $em->persist($point);
+                $em->flush();
+            }
         }
 
-$entity = $request->get('entity');
-        return new Response(var_dump($point));
+        return new Response(var_dump($points));
     }
 
     public function getAjaxTabsAction($dreamId)
@@ -60,8 +54,7 @@ $entity = $request->get('entity');
         $em = $this->getDoctrine()->getManager();
 
         $dream = $em->getRepository('DreamBundle:Dream')->findOneById($dreamId);
-        $contributions = $em->getRepository('DreamBundle:ContributorSupport')->findByDream($dream);
-        $contributorsArray = $this->get('geekhub.dream_bundle.dream_manager')->getContributorsArray($contributions);
+        $contributorsArray = $this->get('geekhub.dream_bundle.dream_manager')->getContributorsArray($dream);
 
         return $this->render('DreamBundle:Dream:tabs.html.twig', array(
             'dream'                 => $dream,

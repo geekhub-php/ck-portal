@@ -28,20 +28,17 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                         continue;
                     }
                     $user = $this->getReference('user' . rand(1, 17));
-                    $contribution = new ContributorSupport();
                     $work = new Work();
 
                     $work->setQuantity(rand(1, 5));
                     $work->setWorker(1);
                     $work->setName($workPoint->getName());
                     $work->setDream($dream);
+                    $work->setHide(rand(0, 1));
+                    $work->setUser($user);
+                    $work->setParent($workPoint);
 
-                    $contribution->setHide(rand(0, 1));
-                    $contribution->setUser($user);
-                    $contribution->setDream($dream);
-                    $contribution->setContributeItem($work);
-
-                    $manager->persist($contribution);
+                    $manager->persist($work);
                     $manager->flush();
                 }
             }
@@ -53,19 +50,17 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                         continue;
                     }
                     $user = $this->getReference('user' . rand(1, 17));
-                    $contribution = new ContributorSupport();
                     $financial = new Financial();
 
                     $financial->setName($financialPoint->getName());
                     $financial->setQuantity(rand(250, 1250000));
                     $financial->setDream($dream);
+                    $financial->setHide(rand(0, 1));
+                    $financial->setUser($user);
+                    $financial->setParent($financialPoint);
 
-                    $contribution->setHide(rand(0, 1));
-                    $contribution->setUser($user);
-                    $contribution->setDream($dream);
-                    $contribution->setContributeItem($financial);
 
-                    $manager->persist($contribution);
+                    $manager->persist($financial);
                     $manager->flush();
                 }
             }
@@ -77,19 +72,16 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                         continue;
                     }
                     $user = $this->getReference('user' . rand(1, 17));
-                    $contribution = new ContributorSupport();
                     $equipment = new Equipment();
 
                     $equipment->setDream($dream);
                     $equipment->setName($equipmentPoint->getName());
                     $equipment->setQuantity(rand(1, 25));
+                    $equipment->setHide(rand(0, 1));
+                    $equipment->setUser($user);
+                    $equipment->setParent($equipmentPoint);
 
-                    $contribution->setHide(rand(0, 1));
-                    $contribution->setUser($user);
-                    $contribution->setDream($dream);
-                    $contribution->setContributeItem($equipment);
-
-                    $manager->persist($contribution);
+                    $manager->persist($equipment);
                     $manager->flush();
                 }
             }

@@ -1,19 +1,19 @@
 {% extends "::base.html.twig" %}
 {% block stylesheets %}
     {{ parent() }}
-<style type="text/css">
-    .ui-tabs-anchor {
-        float: left;
-        padding: 5px;
-    }
-    .ui-tabs-nav {
-        height: 30px;
-    }
-    #tabs {
-        float: right;
-        width: 850px;
-    }
-</style>
+    <style type="text/css">
+        .ui-tabs-anchor {
+            float: left;
+            padding: 5px;
+        }
+        .ui-tabs-nav {
+            height: 30px;
+        }
+        #tabs {
+            float: right;
+            width: 850px;
+        }
+    </style>
 {% endblock %}
 {% block body %}
     <h1>{{ dream.title }}</h1>
@@ -115,8 +115,6 @@
                     </div>
                 </li>
             </ul>
-            <input type="hidden" id="dream-id" value="{{ dream.id }}" />
-            <input type="hidden" id="tabs-url" value="{{ path('cbsupport_ajax_tabs', { 'dreamId': dream.id }) }}" />
         {% else %}
             <div style="clear: both">
                 Щоб прийняти участь у реалізації мрії, будь-ласка, авторизуйтесь.<br />
@@ -131,6 +129,8 @@
                 </a>
             </div>
         {% endif %}
+        <input type="hidden" id="dream-id" value="{{ dream.id }}" />
+        <input type="hidden" id="tabs-url" value="{{ path('cbsupport_ajax_tabs', { 'dreamId': dream.id }) }}" />
     </div>
     <div>
         <table class="record_properties">
@@ -222,6 +222,7 @@
             divData.find('.work').each(function() {
                 workArray[this.name] = this.value;
             });
+            var active
             $.ajax({
                 url: "{{ url('cbsupport_ajax_donate') }}",
                 type: 'POST',
@@ -234,9 +235,9 @@
                     dreamId: $('#dream-id').val()
                 },
                 success: function(data){
-                    alert('Дякуємо за ваш внесок!');
+                    alert('Дякуємо за вашу допомогу!');
                     $('#tabs').load($('#tabs-url').val(), {}, function(){
-                        $('#tabs').tabs("destroy").tabs();
+                        $('#tabs').tabs("destroy").tabs({ active: active });
                     });
                 },
                 complete: function(){
@@ -244,6 +245,7 @@
                 error: function(){
                 },
                 beforeSend: function(request){
+                    active = $( "#tabs" ).tabs( "option", "active" );
                 }
             });
         });

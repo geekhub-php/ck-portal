@@ -44,6 +44,7 @@ class DreamController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
 
+        /** @var $dream Dream */
         $dream = $em->getRepository('DreamBundle:Dream')->findOneBySlug($slug);
 
         if (!$dream) {
@@ -53,14 +54,10 @@ class DreamController extends Controller
         $tagManager = $this->get('fpn_tag.tag_manager');
         $tagManager->loadTagging($dream);
 
-        $contributions = $em->getRepository('DreamBundle:ContributorSupport')->findByDream($dream);
-        $contributorsArray = $this->get('geekhub.dream_bundle.dream_manager')->getContributorsArray($contributions);
-
         $deleteForm = $this->createDeleteForm($slug);
 
         return $this->render('DreamBundle:Dream:show.html.twig', array(
             'dream'                 => $dream,
-            'contributorsArray'     => $contributorsArray,
             'delete_form'           => $deleteForm->createView(),
         ));
     }
