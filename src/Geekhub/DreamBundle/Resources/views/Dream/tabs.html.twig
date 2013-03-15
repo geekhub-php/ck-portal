@@ -7,19 +7,25 @@
     <h4>Грошові витрати</h4>
     <ul>
         {% for item in dream.financial %}
-            <li>{{ item.name }} - {{ item.quantity }} грн.</li>
+            {% if item.isDonate == false %}
+                <li>{{ item.name }} - {{ item.quantity }} грн.</li>
+            {% endif %}
         {% endfor %}
     </ul>
     <h4>Інструменти та обладнання</h4>
     <ul>
         {% for item in dream.equipment %}
-            <li>{{ item.name }} - {{ item.quantity }} шт.</li>
+            {% if item.isDonate == false %}
+                <li>{{ item.name }} - {{ item.quantity }} шт.</li>
+            {% endif %}
         {% endfor %}
     </ul>
     <h4>Роботи та ресурси</h4>
     <ul>
         {% for item in dream.work %}
-            <li>{{ item.name }} - {{ item.quantity }}</li>
+            {% if item.isDonate == false %}
+                <li>{{ item.name }} - {{ item.quantity }}</li>
+            {% endif %}
         {% endfor %}
     </ul>
 </div>
@@ -31,16 +37,34 @@
             {{ contribution.user.name }}&nbsp
             обіцяє
             {% for item in contribution.contributions %}
-            {% if item.contributeItem == 'Work' %}
-            {{ item.contributeItem.name }} - {{ item.contributeItem.quantity }} днів
-            {% elseif item.contributeItem == 'Equipment' %}
-                {{ item.contributeItem.name }} - {{ item.contributeItem.quantity }} шт
-            {% elseif item.contributeItem == 'Financial' %}
-                {{ item.contributeItem.quantity }} грн
-            {% endif %}
-            {% if not loop.last %}
-                ,&nbsp
-            {% endif %}
+                    {% if item == 'Work' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.name }} - {{ item.quantity }} днів</span>
+                        {% else %}
+                            {{ item.name }} - {{ item.quantity }} днів
+                        {% endif %}
+                    {% elseif item == 'Equipment' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.name }} - {{ item.quantity }} шт</span>
+                        {% else %}
+                            {{ item.name }} - {{ item.quantity }} шт
+                        {% endif %}
+                    {% elseif item == 'Financial' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.quantity }} грн</span>
+                        {% else %}
+                            {{ item.quantity }} грн
+                        {% endif %}
+                    {% elseif item == 'OtherDonate' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.name }}</span>
+                        {% else %}
+                            {{ item.name }}
+                        {% endif %}
+                    {% endif %}
+                    {% if not loop.last %}
+                        ,&nbsp
+                    {% endif %}
             {% endfor %}
         </li>
         {% endfor %}

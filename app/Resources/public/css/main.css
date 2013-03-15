@@ -88,3 +88,6 @@ a.contribute span span {
     margin: 7px;
     text-align: center;
 }
+.hidden-item {
+    color: #c6c6c6;
+}
