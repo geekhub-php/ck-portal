@@ -2,26 +2,71 @@
 
 namespace Geekhub\DreamBundle;
 
-use Geekhub\DreamBundle\Entity\ContributorSupport;
+use Symfony\Component\Security\Core\SecurityContext;
+
+use Geekhub\DreamBundle\Entity\AbstractPoint;
 use Geekhub\UserBundle\Entity\User;
+use Geekhub\DreamBundle\Entity\Dream;
 
 class DreamManager
 {
-    public function getContributorsArray($contributions)
+    private $currentUser;
+
+    private $context;
+
+    public function __construct(SecurityContext $context)
     {
+        $this->currentUser = $context->getToken()->getUser();
+        $this->context = $context;
+    }
+
+    public function getContributorsArray(Dream $dream)
+    {
+        $contributions = array_merge(
+            $dream->getFinancial()->toArray(),
+            $dream->getEquipment()->toArray(),
+            $dream->getWork()->toArray(),
+            $dream->getOtherDonate()->toArray()
+        );
         $contributorsArray = array();
 
-        /** @var $item ContributorSupport */
+        /** @var $item AbstractPoint */
         foreach ($contributions as $item) {
             /** @var $user User */
             $user = $item->getUser();
+
+            if ($user == NULL) {
+                continue;
+            }
+            elseif ($item->getHide() && !$this->context->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                continue;
+            }
+            elseif ($item->getHide()
+                && $user->getId() != $dream->getOwner()->getId()
+                && $user->getId() != $this->currentUser->getId()) {
+                continue;
+            }
+
             $contributorsArray[$user->getId()] = array('user' => $user, 'contributions' => array());
         }
 
-        /** @var $item ContributorSupport */
+        /** @var $item AbstractPoint */
         foreach ($contributions as $item) {
             /** @var $user User */
             $user = $item->getUser();
+
+            if ($user == NULL) {
+                continue;
+            }
+            elseif ($item->getHide() && !$this->context->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+                continue;
+            }
+            elseif ($item->getHide()
+                && $user->getId() != $dream->getOwner()->getId()
+                && $user->getId() != $this->currentUser->getId()) {
+                continue;
+            }
+
             $contributorsArray[$user->getId()]['contributions'][] = $item;
         }
 
