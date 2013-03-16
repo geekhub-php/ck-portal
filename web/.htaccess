@@ -3,8 +3,8 @@
     RewriteEngine On
 
     # Explicitly disable rewriting for front controllers
-    RewriteRule ^app_dev.php - [L]
-    RewriteRule ^app.php - [L]
+    # RewriteRule ^app_dev.php - [L]
+    # RewriteRule ^app.php - [L]
 
     RewriteCond %{REQUEST_FILENAME} !-f
 
