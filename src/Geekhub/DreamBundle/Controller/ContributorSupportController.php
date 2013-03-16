@@ -46,7 +46,7 @@ class ContributorSupportController extends Controller
             }
         }
 
-        return new Response(var_dump($points));
+        return new Response('success');
     }
 
     public function getAjaxTabsAction($dreamId)
