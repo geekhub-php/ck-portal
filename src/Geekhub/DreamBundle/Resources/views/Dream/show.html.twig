@@ -218,6 +218,7 @@
             jQuery(this).parent().find('.block').show();
         });
         jQuery('.reset-contribute').on('click', function(e){
+            e.preventDefault();
             jQuery('a.contribute').show(0).parent().find('.block').hide(0);
         });
         jQuery('.submit').on('click', function(e){
