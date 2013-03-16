@@ -1,0 +1,7 @@
+parameters:
+#    wellcome.example.class: Geekhub\WellcomeBundle\Example
+
+services:
+#    wellcome.example:
+#        class: %wellcome.example.class%
+#        arguments: [@service_id, "plain_value", %parameter%]

@@ -8,3 +8,5 @@ composer.phar
 
 .idea/
 app/config/parameters.yml
+web/uploads/*
+web/media/*
