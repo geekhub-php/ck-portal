@@ -5,6 +5,7 @@ use Doctrine\Common\DataFixtures\AbstractFixture;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
 use Geekhub\DreamBundle\Entity\Dream;
+use Geekhub\DreamBundle\Entity\ProgressBar;
 
 class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
 {
@@ -20,6 +21,7 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             $owner = rand(1, 17);
 
             $dream = new Dream();
+            $progressBar = new ProgressBar();
             $dream->setTitle($info[rand(1, 17)]['title']);
             $dream->setDescription($info[rand(1, 17)]['description']);
             $dream->setCreated($date[rand(1, 17)]['created']);
@@ -32,15 +34,15 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             $dream->setState($state[rand(0, 3)]);
             $dream->setLike(rand(0, 100));
             $dream->setMainImage($this->getReference('image' . rand(0, 99))->getPath());
+            $dream->setProgressBar($progressBar);
 
             for ($b = 3 * $i; $b < 3 * $i + 3; $b++) {
                 $dream->addEquipment($this->getReference('equipment' . $b));
+                $dream->getProgressBar()->setEquipment(0);
                 $dream->addFinancial($this->getReference('financial' . $b));
+                $dream->getProgressBar()->setFinance(0);
                 $dream->addWork($this->getReference('work' . $b));
-
-                $this->getReference('equipment' . $b)->setDream($dream);
-                $this->getReference('financial' . $b)->setDream($dream);
-                $this->getReference('work' . $b)->setDream($dream);
+                $dream->getProgressBar()->setWork(0);
             }
 
             for ($b = 1; $b <= rand(5, 17); $b++) {
@@ -71,7 +73,7 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
                 }
             }
 
-
+            $manager->persist($progressBar);
             $manager->persist($dream);
             $manager->flush();
 
