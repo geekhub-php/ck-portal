@@ -5,3 +5,11 @@ cbsupport_ajax_donate:
 cbsupport_ajax_tabs:
     pattern:  /tabs/{dreamId}
     defaults: { _controller: "DreamBundle:ContributorSupport:getAjaxTabs" }
+
+cbsupport_ajax_update_progressbar:
+    pattern:  /progressbar/update/{dreamId}
+    defaults: { _controller: "DreamBundle:ContributorSupport:updateAjaxProgressBar" }
+
+cbsupport_ajax_get_progressbar:
+    pattern:  /progressbar/get/{dreamId}
+    defaults: { _controller: "DreamBundle:ContributorSupport:getAjaxProgressBar" }
