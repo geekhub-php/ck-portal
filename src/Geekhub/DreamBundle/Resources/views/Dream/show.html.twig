@@ -14,6 +14,7 @@
             width: 850px;
         }
     </style>
+    <link rel="stylesheet" href="{{ asset('bundles/dream/css/progressbar/tiny-green/progressbar.css') }}" />
 {% endblock %}
 {% block body %}
     <h1>{{ dream.title }}</h1>
@@ -38,6 +39,14 @@
                 </li>
             {% endfor %}
         </ul>
+        <ul class="rating-info">
+            <li class="count-contributors">Підтримали: {{ contributorsArray | length }}</li>
+            <li class="count-likes">Рейтинг: {{ dream.like }}</li>
+        </ul>
+        <div id="progress-bar">
+            {% render "DreamBundle:ContributorSupport:getAjaxProgressBar" with { dreamId: dream.id } %}
+        </div>
+        <input type="hidden" id="progress-bar-update-url" value="{{ path('cbsupport_ajax_update_progressbar', { 'dreamId': dream.id }) }}" />
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <ul id="contribute-actions">
                 <li>
@@ -239,6 +248,11 @@
                     $('#tabs').load($('#tabs-url').val(), {}, function(){
                         $('#tabs').tabs("destroy").tabs({ active: active });
                     });
+                    $('#progress-bar').load($('#progress-bar-update-url').val(), {}, function(responseText, textStatus, XMLHttpRequest){
+                        progressBar($(responseText).find('#finance-percent').text(), $('#progressbar-finance'));
+                        progressBar($(responseText).find('#equipment-percent').text(), $('#progressbar-equipment'));
+                        progressBar($(responseText).find('#work-percent').text(), $('#progressbar-work'));
+                    });
                 },
                 complete: function(){
                 },
@@ -261,6 +275,15 @@
                 out = obj;
             }
             alert(out);
+        }
+    </script>
+    <script>
+        progressBar({{ dream.progressBar.finance*100 }}, $('#progressbar-finance'));
+        progressBar({{ dream.progressBar.equipment*100 }}, $('#progressbar-equipment'));
+        progressBar({{ dream.progressBar.work*100 }}, $('#progressbar-work'));
+        function progressBar(percent, $element) {
+            var progressBarWidth = percent * $element.width() / 100;
+            $element.find('div').animate({ width: progressBarWidth }, 1000).html(percent + "%&nbsp;");
         }
     </script>
 {% endblock %}

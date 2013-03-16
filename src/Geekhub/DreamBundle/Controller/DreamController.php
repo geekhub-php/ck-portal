@@ -56,9 +56,12 @@ class DreamController extends Controller
 
         $deleteForm = $this->createDeleteForm($slug);
 
+        $contributorsArray = $this->get('geekhub.dream_bundle.dream_manager')->getContributorsArray($dream);
+
         return $this->render('DreamBundle:Dream:show.html.twig', array(
             'dream'                 => $dream,
             'delete_form'           => $deleteForm->createView(),
+            'contributorsArray'     => $contributorsArray,
         ));
     }
 

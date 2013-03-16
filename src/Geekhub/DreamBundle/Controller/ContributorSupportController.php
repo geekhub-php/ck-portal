@@ -62,4 +62,29 @@ class ContributorSupportController extends Controller
         ));
     }
 
+    public function updateAjaxProgressBarAction($dreamId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $dream = $em->getRepository('DreamBundle:Dream')->findOneById($dreamId);
+        $newProgressBar = $this->get('geekhub.dream_bundle.dream_manager')->getNewProgressBar($dream);
+
+        $em->persist($newProgressBar);
+        $em->flush();
+
+        return $this->render('DreamBundle:Dream:progressBar.html.twig', array(
+            'progressBar'                 => $newProgressBar,
+        ));
+    }
+
+    public function getAjaxProgressBarAction($dreamId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        $dream = $em->getRepository('DreamBundle:Dream')->findOneById($dreamId);
+
+        return $this->render('DreamBundle:Dream:progressBar.html.twig', array(
+            'progressBar'                 => $dream->getProgressBar(),
+        ));
+    }
 }

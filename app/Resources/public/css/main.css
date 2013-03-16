@@ -91,3 +91,18 @@ a.contribute span span {
 .hidden-item {
     color: #c6c6c6;
 }
+ul.rating-info {
+    padding: 0;
+    clear: both;
+}
+li.count-contributors {
+    float: left;
+}
+li.count-likes {
+    float: right;
+}
+p.progressbar-info {
+    margin: 0;
+    clear: both;
+
+}

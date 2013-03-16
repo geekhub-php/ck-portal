@@ -47,6 +47,12 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="OtherDonate", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $otherDonate;
 
+    /**
+     * @ORM\OneToOne(targetEntity="ProgressBar")
+     * @ORM\JoinColumn(name="progress_bar_id", referencedColumnName="id")
+     */
+    protected $progressBar;
+
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Document", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $document;
 
@@ -58,9 +64,6 @@ class Dream implements Taggable
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $video;
-
-    /** @ORM\OneToMany(targetEntity="ContributorSupport", mappedBy="dream", cascade={"persist", "remove"}) */
-    protected $contribution;
 
     /** @ORM\Column(name="dream_like", type="integer", nullable=true) */
     protected $like;
@@ -611,6 +614,16 @@ class Dream implements Taggable
         return $this->otherDonate;
     }
 
+    public function setProgressBar(\Geekhub\DreamBundle\Entity\ProgressBar $progressBar)
+    {
+        $this->progressBar = $progressBar;
+    }
+
+    public function getProgressBar()
+    {
+        return $this->progressBar;
+    }
+
     /**
      * Add file
      *
@@ -723,40 +736,7 @@ class Dream implements Taggable
         return $this->video;
     }
 
-    /**
-     * Add contribution
-     *
-     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
-     * @return Dream
-     */
-    public function addContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution)
-    {
-        $this->contribution[] = $contribution;
-    
-        return $this;
-    }
-
-    /**
-     * Remove contribution
-     *
-     * @param \Geekhub\DreamBundle\Entity\ContributorSupport $contribution
-     */
-    public function removeContribution(\Geekhub\DreamBundle\Entity\ContributorSupport $contribution)
-    {
-        $this->contribution->removeElement($contribution);
-    }
-
-    /**
-     * Get contribution
-     *
-     * @return \Doctrine\Common\Collections\Collection 
-     */
-    public function getContribution()
-    {
-        return $this->contribution;
-    }
-
-    /**
+                                                                                            /**
      * Add usersWhoFavorites
      *
      * @param \Geekhub\UserBundle\Entity\User $usersWhoFavorites
