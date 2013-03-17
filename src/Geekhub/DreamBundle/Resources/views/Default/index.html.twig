@@ -1,6 +1,26 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    {% for dream in dreams %}
+    {% for dream in topDreams %}
+        <div class="front-dream">
+            <a href="{{ path('dream_show', { 'slug': dream.slug }) }}">
+                <h3>{{ dream.title }}</h3>
+            </a>Додати до обраного.
+            <div>
+                <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}
+            </div>
+            <div style="margin: 15px;">
+                <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />
+            </div>
+            <div class="like">
+                Підтримали: 0 Рейтинг: {{ dream.like }}
+            </div>
+            <div>
+                Зібрано:
+            </div>
+        </div>
+
+    {% endfor %}
+    {% for dream in newDreams %}
         <div class="front-dream">
             <a href="{{ path('dream_show', { 'slug': dream.slug }) }}">
                 <h3>{{ dream.title }}</h3>

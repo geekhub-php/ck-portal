@@ -11,11 +11,13 @@ class DefaultController extends Controller
     public function indexAction(Request $request)
     {
         $user = $this->get('security.context')->getToken()->getUser();
-        $dreams = $this->getDoctrine()->getRepository('DreamBundle:Dream')->findBy(array(), array('like' => 'DESC'), 6);
+        $topDreams = $this->getDoctrine()->getRepository('DreamBundle:Dream')->findBy(array(), array('like' => 'DESC'), 4);
+        $newDreams = $this->getDoctrine()->getRepository('DreamBundle:Dream')->findBy(array(), array('created' => 'DESC'), 4);
 
         return $this->render('DreamBundle:Default:index.html.twig', array(
             'user' => $user,
-            'dreams' => $dreams
+            'topDreams' => $topDreams,
+            'newDreams' => $newDreams
         ));
     }
 }
