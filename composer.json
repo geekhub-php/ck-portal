@@ -27,7 +27,8 @@
         "hwi/oauth-bundle": "0.2.*@dev",
         "liip/imagine-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
-        "jms/serializer-bundle": "0.12.*@dev"
+        "jms/serializer-bundle": "0.12.*@dev",
+        "misd/guzzle-bundle": "1.0.*@dev"
     },
 
     "minimum-stability": "dev",
