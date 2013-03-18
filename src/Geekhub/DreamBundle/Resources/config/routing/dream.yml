@@ -24,3 +24,7 @@ dream_delete:
     pattern:  /{slug}/delete
     defaults: { _controller: "DreamBundle:Dream:delete" }
     requirements: { _method: post }
+
+dream_ajax_get_like:
+     pattern:  /get-share/{dreamId}
+     defaults: { _controller: "DreamBundle:Dream:getAjaxDreamShareCount" }
