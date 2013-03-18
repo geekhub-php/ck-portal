@@ -20,17 +20,21 @@ class ContributorSupportController extends Controller
      */
     public function setAjaxDonateAction(Request $request)
     {
+        $securityContext = $this->container->get('security.context');
+        $dream = $this->getDoctrine()->getRepository('DreamBundle:Dream')->findOneById($request->get('dreamId'));
+
         if (false == $this->getRequest()->isXmlHttpRequest())
         {
-            return new Response(array('error' => 'Only ajax request can be send'));
+            return $this->prepareAjaxResponse(array('error' => 'Only ajax request can be send'));
+        }
+        elseif (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
+            return $this->prepareAjaxResponse(array('error' => 'Only authenticated user can make donate'));
+        }
+        elseif ($securityContext->getToken()->getUser()->getId() == $dream->getOwner()->getId()) {
+            return $this->prepareAjaxResponse(array('error' => 'You are owner. You don\'t can to contribute your own dream'));
         }
 
-        $securityContext = $this->container->get('security.context');
-        if (!$securityContext->isGranted('IS_AUTHENTICATED_REMEMBERED')) {
-            return new Response(array('error' => 'Only authenticated user can make donate'));
-        }
 
-        $dream = $this->getDoctrine()->getRepository('DreamBundle:Dream')->findOneById($request->get('dreamId'));
         $points = $this->get('geekhub.dream_bundle.point_manager')->getPointEntityFromRequest($request, $dream);
 
         foreach ($points as $point) {
@@ -46,7 +50,7 @@ class ContributorSupportController extends Controller
             }
         }
 
-        return new Response('success');
+        return $this->prepareAjaxResponse(array('success' => true));
     }
 
     public function getAjaxTabsAction($dreamId)
@@ -86,5 +90,19 @@ class ContributorSupportController extends Controller
         return $this->render('DreamBundle:Dream:progressBar.html.twig', array(
             'progressBar'                 => $dream->getProgressBar(),
         ));
+    }
+
+    /**
+     * @param $answer array message ('error' => 'This error')
+     * @param $format string type of response format - json, xml
+     * @return $response Response
+     */
+    private function prepareAjaxResponse($answer, $format = 'json')
+    {
+        $jsonError = $this->container->get('serializer')->serialize($answer, $format);
+        $response = new Response($jsonError);
+        $response->headers->set('Content-Type', 'application/json');
+
+        return $response;
     }
 }
