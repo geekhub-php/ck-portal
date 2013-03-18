@@ -3,6 +3,7 @@
 namespace Geekhub\DreamBundle\Controller;
 
 use Symfony\Component\HttpFoundation\Request;
+use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
@@ -238,5 +239,49 @@ class DreamController extends Controller
             ->add('id', 'hidden')
             ->getForm()
         ;
+    }
+
+    public function getAjaxDreamShareCountAction($dreamId)
+    {
+        $em = $this->getDoctrine()->getManager();
+
+        /** @var $dream Dream */
+        $dream = $em->getRepository('DreamBundle:Dream')->findOneById($dreamId);
+
+        if (!$dream) {
+            $error = array('error' => 'Unable to find Dream entity');
+            $jsonError = $this->container->get('serializer')->serialize($error, 'json');
+            $response = new Response($jsonError);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
+        elseif (false == $this->getRequest()->isXmlHttpRequest())
+        {
+            $error = array('error' => 'Only ajax request can be send');
+            $jsonError = $this->container->get('serializer')->serialize($error, 'json');
+            $response = new Response($jsonError);
+            $response->headers->set('Content-Type', 'application/json');
+
+            return $response;
+        }
+
+        $url = $this->generateUrl(
+            'dream_show',
+            array('slug' => $dream->getSlug()),
+            true
+        );
+        $dreamShareCount = $this->get('geekhub.dream_bundle.like_manager')->getDreamShareCount($url);
+
+        if ($dreamShareCount != $dream->getLike()) {
+            $dream->setLike($dreamShareCount);
+
+            $em->persist($dream);
+            $em->flush();
+        }
+
+        $response = $this->container->get('serializer')->serialize($dream->getLike(), 'json');
+
+        return new Response($response);
     }
 }
