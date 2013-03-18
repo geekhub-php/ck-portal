@@ -1,0 +1,6 @@
+Привіт Адмін!
+Мрія {{ dream.title }} переведена в сатус збору коштів.
+
+Подивитися мрію на сайті - {{ url('dream_show', {'slug': dream.slug}) }}
+
+{% include 'DreamBundle:Email:footer.html.twig' %}
