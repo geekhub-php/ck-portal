@@ -10,6 +10,10 @@ dream_entity:
     resource: "@DreamBundle/Resources/config/routing/dream.yml"
     prefix:   /dream
 
-DreamBundle_cbsupport:
+dream_cbsupport:
     resource: "@DreamBundle/Resources/config/routing/cbsupport.yml"
     prefix:   /cbsupport
+
+dream_emails:
+    resource: "@DreamBundle/Resources/config/routing/notify.yml"
+    prefix:   /notify

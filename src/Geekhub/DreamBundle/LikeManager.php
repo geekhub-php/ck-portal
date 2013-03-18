@@ -60,13 +60,13 @@ class LikeManager
 
     private function getTwShareCount($url)
     {
-        $url = 'http://urls.api.twitter.com/1/urls/count.json?callback=twttr.receiveCount&url='.$url;
+        $url = 'http://urls.api.twitter.com/1/urls/count.json?url='.$url;
 
         $client = new Client($url);
         $request = $client->get();
         $response = $request->send();
-        preg_match ( "/twttr.receiveCount\({\"count\":([\d]+).*/i", $response->getBody(true), $count );
+        $responseArray = $response->json();
 
-        return (int)$count[1];
+        return $responseArray['count'];
     }
 }

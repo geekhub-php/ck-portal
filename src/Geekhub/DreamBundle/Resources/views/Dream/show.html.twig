@@ -53,7 +53,7 @@
                 charset="utf-8"></script>
         <div id="ya_share"></div>
         <input type="hidden" id="progress-bar-update-url" value="{{ path('cbsupport_ajax_update_progressbar', { 'dreamId': dream.id }) }}" />
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and dream.state == 'open' %}
             <ul id="contribute-actions">
                 <li>
                     <a class="contribute" href="#">
@@ -130,7 +130,7 @@
                     </div>
                 </li>
             </ul>
-        {% else %}
+        {% elseif dream.state == 'open' %}
             <div style="clear: both">
                 Щоб прийняти участь у реалізації мрії, будь-ласка, авторизуйтесь.<br />
                 <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">
@@ -155,6 +155,16 @@
                 <td>
                     <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
                     - {{ dream.owner.name }}
+                    <div style="float: right">
+                        {% if dream.progressBar.finance >= 1 and dream.progressBar.equipment >= 1
+                            and dream.progressBar.work >= 1 and dream.state == 'open' %}
+                            <a href="#" id="fundraiser">Розпочати збір коштів</a>
+                        {% elseif dream.state == 'success' %}
+                            <span style="color: green">Збір коштів розпочато</span>
+                        {% else %}
+                            <span style="color: #c6c6c6">Розпочати збір коштів</span>
+                        {% endif %}
+                    </div>
                 </td>
             </tr>
             <tr>
@@ -167,7 +177,7 @@
             </tr>
             <tr>
                 <th>Поточний стан мрії</th>
-                <td>{{ dream.state }}</td>
+                <td><span id="state">{{ dream.state }}</span></td>
             </tr>
             <tr>
                 <th>Теги</th>
@@ -325,6 +335,35 @@
                 error: function(){
                     $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
                     $('#count-likes').append({{ dream.like }});
+                }
+            });
+        });
+    </script>
+    {# --== Set dream success ==-- #}
+    <script>
+        jQuery('#fundraiser').on('click', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "{{ url('notify_ajax_set_dream_success', {'dreamId': dream.id}) }}",
+                data: {
+                    dreamId: $('#dream-id').val()
+                },
+                success: function(data){
+                    alert(data);
+                    if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
+                    }
+                    else {
+                        $('#system-message').append('<dt class="success">Мрія переведена на стадію сбору коштів. Поздоровляємо!</dt><dd class="success message"><ul><li></li></ul></dd>');
+                        $('#state').text('Збір коштів');
+                        $('#contribute-actions').hide();
+                        $('#fundraiser').replaceWith( '<span style="color: green">Збір коштів розпочато</span>' )
+                    }
+                },
+                complete: function(){
+                },
+                error: function(){
+                    $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
                 }
             });
         });
