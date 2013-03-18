@@ -9,6 +9,7 @@ use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 use Geekhub\DreamBundle\Entity\Dream;
 use Geekhub\DreamBundle\Form\DreamType;
+use Geekhub\DreamBundle\Entity\ProgressBar;
 
 /**
  * Dream controller.
@@ -108,6 +109,13 @@ class DreamController extends Controller
                 $oTag = $tagManager->loadOrCreateTag($tag);
                 $tagManager->addTag($oTag, $dream);
             }
+
+            //ProgressBar
+            $progressBar = new ProgressBar();
+            $progressBar->setEquipment(0);
+            $progressBar->setFinance(0);
+            $progressBar->setWork(0);
+            $dream->setProgressBar($progressBar);
 
             $em = $this->getDoctrine()->getManager();
             $em->persist($dream);
