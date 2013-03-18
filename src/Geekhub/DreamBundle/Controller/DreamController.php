@@ -282,7 +282,7 @@ class DreamController extends Controller
         );
         $dreamShareCount = $this->get('geekhub.dream_bundle.like_manager')->getDreamShareCount($url);
 
-        if ($dreamShareCount != $dream->getLike()) {
+        if ($dreamShareCount !== $dream->getLike()) {
             $dream->setLike($dreamShareCount);
 
             $em->persist($dream);
