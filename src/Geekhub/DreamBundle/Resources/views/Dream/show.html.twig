@@ -15,6 +15,8 @@
         }
     </style>
     <link rel="stylesheet" href="{{ asset('bundles/dream/css/progressbar/tiny-green/progressbar.css') }}" />
+    <meta property="og:title" content="{{ dream.title }}" />
+    <meta property="og:description" content="{{- dream.description|dotdotdot(30) -}}" />
 {% endblock %}
 {% block body %}
     <h1>{{ dream.title }}</h1>
