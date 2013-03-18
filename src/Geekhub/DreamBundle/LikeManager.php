@@ -1,0 +1,72 @@
+<?php
+
+namespace Geekhub\DreamBundle;
+
+use JMS\Serializer\Serializer;
+use Guzzle\Http\Client;
+
+class LikeManager
+{
+    public function getDreamShareCount($url)
+    {
+        $vkShareCount = $this->getVkShareCount($url);
+        $okShareCount = $this->getOkShareCount($url);
+        $fbShareCount = $this->getFbShareCount($url);
+        $twShareCount = $this->getTwShareCount($url);
+        $allShareCount = $vkShareCount + $okShareCount + $fbShareCount + $twShareCount;
+
+        return $allShareCount;
+    }
+
+    private function getVkShareCount($url)
+    {
+        $url = 'https://api.vk.com/method/likes.getList?type=sitepage&filter=copies&owner_id=3423353&page_url='.$url;
+
+        $client = new Client($url);
+        $request = $client->get();
+        $response = $request->send();
+        $responseArray = $response->json();
+
+        if (isset($responseArray['error'])) {
+            return '0';
+        }
+
+        return $responseArray['response']['count'];
+    }
+
+    private function getOkShareCount($url)
+    {
+        $url = 'http://www.odnoklassniki.ru/dk?st.cmd=shareData&ref='.$url.'&cb=mailru.share.ok.init';
+
+        $client = new Client($url);
+        $request = $client->get();
+        $response = $request->send();
+        $substr = explode('count":"', $response->getBody(true));
+
+        return (int)str_replace('"})', '', $substr[1]);
+    }
+
+    private function getFbShareCount($url)
+    {
+        $url = 'http://api.ak.facebook.com/restserver.php?v=1.0&method=links.getStats&urls='.$url.'&format=json';
+
+        $client = new Client($url);
+        $request = $client->get();
+        $response = $request->send();
+        $responseArray = $response->json();
+
+        return $responseArray[0]['share_count'];
+    }
+
+    private function getTwShareCount($url)
+    {
+        $url = 'http://urls.api.twitter.com/1/urls/count.json?callback=twttr.receiveCount&url='.$url;
+
+        $client = new Client($url);
+        $request = $client->get();
+        $response = $request->send();
+        preg_match ( "/twttr.receiveCount\({\"count\":([\d]+).*/i", $response->getBody(true), $count );
+
+        return (int)$count[1];
+    }
+}
