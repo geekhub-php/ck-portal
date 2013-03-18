@@ -30,10 +30,15 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                 }
                 /** @var $workPoint Work */
                 foreach ($workDreamPoints as $workPoint) {
+                    $user = $this->getReference('user' . rand(1, 17));
+
                     if (rand(1, 3) == 2) {
                         continue;
                     }
-                    $user = $this->getReference('user' . rand(1, 17));
+                    elseif ($user->getId() == $dream->getOwner()->getId()) {
+                        continue;
+                    }
+
                     $work = new Work();
 
                     $work->setQuantity(rand(1, $workPoint->getQuantity()/2));
@@ -63,10 +68,15 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                 }
                 /** @var $financialPoint Financial */
                 foreach ($financialDreamPoints as $financialPoint) {
+                    $user = $this->getReference('user' . rand(1, 17));
+
                     if (rand(1, 3) == 2) {
                         continue;
                     }
-                    $user = $this->getReference('user' . rand(1, 17));
+                    elseif ($user->getId() == $dream->getOwner()->getId()) {
+                        continue;
+                    }
+
                     $financial = new Financial();
 
                     $financial->setName($financialPoint->getName());
@@ -95,10 +105,15 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                 }
                 /** @var $equipmentPoint Equipment */
                 foreach ($equipmentDreamPoints as $equipmentPoint) {
+                    $user = $this->getReference('user' . rand(1, 17));
+
                     if (rand(1, 3) == 2) {
                         continue;
                     }
-                    $user = $this->getReference('user' . rand(1, 17));
+                    elseif ($user->getId() == $dream->getOwner()->getId()) {
+                        continue;
+                    }
+
                     $equipment = new Equipment();
 
                     $equipment->setDream($dream);
