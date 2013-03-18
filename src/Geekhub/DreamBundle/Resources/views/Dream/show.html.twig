@@ -44,11 +44,14 @@
         </ul>
         <ul class="rating-info">
             <li class="count-contributors">Підтримали: {{ contributorsArray | length }}</li>
-            <li class="count-likes">Рейтинг: {{ dream.like }}</li>
+            <li class="count-likes">Рейтинг: <span id="count-likes"></span></li>
         </ul>
         <div id="progress-bar">
             {% render "DreamBundle:ContributorSupport:getAjaxProgressBar" with { dreamId: dream.id } %}
         </div>
+        <script type="text/javascript" src="//yandex.st/share/share.js"
+                charset="utf-8"></script>
+        <div id="ya_share"></div>
         <input type="hidden" id="progress-bar-update-url" value="{{ path('cbsupport_ajax_update_progressbar', { 'dreamId': dream.id }) }}" />
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <ul id="contribute-actions">
@@ -289,5 +292,41 @@
             var progressBarWidth = percent * $element.width() / 100;
             $element.find('div').animate({ width: progressBarWidth }, 1000).html(percent + "%&nbsp;");
         }
+    </script>
+    <script type="text/javascript">
+        // создаем блок
+        var YaShareInstance = new Ya.share({
+            element: 'ya_share',
+            elementStyle: {
+                'type': 'none',
+                'quickServices': ['facebook', 'vkontakte', 'odnoklassniki', 'twitter']
+            },
+            l10n: 'uk'
+        });
+    </script>
+    <script>
+        $(document).ready(function(){
+            $.ajax({
+                url: "{{ url('dream_ajax_get_like', {'dreamId': dream.id}) }}",
+                data: {
+                    dreamId: $('#dream-id').val()
+                },
+                success: function(data){
+                    if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
+                        $('#count-likes').append({{ dream.like }});
+                    }
+                    else {
+                        $('#count-likes').append(data);
+                    }
+                },
+                complete: function(){
+                },
+                error: function(){
+                    $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
+                    $('#count-likes').append({{ dream.like }});
+                }
+            });
+        });
     </script>
 {% endblock %}
