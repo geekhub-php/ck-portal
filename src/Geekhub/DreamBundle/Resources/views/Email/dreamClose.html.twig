@@ -1,0 +1,9 @@
+Привіт Адмін!
+{{ user.name }} зробив запит на те щоб закрити мрію {{ dream.title }}
+Користувач пояснив своє рішення так:
+{{ reason }}
+
+Подивитися мрію на сайті - {{ url('dream_show', {'slug': dream.slug}) }}
+
+
+{% include 'DreamBundle:Email:footer.html.twig' %}
