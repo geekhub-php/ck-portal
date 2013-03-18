@@ -1,0 +1,3 @@
+notify_ajax_set_dream_success:
+    pattern:  /set-success/{dreamId}
+    defaults: { _controller: "DreamBundle:Notify:setAjaxDreamSuccess" }
