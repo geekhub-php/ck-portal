@@ -118,6 +118,7 @@ class DreamController extends Controller
             $dream->setProgressBar($progressBar);
 
             $em = $this->getDoctrine()->getManager();
+            $em->persist($progressBar);
             $em->persist($dream);
             $em->flush();
 
