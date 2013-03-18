@@ -349,15 +349,11 @@
                     dreamId: $('#dream-id').val()
                 },
                 success: function(data){
-                    alert(data);
                     if (data.error) {
                         $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
                     }
                     else {
-                        $('#system-message').append('<dt class="success">Мрія переведена на стадію сбору коштів. Поздоровляємо!</dt><dd class="success message"><ul><li></li></ul></dd>');
-                        $('#state').text('Збір коштів');
-                        $('#contribute-actions').hide();
-                        $('#fundraiser').replaceWith( '<span style="color: green">Збір коштів розпочато</span>' )
+                        $('#system-message').append('<dt class="success">Мрію буде переведено в статус збору коштів після перевірки адміністратором</dt><dd class="success message"><ul><li></li></ul></dd>');
                     }
                 },
                 complete: function(){

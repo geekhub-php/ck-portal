@@ -27,11 +27,6 @@ class NotifyController extends Controller
             return $this->prepareAjaxResponse('error', 'Only ajax request can be send');
         }
 
-        $dream->setState('success');
-
-        $em->persist($dream);
-        $em->flush();
-
         $message = \Swift_Message::newInstance()
             ->setSubject('Зміна статусу мрії '.$dream->getTitle())
             ->setFrom('noreplay@chedream.com')
@@ -45,7 +40,7 @@ class NotifyController extends Controller
         ;
         $this->get('mailer')->send($message);
 
-        return $this->prepareAjaxResponse('success', 'Мрію переведено в статус збору коштів');
+        return $this->prepareAjaxResponse('success', 'Мрію буде переведено в статус збору коштів після перевірки адміністратором');
     }
 
     /**
