@@ -156,14 +156,28 @@
                     <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
                     - {{ dream.owner.name }}
                     <div style="float: right">
-                        {% if dream.progressBar.finance >= 1 and dream.progressBar.equipment >= 1
-                            and dream.progressBar.work >= 1 and dream.state == 'open' %}
-                            <a href="#" id="fundraiser">Розпочати збір коштів</a>
-                        {% elseif dream.state == 'success' %}
-                            <span style="color: green">Збір коштів розпочато</span>
-                        {% else %}
-                            <span style="color: #c6c6c6">Розпочати збір коштів</span>
-                        {% endif %}
+                        <ul class="dream-action">
+                            {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == dream.owner.id %}
+                                {% if dream.progressBar.finance >= 1 and dream.progressBar.equipment >= 1
+                                    and dream.progressBar.work >= 1 and dream.state == 'open' %}
+                                    <li><a href="#" id="fundraiser">Розпочати збір коштів</a></li>
+                                {% elseif dream.state == 'success' %}
+                                    <li><span style="color: green">Збір коштів розпочато</span></li>
+                                {% else %}
+                                    <li><span style="color: #c6c6c6">Розпочати збір коштів</span></li>
+                                {% endif %}
+                            {% endif %}
+                            <li>
+                                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == dream.owner.id and dream.state == 'open' %}
+                                <a id="close-dream" href="#">Закрити мрію</a>
+                                <div class="block">
+                                    <textarea rows="5" cols="30" name="text"></textarea><br />
+                                    <a href="#" id="close-dream-submit">Відправити</a>
+                                    <a href="#" id="close-dream-cancel">Відмінити</a>
+                                </div>
+                                {% endif %}
+                            </li>
+                        </ul>
                     </div>
                 </td>
             </tr>
@@ -261,15 +275,20 @@
                     dreamId: $('#dream-id').val()
                 },
                 success: function(data){
-                    alert('Дякуємо за вашу допомогу!');
-                    $('#tabs').load($('#tabs-url').val(), {}, function(){
-                        $('#tabs').tabs("destroy").tabs({ active: active });
-                    });
-                    $('#progress-bar').load($('#progress-bar-update-url').val(), {}, function(responseText, textStatus, XMLHttpRequest){
-                        progressBar($(responseText).find('#finance-percent').text(), $('#progressbar-finance'));
-                        progressBar($(responseText).find('#equipment-percent').text(), $('#progressbar-equipment'));
-                        progressBar($(responseText).find('#work-percent').text(), $('#progressbar-work'));
-                    });
+                    if (data.success) {
+                        alert('Дякуємо за вашу допомогу!');
+                        $('#tabs').load($('#tabs-url').val(), {}, function(){
+                            $('#tabs').tabs("destroy").tabs({ active: active });
+                        });
+                        $('#progress-bar').load($('#progress-bar-update-url').val(), {}, function(responseText, textStatus, XMLHttpRequest){
+                            progressBar($(responseText).find('#finance-percent').text(), $('#progressbar-finance'));
+                            progressBar($(responseText).find('#equipment-percent').text(), $('#progressbar-equipment'));
+                            progressBar($(responseText).find('#work-percent').text(), $('#progressbar-work'));
+                        });
+                    }
+                    else if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
+                    }
                 },
                 complete: function(){
                 },
@@ -344,7 +363,7 @@
         jQuery('#fundraiser').on('click', function(e){
             e.preventDefault();
             $.ajax({
-                url: "{{ url('notify_ajax_set_dream_success', {'dreamId': dream.id}) }}",
+                url: "{{ url('notify_ajax_set_dream_success', {'dreamId': dream.id }) }}",
                 data: {
                     dreamId: $('#dream-id').val()
                 },
@@ -359,7 +378,42 @@
                 complete: function(){
                 },
                 error: function(){
-                    $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
+                    $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( </li></ul></dd>')
+                }
+            });
+        });
+    </script>
+    {# --== Close dream ==-- #}
+    <script>
+        jQuery('#close-dream').on('click', function(e){
+            e.preventDefault();
+            jQuery(this).parent().find('.block').show();
+        });
+        jQuery('#close-dream-cancel').on('click', function(e){
+            e.preventDefault();
+            jQuery(this).parent().hide();
+        });
+        jQuery('#close-dream-submit').on('click', function(e){
+            e.preventDefault();
+            $.ajax({
+                url: "{{ url('notify_ajax_close_dream') }}",
+                type: 'POST',
+                data: {
+                    dreamId: $('#dream-id').val(),
+                    reason:  $(this).parent().find('textarea').val()
+                },
+                success: function(data){
+                    if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
+                    }
+                    else {
+                        $('#system-message').append('<dt class="success">Мрію буде закрито після перевірки адміністратором</dt><dd class="success message"><ul><li></li></ul></dd>');
+                    }
+                },
+                complete: function(){
+                },
+                error: function(){
+                    $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( </li></ul></dd>')
                 }
             });
         });
