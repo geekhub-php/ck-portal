@@ -1,0 +1,8 @@
+Привіт Адмін!
+
+Користувач {{ user.name }} створив мрію {{ dream.title }}
+Будь ласка перевірте мрію, та змініть статус або дайте відмову користувачу.
+
+Подивитися мрію на сайті - {{ url('dream_show', {'slug': dream.slug}) }}
+
+{% include 'DreamBundle:Email:footer.html.twig' %}

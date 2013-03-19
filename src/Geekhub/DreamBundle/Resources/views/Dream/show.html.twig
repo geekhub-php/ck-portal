@@ -21,6 +21,9 @@
 {% endblock %}
 {% block body %}
     <h1>{{ dream.title }}</h1>
+    {% if dream.state == null %}
+        <p>Мрія знаходиться на модерації</p>
+    {% endif %}
 
     <div style="width: 250px; float: left;">
         <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" />

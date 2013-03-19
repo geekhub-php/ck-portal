@@ -124,6 +124,22 @@ class DreamController extends Controller
 
             $tagManager->saveTagging($dream);
 
+            $message = \Swift_Message::newInstance()
+                ->setSubject('Створена нова мрія '.$dream->getTitle())
+                ->setFrom('noreplay@chedream.com')
+                ->setTo('noreplay@chedream.com')
+                ->setBody(
+                $this->renderView(
+                    'DreamBundle:Email:dreamNew.html.twig',
+                    array(
+                        'dream'     => $dream,
+                        'user'      => $user,
+                    )
+                )
+            )
+            ;
+            $this->get('mailer')->send($message);
+
             return $this->redirect($this->generateUrl('dream_show', array('slug' => $dream->getSlug())));
         }
 
