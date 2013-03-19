@@ -113,6 +113,14 @@ hwi_oauth:
 #            scope:               "VALUABLE_ACCESS;PHOTO CONTENT"
     # here you will add one (or more) configurations for resource owners
 
+swiftmailer:
+    transport:  smtp
+    encryption: ssl
+    auth_mode:  login
+    host:       smtp.gmail.com
+    username:   %swiftmailer_username%
+    password:   %swiftmailer_password%
+
 liip_imagine:
     web_root: %kernel.root_dir%/../web
     data_root: %kernel.root_dir%/../web

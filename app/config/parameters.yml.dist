@@ -22,3 +22,8 @@ parameters:
     odnoklassniki_app_id:       ~
     odnoklassniki_app_secret:   ~
     odnoklassniki_app_public:   ~
+
+#    swiftmailer
+    delivery_address:         example@gmail.com
+    swiftmailer_username:     username
+    swiftmailer_password:     password
