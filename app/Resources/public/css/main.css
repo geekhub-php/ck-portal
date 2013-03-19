@@ -106,3 +106,10 @@ p.progressbar-info {
     clear: both;
 
 }
+.dream-action li {
+    float: left;
+    padding: 5px;
+}
+.dream-action li .block {
+    display: none;
+}
