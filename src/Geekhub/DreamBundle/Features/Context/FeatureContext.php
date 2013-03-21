@@ -8,6 +8,7 @@ use Behat\MinkExtension\Context\MinkContext;
 
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
+use Behat\Behat\Context\Step;
 use Behat\Gherkin\Node\PyStringNode,
     Behat\Gherkin\Node\TableNode;
 
@@ -21,8 +22,7 @@ use Behat\Gherkin\Node\PyStringNode,
 /**
  * Feature context.
  */
-class FeatureContext extends BehatContext //MinkContext if you want to test web
-                  implements KernelAwareInterface
+class FeatureContext extends MinkContext implements KernelAwareInterface
 {
     private $kernel;
     private $parameters;
@@ -35,6 +35,27 @@ class FeatureContext extends BehatContext //MinkContext if you want to test web
     public function __construct(array $parameters)
     {
         $this->parameters = $parameters;
+    }
+
+    /**
+     * @Given /^я вхожу как пользователь "([^"]*)" с паролем "([^"]*)"$/
+     */
+    public function iaLoghiniusKakSParoliem($username, $password)
+    {
+        return array(
+            new Step\Given('I am on "/login"'),
+            new Step\When("fill in \"Username:\" with \"$username\""),
+            new Step\When("fill in \"Password:\" with \"$password\""),
+            new Step\When("I press \"Login\""),
+        );
+    }
+
+    /**
+     * @When /^я жду (\d+) секунд?$/
+     */
+    public function waitSeconds($seconds)
+    {
+        $this->getSession()->wait(1000*$seconds);
     }
 
     /**
