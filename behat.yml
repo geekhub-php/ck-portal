@@ -1,5 +1,9 @@
 default:
   extensions:
+    VIPSoft\DoctrineDataFixturesExtension\Extension:
+          autoload:    true
+          directories: ~
+          fixtures:    ~
     Behat\Symfony2Extension\Extension:
         mink_driver: true
     Behat\MinkExtension\Extension:
