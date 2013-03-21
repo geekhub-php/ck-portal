@@ -20,18 +20,14 @@ class LikeManager
 
     public function getVkShareCount($url)
     {
-        $url = 'https://api.vk.com/method/likes.getList?type=sitepage&filter=copies&owner_id=3423353&page_url='.$url;
+        $url = 'http://vk.com/share.php?act=count&index=1&url='.$url.'&format=json';
 
         $client = new Client($url);
         $request = $client->get();
         $response = $request->send();
-        $responseArray = $response->json();
+        $substr = explode(',', $response->getBody(true));
 
-        if (isset($responseArray['error'])) {
-            return '0';
-        }
-
-        return $responseArray['response']['count'];
+        return (int)trim(str_replace('};', '', $substr[1]));
     }
 
     public function getOkShareCount($url)
