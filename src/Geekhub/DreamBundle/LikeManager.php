@@ -18,7 +18,7 @@ class LikeManager
         return $allShareCount;
     }
 
-    private function getVkShareCount($url)
+    public function getVkShareCount($url)
     {
         $url = 'https://api.vk.com/method/likes.getList?type=sitepage&filter=copies&owner_id=3423353&page_url='.$url;
 
@@ -34,7 +34,7 @@ class LikeManager
         return $responseArray['response']['count'];
     }
 
-    private function getOkShareCount($url)
+    public function getOkShareCount($url)
     {
         $url = 'http://www.odnoklassniki.ru/dk?st.cmd=shareData&ref='.$url.'&cb=mailru.share.ok.init';
 
@@ -46,7 +46,7 @@ class LikeManager
         return (int)str_replace('"})', '', $substr[1]);
     }
 
-    private function getFbShareCount($url)
+    public function getFbShareCount($url)
     {
         $url = 'http://api.ak.facebook.com/restserver.php?v=1.0&method=links.getStats&urls='.$url.'&format=json';
 
@@ -58,7 +58,7 @@ class LikeManager
         return $responseArray[0]['share_count'];
     }
 
-    private function getTwShareCount($url)
+    public function getTwShareCount($url)
     {
         $url = 'http://urls.api.twitter.com/1/urls/count.json?url='.$url;
 
