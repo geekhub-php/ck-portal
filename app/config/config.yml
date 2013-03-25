@@ -117,7 +117,7 @@ swiftmailer:
     transport:  smtp
     encryption: ssl
     auth_mode:  login
-    host:       smtp.gmail.com
+    host:       %swiftmailer_host%
     username:   %swiftmailer_username%
     password:   %swiftmailer_password%
 
