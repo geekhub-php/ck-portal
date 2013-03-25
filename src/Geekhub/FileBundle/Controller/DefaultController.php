@@ -18,7 +18,7 @@ class DefaultController extends Controller
         //ToDo Add user check
         $image = new Image();
 
-        $image->setAllowedMimeType($this->container->getParameter('geekhub_file.image.allowed_mime_type'));
+        $image->setAllowedExtensions($this->container->getParameter('geekhub_file.image.allowed_extensions'));
         $image->setSizeLimit($this->container->getParameter('geekhub_file.image.size_limit'));
         $image->setUploadDir($this->container->getParameter('geekhub_file.image.upload_directory'));
 
@@ -35,7 +35,7 @@ class DefaultController extends Controller
         //ToDo Add user check
         $document = new Document();
 
-        $document->setAllowedMimeType($this->container->getParameter('geekhub_file.document.allowed_mime_type'));
+        $document->setAllowedExtensions($this->container->getParameter('geekhub_file.document.allowed_extensions'));
         $document->setSizeLimit($this->container->getParameter('geekhub_file.document.size_limit'));
         $document->setUploadDir($this->container->getParameter('geekhub_file.document.upload_directory'));
 

@@ -53,7 +53,7 @@ abstract class File
      * @var array configurable value
      * @Exclude
      */
-    protected $allowedMimeType;
+    protected $allowedExtensions;
 
     /**
      * @var string configurable value
@@ -151,14 +151,14 @@ abstract class File
         return $this->error;
     }
 
-    public function setAllowedMimeType($allowedMimeType)
+    public function setAllowedExtensions($allowedExtensions)
     {
-        $this->allowedMimeType = $allowedMimeType;
+        $this->allowedExtensions = $allowedExtensions;
     }
 
-    public function getAllowedMimeType()
+    public function getAllowedExtensions()
     {
-        return $this->allowedMimeType;
+        return $this->allowedExtensions;
     }
 
     public function setSizeLimit($sizeLimit)
