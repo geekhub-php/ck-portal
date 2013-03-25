@@ -143,6 +143,8 @@ class PointManager
         $points = array();
 
         foreach ($request->get('work') as $id => $quantity) {
+            $quantity == 'true' ? $quantity = 1 : $quantity = 0;
+
             if ($quantity == 0) {
                 continue;
             }
@@ -155,18 +157,16 @@ class PointManager
                 'parent' => $parentPoint,
                 'user' => $this->getUser(),
                 'isDonate' => true,
-                'hide' => $hide
             ));
 
             if ($point) {
-                $point->setQuantity($point->getQuantity() + $quantity);
+                $point->setQuantity($quantity);
             }
             else {
                 $point = new Work();
 
-                $point->setWorker(1);
                 $point->setName($parentPoint->getName());
-                $point->setQuantity($quantity);
+                $point->setQuantity(1);
                 $point->setDream($dream);
                 $point->setParent($parentPoint);
                 $point->setUser($this->getUser());
