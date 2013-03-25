@@ -24,7 +24,7 @@
     <ul>
         {% for item in dream.work %}
             {% if item.isDonate == false %}
-                <li>{{ item.name }} - {{ item.quantity }}</li>
+                <li>{{ item.name }} - {{ item.quantity }} чол.</li>
             {% endif %}
         {% endfor %}
     </ul>
@@ -39,9 +39,9 @@
             {% for item in contribution.contributions %}
                     {% if item == 'Work' %}
                         {% if item.hide == true %}
-                            <span class="hidden-item">{{ item.name }} - {{ item.quantity }} днів</span>
+                            <span class="hidden-item">{{ item.name }}</span>
                         {% else %}
-                            {{ item.name }} - {{ item.quantity }} днів
+                            {{ item.name }}
                         {% endif %}
                     {% elseif item == 'Equipment' %}
                         {% if item.hide == true %}

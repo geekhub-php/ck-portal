@@ -34,7 +34,6 @@
 
     Когда я кликаю по ссылке "add_work_link"
     И я заполняю поле "geekhub_dreambundle_dreamtype_work_2_name" значением "Покрасить ноутбук в голубой цвет"
-    И я заполняю поле "geekhub_dreambundle_dreamtype_work_2_worker" значением "5"
     И я заполняю поле "geekhub_dreambundle_dreamtype_work_2_quantity" значением "10"
 
     И я нажимаю "Створити"

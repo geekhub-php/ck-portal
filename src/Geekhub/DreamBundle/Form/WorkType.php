@@ -12,7 +12,6 @@ class WorkType extends AbstractType
     {
         $builder
             ->add('name')
-            ->add('worker')
             ->add('quantity')
         ;
     }
