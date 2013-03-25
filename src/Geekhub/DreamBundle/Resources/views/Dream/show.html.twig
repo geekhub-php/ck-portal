@@ -80,12 +80,14 @@
                     </a>
                     <div class="block">
                         {% for item in dream.equipment %}
+                            {% if item.getIsDonate == false %}
                                 <label>{{ item.name }}</label>
                                 <select class="equipment" name="{{ item.id }}">
                                     {% for number in 0..item.quantity %}
                                         <option value="{{ number }}">{{ number }}</option>
                                     {% endfor %}
                                 </select>шт. <br />
+                            {% endif %}
                         {% endfor %}
                         <label for="equipment-hide">
                             <input type="checkbox" id="equipment-hide" class="hide" /> Приховати мою допомогу
@@ -101,6 +103,7 @@
                     </a>
                     <div class="block">
                         {% for item in dream.work %}
+                            {% if item.getIsDonate == false %}
                                 <input class="work" id="work-point-{{ item.id }}" type="checkbox" name="{{ item.id }}"
                                     {%  for workPoint in app.security.token.user.getWorkDonates %}
                                         {% if workPoint.getParent.getId == item.id %}
@@ -110,6 +113,7 @@
                                 />
                                 <label for="work-point-{{ item.id }}">{{ item.name }}</label>
                                 <br />
+                            {% endif %}
                         {% endfor %}
                         <label for="work-hide">
                             <input type="checkbox" id="work-hide" class="hide" /> Приховати мою допомогу
