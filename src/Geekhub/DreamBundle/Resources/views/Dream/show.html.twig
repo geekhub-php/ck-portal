@@ -80,12 +80,12 @@
                     </a>
                     <div class="block">
                         {% for item in dream.equipment %}
-                            <label>{{ item.name }}</label>
-                            <select class="equipment" name="{{ item.id }}">
-                                {% for number in 0..item.quantity %}
-                                    <option value="{{ number }}">{{ number }}</option>
-                                {% endfor %}
-                            </select>шт. <br />
+                                <label>{{ item.name }}</label>
+                                <select class="equipment" name="{{ item.id }}">
+                                    {% for number in 0..item.quantity %}
+                                        <option value="{{ number }}">{{ number }}</option>
+                                    {% endfor %}
+                                </select>шт. <br />
                         {% endfor %}
                         <label for="equipment-hide">
                             <input type="checkbox" id="equipment-hide" class="hide" /> Приховати мою допомогу
@@ -101,12 +101,15 @@
                     </a>
                     <div class="block">
                         {% for item in dream.work %}
-                            <label>{{ item.name }}</label>
-                            <select class="work" name="{{ item.id }}">
-                                {% for number in 0..item.quantity %}
-                                    <option value="{{ number }}">{{ number }}</option>
-                                {% endfor %}
-                            </select> днів.<br />
+                                <input class="work" id="work-point-{{ item.id }}" type="checkbox" name="{{ item.id }}"
+                                    {%  for workPoint in app.security.token.user.getWorkDonates %}
+                                        {% if workPoint.getParent.getId == item.id %}
+                                            checked
+                                        {% endif %}
+                                    {%  endfor  %}
+                                />
+                                <label for="work-point-{{ item.id }}">{{ item.name }}</label>
+                                <br />
                         {% endfor %}
                         <label for="work-hide">
                             <input type="checkbox" id="work-hide" class="hide" /> Приховати мою допомогу
@@ -263,7 +266,7 @@
             });
             workArray = {};
             divData.find('.work').each(function() {
-                workArray[this.name] = this.value;
+                workArray[this.name] = this.checked;
             });
             var active
             $.ajax({
