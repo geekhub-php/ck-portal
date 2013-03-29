@@ -14,7 +14,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
 {
     public function load(ObjectManager $manager)
     {
-        $table = new TableNode(file_get_contents(__DIR__.'/user.txt'));
+        $table = new TableNode(file_get_contents(__DIR__.'/user.gherkin'));
         $array = $table->getRows();
         for ($i = 1; isset($array[$i]); $i++) {
             $entity = new User();
@@ -26,7 +26,6 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
             $this->setAdditionalInfo($entity);
 
             $manager->persist($entity);
-            $manager->flush();
 
             $this->addReference('user'.$i, $entity);
         }
@@ -42,6 +41,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, C
         $user->setEnabled(true);
         $user->setExpired(false);
         $manager->persist($user);
+
         $manager->flush();
 
         $this->addReference('userdemo', $user);
