@@ -139,6 +139,10 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [50, 50], mode: outbound }
+        dream_middle:
+            quality: 75
+            filters:
+                thumbnail: { size: [80, 80], mode: outbound }
         dream_main_image:
             quality: 75
             filters:
