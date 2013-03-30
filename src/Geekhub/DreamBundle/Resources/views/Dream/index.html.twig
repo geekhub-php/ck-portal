@@ -7,7 +7,10 @@
             <a href="{{ path('dream_show', { 'slug': dream.slug }) }}"><h3>{{ dream.title }}</h3></a>
             Додати до обраного.
             <div>
-                <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}
+                <a href="{{ path('profile_stranger_show', {'slug':dream.owner.slug}) }}">
+                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />
+                    {{ dream.owner.name }}
+                </a>
             </div>
             <div style="margin: 15px;">
                 <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />

@@ -34,8 +34,10 @@
         {% for contribution in contributorsArray %}
         <li style="height: 50px">
             <img src="{{ contribution.user.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
-            {{ contribution.user.name }}&nbsp
-            обіцяє
+            <a href="{{ path('profile_stranger_show', {'slug':contribution.user.slug}) }}">
+                {{- contribution.user.name -}}
+            </a>
+            &nbspобіцяє
             {% for item in contribution.contributions %}
                     {% if item == 'Work' %}
                         {% if item.hide == true %}

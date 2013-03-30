@@ -1,0 +1,83 @@
+<ul>
+    <li><a href="#tabs-1">Автор проектів</a></li>
+    <li><a href="#tabs-2">Учасник проектів</a></li>
+    {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == user.id %}
+        <li><a href="#tabs-3">Favourites</a></li>
+        <li><a href="#tabs-4">Повідомлення</a></li>
+    {% endif %}
+</ul>
+<div id="tabs-1">
+    {% if user.userDreams|length == 0 %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == dream.owner.id %}
+            Ви поки що не створили жодної мрії
+        {% else %}
+            Користувач ще не створив жодної мрії
+        {% endif %}
+    {% else %}
+        <ul>
+            {% for dream in user.userDreams %}
+                <li>
+                    <img style="float: left; padding: 5px" src="{{ dream.mainImage | imagine_filter('dream_middle') }}" />
+                    <a href="{{ path('dream_show' , {'slug':dream.slug}) }}">
+                        <h3>{{ dream.title }}</h3>
+                    </a>
+                    {{ dream.description|dotdotdot(30) }}
+                </li>
+            {% endfor %}
+        </ul>
+    {% endif %}
+</div>
+<div id="tabs-2">
+    <ul>
+        {% for contribution in contributorsArray %}
+        <li>
+            <div style="float: left; width: 70%">
+                <img style="float: left; padding: 5px" src="{{ contribution.dream.mainImage | imagine_filter('dream_middle') }}" />&nbsp
+                <a href="{{ path('dream_show' , {'slug':contribution.dream.slug}) }}">
+                    <h3 style="margin: -20px 0 5px 0">{{ contribution.dream.title }}</h3>
+                </a>&nbsp
+                {{ contribution.dream.description|dotdotdot(20) }}
+            </div>
+            <div style="float: left; width: 30%">
+                Я обіцяю
+                {% for item in contribution.contributions %}
+                    {% if item == 'Work' %}
+                    {% if item.hide == true %}
+                        <span class="hidden-item">{{ item.name }}</span>
+                    {% else %}
+                        {{ item.name }}
+                    {% endif %}
+                    {% elseif item == 'Equipment' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.name }} - {{ item.quantity }} шт</span>
+                        {% else %}
+                            {{ item.name }} - {{ item.quantity }} шт
+                        {% endif %}
+                    {% elseif item == 'Financial' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.quantity }} грн</span>
+                        {% else %}
+                            {{ item.quantity }} грн
+                        {% endif %}
+                    {% elseif item == 'OtherDonate' %}
+                        {% if item.hide == true %}
+                            <span class="hidden-item">{{ item.name }}</span>
+                        {% else %}
+                            {{ item.name }}
+                        {% endif %}
+                    {% endif %}
+                    {% if not loop.last %}
+                        ,&nbsp
+                    {% endif %}
+                {% endfor %}
+            </div>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+{% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == user.id %}
+    <div id="tabs-3">
+    </div>
+    <div id="tabs-4">
+    </div>
+{% endif %}

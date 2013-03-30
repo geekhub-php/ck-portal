@@ -1,0 +1,73 @@
+{% extends "::base.html.twig" %}
+{% block title %}{{ parent() }} - {{ user.name }}{% endblock %}
+{% block stylesheets %}
+    {{ parent() }}
+    <style type="text/css">
+        .ui-tabs-anchor {
+            float: left;
+            padding: 5px;
+        }
+        .ui-tabs-nav {
+            height: 30px;
+        }
+        #tabs {
+            float: right;
+            width: 850px;
+        }
+        #tabs div li {
+            height: 100px;
+            border-bottom: 1px gray dotted;
+        }
+    </style>
+    <meta property="og:title" content="{{ user.name }}" />
+    <meta property="og:description" content="{{- user.aboutMe|dotdotdot(30) -}}" />
+{% endblock %}
+{% block body %}
+    <div style="width: 250px; float: left;">
+        <img src="{{ user.profilePicture | imagine_filter('dream_main_image') }}" />
+        <input type="hidden" id="dream-id" value="{{ user.id }}" />
+        <input type="hidden" id="tabs-url" value="" />
+    </div>
+    <div>
+        <table class="record_properties">
+            <tr>
+                <td><h1>{{ user.name }}</h1></td>
+            </tr>
+            <tr>
+                <td>{{ user.birthday }}</td>
+            </tr>
+            <tr>
+                <th>Про себе</th>
+                <td>{{ user.aboutMe }}</td>
+            </tr>
+            </tbody>
+        </table>
+        <div id="tabs">
+            {% include 'UserBundle:Profile:tabs.html.twig' %}
+        </div>
+    </div>
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+
+    <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    <script>
+        $(document).ready(function(){
+            $( "#tabs" ).tabs();
+        });
+    </script>
+    <script type="text/javascript">
+        function dump(obj) {
+            var out = "";
+            if(obj && typeof(obj) == "object"){
+                for (var i in obj) {
+                    out += i + ": " + obj[i] + "\n";
+                }
+            } else {
+                out = obj;
+            }
+            alert(out);
+        }
+    </script>
+{% endblock %}

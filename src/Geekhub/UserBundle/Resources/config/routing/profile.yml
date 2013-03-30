@@ -1,0 +1,7 @@
+profile_my_show:
+    pattern:    /
+    defaults:   { _controller: UserBundle:Profile:showMyProfile }
+
+profile_stranger_show:
+    pattern:    /{slug}/show
+    defaults:   { _controller: UserBundle:Profile:showStrangerProfile }
