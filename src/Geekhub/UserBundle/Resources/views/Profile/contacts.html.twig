@@ -1,0 +1,38 @@
+<div id="contacts">
+    {% if user.facebookProfile != NULL %}
+        <a href="{{ user.facebookProfile }}">Fb</a>
+    {% endif %}
+    {% if user.vkontakteProfile != NULL %}
+        <a href="{{ user.vkontakteProfile }}">Vk</a>
+    {% endif %}
+    {% if user.odnoklassnikiProfile != NULL %}
+        <a href="{{ user.odnoklassnikiProfile }}">Ok</a>
+    {% endif %}
+    {% if user.phone != NULL %}
+        <a href="#" title="{{ user.phone }}">Phone</a>
+    {% endif %}
+    {% if user.skype != NULL %}
+        <a href="#" title="{{ user.skype }}">Skype</a>
+    {% endif %}
+    {% if isFakeEmail == false %}
+        <a id="send-email" href="#" {% if app.security.token.user.id == user.id %}title="{{ user.email }}"{% endif %}>
+            Email
+        </a>
+        <div class="block">
+            <p>Написати листа</p>
+            <label for="add-phone">Адрес для зворотнього зв'язку
+                <input class="data" id="sender-email" value="{{ app.security.token.user.email }}" size="26" />
+            </label>
+            <label for="theme-email">Тема листа
+                <input class="data" id="theme-email" size="26" />
+            </label>
+            <label for="text-email">Текст повідомлення
+                <textarea style="width: 240px;height: 80px;" id="text-email"    ></textarea>
+            </label>
+            <input type="hidden" id="user-slug" value="{{ user.slug }}" />
+
+            <a href="#" class="submit-send-email">Надіслати</a>
+            <a href="#" class="reset-send-email">Відмінити</a>
+        </div>
+    {% endif %}
+</div>

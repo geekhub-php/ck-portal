@@ -25,8 +25,7 @@
 {% block body %}
     <div style="width: 250px; float: left;">
         <img src="{{ user.profilePicture | imagine_filter('dream_main_image') }}" />
-        <input type="hidden" id="dream-id" value="{{ user.id }}" />
-        <input type="hidden" id="tabs-url" value="" />
+        {% include 'UserBundle:Profile:contacts.html.twig' %}
     </div>
     <div>
         <table class="record_properties">
