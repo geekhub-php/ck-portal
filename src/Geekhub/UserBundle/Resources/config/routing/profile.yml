@@ -25,3 +25,7 @@ ajax_update_phone:
 ajax_update_email:
     pattern:    /ajax/update/email
     defaults:   { _controller: UserBundle:AjaxUser:updateUserEmail }
+
+ajax_send_email:
+    pattern:    /ajax/send/email
+    defaults:   { _controller: UserBundle:AjaxUser:sendEmail }

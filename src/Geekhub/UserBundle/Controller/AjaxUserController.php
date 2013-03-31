@@ -5,6 +5,7 @@ namespace Geekhub\UserBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Geekhub\UserBundle\Entity\User;
 
 class AjaxUserController extends Controller
 {
@@ -121,6 +122,43 @@ class AjaxUserController extends Controller
         }
 
         return $this->prepareAjaxResponse(array('error' => $errors));
+    }
+
+    public function sendEmailAction(Request $request)
+    {
+        if (is_array($error = $this->isValidRequest())) {
+            return $this->prepareAjaxResponse($error);
+        }
+
+        $senderEmail = $request->get('senderEmail');
+        $themeEmail = $request->get('themeEmail');
+        $textEmail = $request->get('textEmail');
+        $slug = $request->get('userSlug');
+
+        $em = $this->getDoctrine()->getManager();
+        /* @var $recipientUser User */
+        $recipientUser = $em->getRepository('UserBundle:User')->findOneBySlug($slug);
+
+        $message = \Swift_Message::newInstance()
+            ->setSubject('Повідомлення з сайту Черкаська мрія')
+            ->setFrom('noreplay@chedream.com')
+            ->setTo($recipientUser->getEmail())
+            ->setBody(
+                $this->renderView(
+                    'UserBundle:Email:message.html.twig',
+                    array(
+                        'themeEmail'    => $themeEmail,
+                        'senderEmail'   => $senderEmail,
+                        'textEmail'     => $textEmail,
+                        'senderUser'    => $this->getUser(),
+                        'recipientUser' => $recipientUser
+                    )
+                )
+            )
+        ;
+        $this->get('mailer')->send($message);
+
+        return $this->prepareAjaxResponse(array('success' => 'Your email has been send successfully!'));
     }
 
     /**

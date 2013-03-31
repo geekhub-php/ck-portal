@@ -1,0 +1,8 @@
+Привіт, {{ recipientUser.name }}!
+Користувач {{ senderUser.name }} надіслав тобі повідомлення:
+Тема повідомлення: {{ themeEmail }}
+Email відправника: {{ senderEmail }}
+Текст повідомлення:
+    {{ textEmail }}
+
+{% include 'DreamBundle:Email:footer.html.twig' %}
