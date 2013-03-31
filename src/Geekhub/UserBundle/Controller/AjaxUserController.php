@@ -54,6 +54,75 @@ class AjaxUserController extends Controller
         return $this->prepareAjaxResponse(array('error' => $errors));
     }
 
+    public function updateUserSkypeAction(Request $request)
+    {
+        if (is_array($error = $this->isValidRequest())) {
+            return $this->prepareAjaxResponse($error);
+        }
+
+        $user = $this->getUser();
+        $user->setSkype($request->get('contactData'));
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($user);
+
+        if (count($errors) == 0) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->prepareAjaxResponse(array('success' => 'Your information has been update successfully'));
+        }
+
+        return $this->prepareAjaxResponse(array('error' => $errors));
+    }
+
+    public function updateUserPhoneAction(Request $request)
+    {
+        if (is_array($error = $this->isValidRequest())) {
+            return $this->prepareAjaxResponse($error);
+        }
+
+        $user = $this->getUser();
+        $user->setPhone($request->get('contactData'));
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($user);
+
+        if (count($errors) == 0) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->prepareAjaxResponse(array('success' => 'Your information has been update successfully'));
+        }
+
+        return $this->prepareAjaxResponse(array('error' => $errors));
+    }
+
+    public function updateUserEmailAction(Request $request)
+    {
+        if (is_array($error = $this->isValidRequest())) {
+            return $this->prepareAjaxResponse($error);
+        }
+
+        $user = $this->getUser();
+        $user->setEmail($request->get('contactData'));
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($user);
+
+        if (count($errors) == 0) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->prepareAjaxResponse(array('success' => 'Your information has been update successfully'));
+        }
+
+        return $this->prepareAjaxResponse(array('error' => $errors));
+    }
+
     /**
      * @param $answer array message ('error' => 'This error')
      * @param $format string type of response format - json, xml

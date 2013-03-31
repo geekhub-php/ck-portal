@@ -13,3 +13,15 @@ ajax_update_about_me:
 ajax_update_avatar:
     pattern:    /ajax/update/avatar
     defaults:   { _controller: UserBundle:AjaxUser:updateUserAvatar }
+
+ajax_update_skype:
+    pattern:    /ajax/update/skype
+    defaults:   { _controller: UserBundle:AjaxUser:updateUserSkype }
+
+ajax_update_phone:
+    pattern:    /ajax/update/phone
+    defaults:   { _controller: UserBundle:AjaxUser:updateUserPhone }
+
+ajax_update_email:
+    pattern:    /ajax/update/email
+    defaults:   { _controller: UserBundle:AjaxUser:updateUserEmail }
