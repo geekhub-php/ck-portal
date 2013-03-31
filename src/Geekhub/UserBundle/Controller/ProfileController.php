@@ -21,9 +21,11 @@ class ProfileController extends Controller
         }
 
         $contributorsArray = $this->get('geekhub.user_bundle.user_manager')->getContributedDreams($user, true);
+        $isFakeEmail = $this->get('geekhub.user_bundle.user_manager')->isFakeEmail($user);
 
         return $this->render('UserBundle:Profile:showMy.html.twig', array(
             'user'              => $user,
+            'isFakeEmail'       => $isFakeEmail,
             'contributorsArray' => $contributorsArray,
         ));
     }
@@ -44,9 +46,11 @@ class ProfileController extends Controller
         }
 
         $contributorsArray = $this->get('geekhub.user_bundle.user_manager')->getContributedDreams($user, false);
+        $isFakeEmail = $this->get('geekhub.user_bundle.user_manager')->isFakeEmail($user);
 
         return $this->render('UserBundle:Profile:showStranger.html.twig', array(
             'user'              => $user,
+            'isFakeEmail'       => $isFakeEmail,
             'contributorsArray' => $contributorsArray,
         ));
     }

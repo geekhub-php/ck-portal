@@ -44,4 +44,16 @@ class UserManager
 
         return $contributorsArray;
     }
+
+    public function isFakeEmail(User $user)
+    {
+        if (preg_match("/\S*@vk.com\S*/i", $user->getEmail())) {
+            return true;
+        }
+        elseif (preg_match("/\S*@odnoklassniki.ru\S*/i", $user->getEmail())) {
+            return true;
+        }
+
+        return false;
+    }
 }
