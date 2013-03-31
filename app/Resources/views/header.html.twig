@@ -1,11 +1,11 @@
-<header id="header" class="">
+<div id="header" class="header">
     <h1 id="logo" class="">
         <a href="{{ path('dream_homepage') }}">
             <img src="" alt="" />Chedream
         </a>
     </h1>
     <nav id="nav" class="">
-        <ul id="navigation" class="">
+        <ul id="navigation" class="header-menu">
             <li>
                 <a href="{{ path('dream_dreams') }}">Мрії</a>
             </li>
@@ -19,31 +19,41 @@
                 <a href="#">Підписатись</a>
             </li>
             <li>
-                <a href="{{ path('dream_new') }}">+ Додати мрію</a>
+                <a class="add-dream" href="{{ path('dream_new') }}">Додати мрію</a>
             </li>
         </ul><!-- /navigation -->
     </nav><!-- /nav -->
-    <div id="sign-in">
+    <div id="sign-in" class="signin-block">
+        <span>Увійти через</span>
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             {% set user = app.security.getToken().getUser() %}
             Вітаю, {{ user.name }} | notify = {{ user.notices | length }} | <a href="#">Мої мрії</a> <a href="{{ path('fos_user_security_logout') }}">Вийти</a>
         {% else %}
-            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">
-                Фб
-            </a>
-            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte'}) }}" class="social-sign-in">
-                Вк
-            </a>
-            <a href="{{ path('hwi_oauth_service_redirect', {'service': 'odnoklassniki'}) }}" class="social-sign-in">
-                Ок
-            </a>
+            <ul>
+                <li>
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in fb-signin">
+                        Фб
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'vkontakte'}) }}" class="social-sign-in vk-signin">
+                        Вк
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'odnoklassniki'}) }}" class="social-sign-in ok-signin">
+                        Ок
+                    </a>
+                </li>
+            </ul>
         {% endif %}
     </div>
-    <div id="search">
+    <div id="search" class="search-block">
+        <a href="#" id="search-form-open">Пошук</a>
         <form>
-            <input type="text">
+            <input type="text" placeholder="Search"/>
             <button type="submit">Знайти</button>
         </form>
     </div>
-</header><!-- /header -->
+</div><!-- /header -->
 
