@@ -83,7 +83,8 @@ a.contribute span span {
     padding: 0;
 }
 #contribute-actions div.block,
-#contact-actions div.block{
+#contact-actions div.block,
+#contacts div.block{
     display: none;
     clear: both;
     margin: 7px;

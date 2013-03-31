@@ -52,6 +52,49 @@
 
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script>
+        jQuery('#send-email').on('click', function(e){
+            e.preventDefault();
+            jQuery(this).parent().find('.block').show();
+        });
+        jQuery('.reset-send-email').on('click', function(e){
+            e.preventDefault();
+            jQuery('#send-email').show(0).parent().find('.block').hide(0);
+        });
+        jQuery('.submit-send-email').on('click', function(e){
+            e.preventDefault();
+            divData = jQuery(this).parent();
+            senderEmail = divData.find("#sender-email").val();
+            themeEmail = divData.find("#theme-email").val();
+            textEmail = divData.find("#text-email").val();
+            userSlug = divData.find("#user-slug").val();
+            $.ajax({
+                url: "{{ url('ajax_send_email') }}",
+                type: 'POST',
+                data: {
+                    senderEmail: senderEmail,
+                    themeEmail: themeEmail,
+                    textEmail: textEmail,
+                    userSlug: userSlug
+                },
+                success: function(data){
+                    if (data.success) {
+                        alert(data.success);
+                        divData.show(0).parent().find('.block').hide(0);
+                    }
+                    else if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
+                    }
+                },
+                complete: function(){
+                },
+                error: function(){
+                },
+                beforeSend: function(request){
+                }
+            });
+        });
+    </script>
+    <script>
         $(document).ready(function(){
             $( "#tabs" ).tabs();
         });
