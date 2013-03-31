@@ -82,7 +82,8 @@ a.contribute span span {
 #contribute-actions {
     padding: 0;
 }
-#contribute-actions div.block {
+#contribute-actions div.block,
+#contact-actions div.block{
     display: none;
     clear: both;
     margin: 7px;
@@ -112,4 +113,8 @@ p.progressbar-info {
 }
 .dream-action li .block {
     display: none;
+}
+
+#contacts {
+    margin: 20px 0 5px 0;
 }

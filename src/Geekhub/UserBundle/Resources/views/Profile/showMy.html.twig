@@ -24,10 +24,73 @@
     <meta property="og:description" content="{{- user.aboutMe|dotdotdot(30) -}}" />
 {% endblock %}
 {% block body %}
-    <div id="main-image" style="width: 200px; height: 200px; float: left; background-image: url('{{ user.profilePicture | imagine_filter('dream_main_image') }}')">
+    <div style="width: 250px; float: left;">
+        <div id="main-image" style="width: 200px; height: 200px; background-image: url('{{ user.profilePicture | imagine_filter('dream_main_image') }}')">
+        </div>
+        <div id="contacts">
+            {% if user.facebookProfile != NULL %}
+                <a href="{{ user.facebookProfile }}">Fb</a>
+            {% endif %}
+            {% if user.vkontakteProfile != NULL %}
+                <a href="{{ user.vkontakteProfile }}">Vk</a>
+            {% endif %}
+            {% if user.odnoklassnikiProfile != NULL %}
+                <a href="{{ user.odnoklassnikiProfile }}">Ok</a>
+            {% endif %}
+            {% if user.phone != NULL %}
+                <a href="#" title="{{ user.phone }}">Phone</a>
+            {% endif %}
+            {% if user.skype != NULL %}
+                <a href="#" title="{{ user.skype }}">Skype</a>
+            {% endif %}
+            {% if isFakeEmail == false %}
+                <a href="#" title="{{ user.email }}">Email</a>
+            {% endif %}
+        </div>
+        <ul id="contact-actions">
+            <li>
+                {% if user.skype != NULL %}
+                    <a class="add-contact" href="#">Змінити Skype</a>
+                {% else %}
+                    <a class="add-contact" href="#">Додати Skype</a>
+                {% endif %}
+                <div class="block">
+                    <label for="add-skype">Slype логін
+                        <input class="data" id="add-skype" value="{{ user.skype }}" class="quantity" size="26" />
+                    </label>
+                    <input type="hidden" value="{{ url('ajax_update_skype') }}">
+                    <a href="#" class="submit-add-contact">Ok</a>
+                    <a href="#" class="reset-add-contact">Вихід</a>
+                </div>
+            </li>
+            <li>
+                <a class="add-contact" {% if isFakeEmail == true %}style="color: red" {% endif %}href="#">Змінити E-mail</a>
+                <div class="block">
+                    <label for="add-email">Email
+                        <input class="data" id="add-email" value="{{ user.email }}" class="quantity" size="26" />
+                    </label>
+                    <input type="hidden" value="{{ url('ajax_update_email') }}">
+                    <a href="#" class="submit-add-contact">Ok</a>
+                    <a href="#" class="reset-add-contact">Вихід</a>
+                </div>
+            </li>
+            <li>
+                {% if user.phone != NULL %}
+                    <a class="add-contact" href="#">Змінити номер телефону</a>
+                {% else %}
+                    <a class="add-contact" href="#">Додати номер телефону</a>
+                {% endif %}
+                <div class="block">
+                    <label for="add-phone">Телефон
+                        <input class="data" id="add-phone" value="{{ user.phone }}" class="quantity" size="26" />
+                    </label>
+                    <input type="hidden" value="{{ url('ajax_update_phone') }}">
+                    <a href="#" class="submit-add-contact">Ok</a>
+                    <a href="#" class="reset-add-contact">Вихід</a>
+                </div>
+            </li>
+        </ul>
     </div>
-    <div id="fine-uploader"></div>
-    <div>
         <table class="record_properties">
             <tr>
                 <td><h1>{{ user.name }}</h1></td>
@@ -68,8 +131,48 @@
         <script type="text/javascript" src="{{ asset_url }}"></script>
     {% endjavascripts %}
     <script>
+        jQuery('a.add-contact').on('click', function(e){
+            e.preventDefault();
+            jQuery('a.add-contact').show(0).parent().find('.block').hide(0);
+            jQuery(this).hide(0);
+            jQuery(this).parent().find('.block').show();
+        });
+        jQuery('.reset-add-contact').on('click', function(e){
+            e.preventDefault();
+            jQuery('a.add-contact').show(0).parent().find('.block').hide(0);
+        });
+        jQuery('.submit-add-contact').on('click', function(e){
+            e.preventDefault();
+            divData = jQuery(this).parent();
+            contactData = divData.find(".data").val();
+            $.ajax({
+                url: divData.find('input:hidden').val(),
+                type: 'POST',
+                data: {
+                    contactData: contactData
+                },
+                success: function(data){
+                    if (data.success) {
+                        alert(data.success);
+                        jQuery('a.add-contact').show(0).parent().find('.block').hide(0);
+                    }
+                    else if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>');
+                    }
+                },
+                complete: function(){
+                },
+                error: function(){
+                },
+                beforeSend: function(request){
+                }
+            });
+        });
+    </script>
+    <script>
         $(document).ready(function(){
             $( "#tabs" ).tabs();
+            $( document ).tooltip();
         });
     </script>
     <script>
