@@ -31,6 +31,29 @@ class AjaxUserController extends Controller
         return $this->prepareAjaxResponse(array('error' => $errors));
     }
 
+    public function updateUserAvatarAction(Request $request)
+    {
+        if (is_array($error = $this->isValidRequest())) {
+            return $this->prepareAjaxResponse($error);
+        }
+
+        $user = $this->getUser();
+        $user->setProfilePicture($request->get('profilePicture'));
+
+        $validator = $this->get('validator');
+        $errors = $validator->validate($user);
+
+        if (count($errors) == 0) {
+            $em = $this->getDoctrine()->getManager();
+            $em->persist($user);
+            $em->flush();
+
+            return $this->prepareAjaxResponse(array('success' => 'Your information has been update successfully'));
+        }
+
+        return $this->prepareAjaxResponse(array('error' => $errors));
+    }
+
     /**
      * @param $answer array message ('error' => 'This error')
      * @param $format string type of response format - json, xml

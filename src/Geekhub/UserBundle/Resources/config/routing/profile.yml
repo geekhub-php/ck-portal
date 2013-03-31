@@ -9,3 +9,7 @@ profile_stranger_show:
 ajax_update_about_me:
     pattern:    /ajax/update/about-me
     defaults:   { _controller: UserBundle:AjaxUser:updateUserAboutMe }
+
+ajax_update_avatar:
+    pattern:    /ajax/update/avatar
+    defaults:   { _controller: UserBundle:AjaxUser:updateUserAvatar }
