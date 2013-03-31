@@ -17,8 +17,10 @@
     border-bottom: 1px solid #DDD;
     color: #FFF;
 }
-.main-image-upload {
+.main-image-start {
     background-image: url(../../img/no-picture.gif);
+}
+.main-image-upload {
     background-color: transparent;
     height: 200px;
     width: 200px;
