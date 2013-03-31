@@ -37,10 +37,12 @@
                 <td>{{ user.birthday }}</td>
             </tr>
             <tr>
-                <th>Про себе</th>
-                <td>{{ user.aboutMe }}</td>
+                <th>Про себе<br />
+                    <a href="#" id="about-me-edit">змінити</a>
+                    <a href="#" style="display: none;" id="about-me-update">зберегти</a>
+                </th>
+                <td id="about-me">{{ user.aboutMe }}</td>
             </tr>
-            </tbody>
         </table>
         <div id="tabs">
             {% include 'UserBundle:Profile:tabs.html.twig' %}
@@ -55,6 +57,45 @@
     <script>
         $(document).ready(function(){
             $( "#tabs" ).tabs();
+        });
+    </script>
+    <script>
+        {# Edit aboutMe #}
+        jQuery('#about-me-edit').on('click', function(e){
+            e.preventDefault();
+            var aboutMe = $('#about-me');
+            aboutMe.html('<textarea style="width: 580px;height: 80px;" name="aboutMe" class="commentArea">' + aboutMe.text() + '</textarea>');
+            $(this).hide();
+            $('#about-me-update').show();
+        });
+
+        $("#about-me-update").click(function(e){
+            e.preventDefault();
+            var aboutMeNew = $(this).closest('tr').find('textarea.commentArea').val();
+            $.ajax({
+                url: "{{ url('ajax_update_about_me') }}",
+                type: 'POST',
+                data: {
+                    aboutMe: aboutMeNew
+                },
+                success: function(data){
+                    if (data.success) {
+                        $('.commentArea').replaceWith('<td>'+aboutMeNew+'</td>');
+                        $('#about-me-update').hide();
+                        $('#about-me-edit').show();
+                        alert(data.success);
+                    }
+                    else if (data.error) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>').unbind();
+                    }
+                },
+                complete: function(){
+                },
+                error: function(){
+                },
+                beforeSend: function(request){
+                }
+            });
         });
     </script>
     <script type="text/javascript">
