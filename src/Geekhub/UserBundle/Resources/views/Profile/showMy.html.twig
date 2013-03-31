@@ -2,6 +2,7 @@
 {% block title %}{{ parent() }} - {{ user.name }}{% endblock %}
 {% block stylesheets %}
     {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('bundles/dream/css/uploader/fineuploader.css') }}" />
     <style type="text/css">
         .ui-tabs-anchor {
             float: left;
@@ -23,11 +24,9 @@
     <meta property="og:description" content="{{- user.aboutMe|dotdotdot(30) -}}" />
 {% endblock %}
 {% block body %}
-    <div style="width: 250px; float: left;">
-        <img src="{{ user.profilePicture | imagine_filter('dream_main_image') }}" />
-        <input type="hidden" id="dream-id" value="{{ user.id }}" />
-        <input type="hidden" id="tabs-url" value="" />
+    <div id="main-image" style="width: 200px; height: 200px; float: left; background-image: url('{{ user.profilePicture | imagine_filter('dream_main_image') }}')">
     </div>
+    <div id="fine-uploader"></div>
     <div>
         <table class="record_properties">
             <tr>
@@ -54,6 +53,20 @@
     {{ parent() }}
 
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
+    {% javascripts
+        'bundles/dream/js/tag-it.min.js'
+        'bundles/dream/js/uploader/util.js'
+        'bundles/dream/js/uploader/handler.base.js'
+        'bundles/dream/js/uploader/handler.xhr.js'
+        'bundles/dream/js/uploader/ajax.requester.js'
+        'bundles/dream/js/uploader/deletefile.ajax.requester.js'
+        'bundles/dream/js/uploader/button.js'
+        'bundles/dream/js/uploader/uploader.basic.js'
+        'bundles/dream/js/uploader/dnd.js'
+        'bundles/dream/js/uploader/uploader.js'
+        'bundles/dream/js/stacktrace.js'%}
+        <script type="text/javascript" src="{{ asset_url }}"></script>
+    {% endjavascripts %}
     <script>
         $(document).ready(function(){
             $( "#tabs" ).tabs();
@@ -97,6 +110,68 @@
                 }
             });
         });
+    </script>
+    <script>
+        function createUploader() {
+            var uploader = new qq.FineUploader({
+                element: document.getElementById('main-image'),
+                template: '<div class="qq-uploader">' +
+                        ('<div class="qq-upload-drop-area"><span>Перетащіть сюди файл</span></div>') +
+                        ('<div class="qq-upload-button main-image-upload"></div>') +
+                        '<span class="qq-drop-processing"><span>Працюємо</span><span class="qq-drop-processing-spinner"></span></span>' +
+                        ('<ul class="qq-upload-list"></ul>') +
+                        '</div>',
+                classes: {
+                    buttonHover: 'main-image-upload-hover',
+                    buttonFocus: 'qq-upload-button-focus'
+                },
+                request: {
+                    debug: true,
+                    endpoint: '{{ url('file_upload_image') }}'
+                },
+                callbacks: {
+                    onComplete: function(id, fileName, responseJSON) {
+                        if (!responseJSON.error) {
+                            $.ajax({
+                                url: "{{ url('ajax_update_avatar') }}",
+                                type: 'POST',
+                                data: {
+                                    profilePicture: responseJSON.path
+                                },
+                                success: function(data){
+                                    if (data.success) {
+                                        $('#main-image').removeAttr( 'style').css({
+                                            "width": "200px",
+                                            "height": "200px",
+                                            "float": "left"
+                                        });
+                                        alert(data.success);
+                                    }
+                                    else if (data.error) {
+                                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>' + data.error + '</li></ul></dd>').unbind();
+                                    }
+                                },
+                                complete: function(){
+                                },
+                                error: function(){
+                                },
+                                beforeSend: function(request){
+                                }
+                            });
+                            $('.main-image-upload').css('background-image', 'none');
+                            $('#main-image-preview').remove();
+                            $('.main-image-upload').append('<img id="main-image-preview" height="200px" src="{{app.request.baseurl}}/' + responseJSON.path + '" alt="' + fileName + '">');
+                            $('#geekhub_dreambundle_dreamtype_mainImage').val(responseJSON.path);
+                        }
+                    },
+                    onError: function(id, name, errorReason) {
+                        $('#system-message').append('<dt class="error">Ошибка</dt><dd class="error message"><ul><li>Упс, щось пішло не так :( ' + errorReason + '</li></ul></dd>')
+                    }
+                }
+            });
+        }
+
+        window.onload = createUploader;
     </script>
     <script type="text/javascript">
         function dump(obj) {
