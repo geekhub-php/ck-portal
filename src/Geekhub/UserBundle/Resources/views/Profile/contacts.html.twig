@@ -15,13 +15,19 @@
         <a href="#" title="{{ user.skype }}">Skype</a>
     {% endif %}
     {% if isFakeEmail == false %}
-        <a id="send-email" href="#" {% if app.security.token.user.id == user.id %}title="{{ user.email }}"{% endif %}>
+        <a id="send-email" href="#"
+           {% if is_granted("IS_AUTHENTICATED_REMEMBERED")
+           and app.security.token.user.id == user.id %}title="{{ user.email }}"{% endif %}>
             Email
         </a>
         <div class="block">
             <p>Написати листа</p>
             <label for="add-phone">Адрес для зворотнього зв'язку
-                <input class="data" id="sender-email" value="{{ app.security.token.user.email }}" size="26" />
+                <input class="data" id="sender-email" value="
+                {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
+                    {{ app.security.token.user.email }}
+                {% endif %}
+                " size="26" />
             </label>
             <label for="theme-email">Тема листа
                 <input class="data" id="theme-email" size="26" />
