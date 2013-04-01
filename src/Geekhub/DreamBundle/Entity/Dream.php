@@ -11,7 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  * Dream
  *
  * @ORM\Table(name="dream")
- * @ORM\Entity
+ * @ORM\Entity(repositoryClass="Geekhub\DreamBundle\Entity\DreamRepository")
  * @Gedmo\SoftDeleteable(fieldName="deletedAt")
  */
 class Dream implements Taggable
