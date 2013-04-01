@@ -1,3 +1,7 @@
+pages:
+    resource: "@PagesBundle/Resources/config/routing.yml"
+    prefix:   /
+
 dream_bundle:
     resource: "@DreamBundle/Resources/config/routing.yml"
     prefix:   /

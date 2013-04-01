@@ -1,0 +1,3 @@
+pages_faq:
+    pattern:  /faq
+    defaults: { _controller: PagesBundle:Default:faq }

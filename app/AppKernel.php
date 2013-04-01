@@ -30,6 +30,7 @@ class AppKernel extends Kernel
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
             new Geekhub\FileBundle\GeekhubFileBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
+            new Geekhub\PagesBundle\PagesBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
