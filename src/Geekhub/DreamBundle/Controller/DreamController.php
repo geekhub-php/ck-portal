@@ -6,10 +6,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\Security\Core\Exception\AccessDeniedException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 use Geekhub\DreamBundle\Entity\Dream;
 use Geekhub\DreamBundle\Form\DreamType;
 use Geekhub\DreamBundle\Entity\ProgressBar;
+use Geekhub\DreamBundle\Entity\DreamRepository;
 
 /**
  * Dream controller.
@@ -21,11 +23,12 @@ class DreamController extends Controller
      * Lists all Dream entities.
      *
      */
-    public function indexAction()
+    public function indexAction($state)
     {
         $em = $this->getDoctrine()->getManager();
 
-        $dreams = $em->getRepository('DreamBundle:Dream')->findAll();
+        $dreams = $em->getRepository('DreamBundle:Dream')->findBy(array(), array('created' => 'DESC'), 8, 0);
+        $countDreams = $em->getRepository('DreamBundle:Dream')->getCountDreams('all');
 
         //Set tags
         $tagManager = $this->get('fpn_tag.tag_manager');
@@ -34,7 +37,40 @@ class DreamController extends Controller
         }
 
         return $this->render('DreamBundle:Dream:index.html.twig', array(
-            'dreams' => $dreams,
+            'state'  => $state,
+            'limit'  => 0,
+            'offset' => 0,
+        ));
+    }
+
+    public function showMoreDreamsAction($limit, $offset, $state)
+    {
+        /* @var $dreamRepo DreamRepository */
+        $dreamRepo = $this->getDoctrine()->getManager()->getRepository('DreamBundle:Dream');
+        $countDreams = $dreamRepo->getCountDreams($state);
+
+        switch ($state) {
+            case 'new':
+                $dreams = $dreamRepo->findBy(array(), array('created' => 'DESC'), $limit, $offset);
+                break;
+            case 'popular':
+                $dreams = $dreamRepo->findBy(array(), array('like' => 'DESC'), $limit, $offset);
+                break;
+            case 'success':
+                $dreams = $dreamRepo->findBy(array('state' => 'success'), array('created' => 'DESC'), $limit, $offset);
+                break;
+            case 'complete':
+                $dreams = $dreamRepo->findBy(array('state' => 'complete'), array('created' => 'DESC'), $limit, $offset);
+                break;
+            default:
+                throw new NotFoundHttpException('Bad request!');
+        }
+
+        return $this->render('DreamBundle:Dream:showMore.html.twig', array(
+            'dreams'      => $dreams,
+            'countDreams' => $countDreams,
+            'limit'       => $limit,
+            'offset'      => $offset,
         ));
     }
 

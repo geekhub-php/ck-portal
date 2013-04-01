@@ -1,38 +1,28 @@
 {% extends "::base.html.twig" %}
 {% block body %}
 <h1>Черкаські мрії</h1>
-
-    {% for dream in dreams %}
-        <div class="front-dream">
-            <a href="{{ path('dream_show', { 'slug': dream.slug }) }}"><h3>{{ dream.title }}</h3></a>
-            Додати до обраного.
-            <div>
-                <a href="{{ path('profile_stranger_show', {'slug':dream.owner.slug}) }}">
-                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />
-                    {{ dream.owner.name }}
-                </a>
-            </div>
-            <div style="margin: 15px;">
-                <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />
-            </div>
-            <div class="like">
-                Підтримали: 0 Рейтинг: {{ dream.like }}
-            </div>
-            <div>
-                Зібрано:
-            </div>
-            <div>
-                Теги:<br />
-                {% for tag in dream.tags %}{{ tag.name }} {% endfor %}
-            </div>
-        </div>
-    {% endfor %}
-
 <ul>
     <li>
-        <a href="{{ path('dream_new') }}">
-            Створити нову мрію
-        </a>
+        <a href="{{ path('dream_dreams') }}">Нові</a>
+    </li>
+    <li>
+        <a href="{{ path('dream_dreams', {'state': 'popular'}) }}">Популярні</a>
+    </li>
+    <li>
+        <a href="{{ path('dream_dreams', {'state': 'success'}) }}">На стадії втілення</a>
+    </li>
+    <li>
+        <a href="{{ path('dream_dreams', {'state': 'complete'}) }}">Втілені</a>
     </li>
 </ul>
+    {% render url('dream_show_more_dreams', { 'state': state }) %}
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        $("#show-more").on('click', function(e) {
+            e.preventDefault();
+            $('#show-more-container').load('{{ path('dream_show_more_dreams', {'state': state, 'limit': limit+8, 'offser': offset+8}) }}');
+        });
+    </script>
 {% endblock %}

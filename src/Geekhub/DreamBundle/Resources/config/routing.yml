@@ -3,8 +3,12 @@ dream_homepage:
     defaults: { _controller: DreamBundle:Default:index }
 
 dream_dreams:
-    pattern:  /dreams
-    defaults: { _controller: "DreamBundle:Dream:index" }
+    pattern:  /dreams/{state}
+    defaults: { _controller: "DreamBundle:Dream:index", state: 'new' }
+
+dream_show_more_dreams:
+    pattern:  /showmore/{limit}/{offset}/{state}
+    defaults: { _controller: "DreamBundle:Dream:showMoreDreams", limit: 8, offset: 0, state: 'new' }
 
 dream_entity:
     resource: "@DreamBundle/Resources/config/routing/dream.yml"
