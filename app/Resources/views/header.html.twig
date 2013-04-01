@@ -26,7 +26,7 @@
     <div id="sign-in">
         {% if is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             {% set user = app.security.getToken().getUser() %}
-            Вітаю, {{ user.name }} | notify = {{ user.notices | length }} | <a href="#">Мої мрії</a> <a href="{{ path('fos_user_security_logout') }}">Вийти</a>
+            Вітаю, <a href="{{ path('profile_my_show') }}">{{ user.name }}</a> | notify = {{ user.notices | length }} | <a href="#">Мої мрії</a> <a href="{{ path('fos_user_security_logout') }}">Вийти</a>
         {% else %}
             <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">
                 Фб
