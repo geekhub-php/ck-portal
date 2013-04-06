@@ -2,6 +2,7 @@
 <html>
     <head>
         <meta charset="UTF-8" />
+<<<<<<< HEAD
         <title>{% block title %}Черкаська мрія{% endblock %}</title>
         {% block stylesheets %}
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
@@ -9,6 +10,11 @@
                 <link rel="stylesheet" type="text/css" charset="UTF-8" media="all" href="{{ asset_url }}"/>
             {% endstylesheets %}
         {% endblock %}
+=======
+        <title>{% block title %}{% endblock %}</title>
+        {% block stylesheets %}{% endblock %}
+        <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
+>>>>>>> 30574c8ed8ff24650ff7f9171c4f39e0fe1852c9
     </head>
     <body>
         <div id="system-message-container">

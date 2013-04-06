@@ -1,14 +1,515 @@
-.container { position: relative; width: 1100px; margin: 0 auto; padding: 0; }
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> RESET CSS <--------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+/**
+* Eric Meyer's Reset CSS v2.0 (http://meyerweb.com/eric/tools/css/reset/)
+* http://cssreset.com
+*/
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed,
+figure, figcaption, footer, header, hgroup,
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 100%;
+    font: inherit;
+    vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure,
+footer, header, hgroup, menu, nav, section {
+    display: block;
+}
+ol, ul {
+    list-style: none;
+}
+blockquote, q {
+    quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+    content: '';
+    content: none;
+}
+table {
+    border-collapse: collapse;
+    border-spacing: 0;
+}
+
+body {
+    background: #E9E9E9;
+    font: 14px/120% 'DAXPRO';
+}
+
+@font-face {
+    font-family: 'DAXPRO';
+    src: url('../../../web/fonts/DAXPRO.eot');
+    src: url('../../../web/fonts/DAXPRO.woff') format('woff'),
+         url('../../../web/fonts/DAXPRO.ttf') format('truetype'),
+         url('../../../web/fonts/DAXPRO.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    font-family: 'DAXPRO-BOLD';
+    src: url('../../../web/fonts/DAXPRO-BOLD.eot');
+    src: url('../../../web/fonts/DAXPRO-BOLD.woff') format('woff'),
+         url('../../../web/fonts/DAXPRO-BOLD.ttf') format('truetype'),
+         url('../../../web/fonts/DAXPRO-BOLD.svg') format('svg');
+    font-weight: normal;
+    font-style: normal;
+}
+
+
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> MAIN STRUCTURE <---------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.container {
+    margin: 0 auto;
+    width: 960px;
+}
+
+
+.header {
+    background: url(../../../web/images/base_images/header_spot.png) no-repeat center top;
+    height: 75px;
+    position: relative;
+
+}
+.header a {
+    font-family: 'DAXPRO';
+}
+h1#logo a {
+    background: url(../../../web/images/base_images/logo.png) no-repeat left top;
+    display: block;
+    height: 32px;
+    margin: 20px 0 0;
+    overflow: hidden;
+    text-indent: -1000px;
+    width: 88px;
+}
+ul.header-menu {
+    float: left;
+    overflow: hidden;
+    padding: 16px 0 0;
+}
+ul.header-menu li {
+    float: left;
+    overflow: hidden;
+    padding: 0 0 0 20px;
+}
+ul.header-menu li a {
+    color: #33393E;
+    font: 14px/40px 'DAXPRO';
+    text-decoration: none;
+}
+ul.header-menu li a:hover {
+    color: #DD3509;
+}
+ul.header-menu li a.add-dream {
+    background: url(../../../web/images/base_images/add_dream.png) no-repeat right top;
+    display: block;
+    font-family: 'DAXPRO-BOLD';
+    height: 40px;
+    line-height: 40px;;
+    padding: 0 49px 0 30px;
+}
+ul.header-menu li a.add-dream:hover {
+    background: url(../../../web/images/base_images/add_dream.png) no-repeat right bottom;
+    color: #33393E;
+}
+.signin-block {
+    float: left;
+    margin: 0 0 0 37px;
+}
+.signin-block span {
+    color: #9B9B9B;
+    display: block;
+    float: left;
+    font: 14px/71px 'DAXPRO';
+    margin-right: 7px;
+}
+.signin-block ul {
+    float: left;
+    overflow: hidden;
+}
+.signin-block ul li {
+    float: left;
+    margin: 0;
+}
+.signin-block ul li a {
+    display: block;
+    height: 75px;
+    overflow: hidden;
+    padding: 0;
+    text-indent: -100px;
+}
+.signin-block ul li a.fb-signin {
+    background: url(../../../web/images/base_images/fb_header_link.png) no-repeat right top;
+    width: 31px;
+}
+.signin-block ul li a.vk-signin {
+    background: url(../../../web/images/base_images/vk_header_link.png) no-repeat right top;
+    width: 40px;
+}
+.signin-block ul li a.ok-signin {
+    background: url(../../../web/images/base_images/ok_header_link.png) no-repeat right top;
+    width: 30px;
+}
+.signin-block ul li a:hover {
+    background-position: left top;
+}
+.search-block {
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+.search-block a {
+    background: url(../../../web/images/base_images/seaech_icon.png) no-repeat 59px center;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #9B9B9B;
+    display: block;
+    font: 14px/75px 'DAXPRO';
+    height: 75px;
+    text-decoration: none;
+    padding-left: 13px;
+    width: 86px;
+}
+.search-block a:hover {
+    background-color: #DDD;
+}
+.search-block form {
+    display: none;
+}
+.search-block form.visible {
+    display: block;
+    width: 244px;
+}
+.search-block form input[type="text"] {
+    background: #333;
+    border: none;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #FFF;;
+    display: block;
+    float: left;
+    font: 15px/75px 'DAXPRO-BOLD';
+    height: 75px;
+    padding: 0 0 0 20px;
+    width: 208px;
+}
+::-webkit-input-placeholder {
+    color: #FFF;
+}
+
+:-moz-placeholder { /* Firefox 18- */
+    color: #FFF;
+}
+
+::-moz-placeholder {  /* Firefox 19+ */
+    color: #FFF;
+}
+
+:-ms-input-placeholder {
+    color: #FFF;
+}
+.search-block form button[type="submit"] {
+    background: url(../../../web/images/base_images/search_button.png) no-repeat left top;
+    border: none;
+    display: block;
+    height: 75px;
+    overflow: hidden;
+    text-indent: -1000px;
+    width: 36px;
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> SLIDER BLOCK <-----------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.slider-wrapper {
+    background: #FFF;
+    height: 320px;
+    margin: 0 0 23px;
+    position: relative;
+}
+.slider-wrapper span.slider-bottom-shadow {
+    background: url(../../../web/images/base_images/slider_shadow.png) no-repeat center top;
+    bottom: -17px;
+    display: block;
+    height: 17px;
+    left: 0;
+    position: absolute;
+    right: 0;
+}
+.slider {
+    background: #98fb98;
+    height: 320px;
+    margin: 0 auto;
+    width: 500px;
+}
+ul.splash.left {
+    float: left;
+}
+ul.splash.right {
+    float: right;
+}
+ul.splash li {
+    height: 159px;
+}
+ul.splash li:first-child {
+    border-bottom: 1px solid #E9E9E9;
+}
+ul.splash li a {
+    background: #FFF;
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    color: #464646;
+    display: block;
+    font: 23px/120% 'DAXPRO-BOLD';
+    height: 159px;
+    padding: 20px;
+    text-decoration: none;
+    width: 230px;
+}
+ul.splash.left li a:hover {
+    color: #F2602C;
+    margin-left: -12px;
+    padding-left: 32px;
+}
+ul.splash.right li a:hover {
+    color: #F2602C;
+    margin-right: -12px;
+    width: 242px;
+}
+
+ul.splash.left li a.active {
+    background: url(../../../web/images/base_images/splash_left_active_bg.png) no-repeat left top;
+    color: #FFF;
+    margin-left: -12px;
+    padding-left: 32px;
+}
+ul.splash.right li a.active {
+    background: url(../../../web/images/base_images/splash_right_active_bg.png) no-repeat left top;
+    color: #FFF;
+    margin-right: -12px;
+    width: 242px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> DREAMS LIST <------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+ul.dreams-list {
+    margin: 0 0 0 -13px;
+    overflow: hidden;
+
+}
+ul.dreams-list > li {
+    background: #FFF;
+    float: left;
+    height: 412px;
+    margin: 0 0 20px 13px;
+    overflow: hidden;
+    position: relative;
+    width: 230px;
+}
+ul.dreams-list li a.add-to-chosen {
+    background: url(../../../web/images/base_images/add_to_chosen.png) no-repeat left top;
+    height: 32px;
+    overflow: hidden;
+    position: absolute;
+    right: 0;
+    text-indent: -1000px;
+    top: 0;
+    width: 32px;
+}
+ul.dreams-list li a.dream-title {
+    color: #33393E;
+    display: block;
+    font: 17px/120% 'DAXPRO';
+    height: 61px;
+    margin: 22px 24px 0;
+    text-decoration: none;
+}
+ul.dreams-list li .dream-creator {
+    color: #9B9B9B;
+    font: 14px/120% 'DAXPRO';
+    left: 0;
+    position: absolute;
+    top: 94px;
+    z-index: 2;
+}
+ul.dreams-list li .dream-creator img {
+    background: #db7093;
+    display: block;
+    float: left;
+    height: 24px;
+    margin-top: 14px;
+    width: 24px;
+}
+ul.dreams-list li .dream-photo {
+    margin: 38px 0 0;
+    position: relative;
+}
+ul.dreams-list li .dream-photo span {
+    background: url(../../../web/images/base_images/dream_photo_span.png) no-repeat right top;
+    height: 20px;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 20px;
+}
+ul.dreams-list li .dream-photo img {
+    background: #4169e1;
+    display: block;
+    height: 155px;
+    width: 230px;
+}
+ul.dreams-list li .support {
+    margin: -44px 0 0;
+    overflow: hidden;
+    position: relative;
+    z-index: 1;
+}
+ul.dreams-list li .support li {
+    color: #FFF;
+    float: right;
+    padding: 12px;
+}
+ul.dreams-list li .support li:first-child {
+    float: left;
+}
+ul.dreams-list li .support li span {
+    font: 16px 'DAXPRO-BOLD';
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------> FOOTER <--------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.footer {
+    height: 130px;
+}
+.footer span.copy {
+    background: url(../../../web/images/base_images/footer_copy.png) no-repeat left center;
+    color: #9B9B9B;
+    float: left;
+    line-height: 21px;
+    padding: 0 0 0 28px;
+}
+ul.links {
+    float: left;
+    margin: 0 0 0 74px;
+    overflow: hidden;
+}
+ul.links li {
+    margin: 0 0 12px;
+    overflow: hidden;
+}
+ul.links li a {
+    color: #464646;
+    text-decoration: none;
+}
+ul.links li a:hover {
+    color: #DD3509;
+}
+ul.follow {
+    float: left;
+    margin: 0 0 0 83px;
+    overflow: hidden;
+    width: 230px;
+}
+ul.follow li {
+    float: left;
+    color: #9B9B9B;
+    margin: 0 0 17px 0;
+}
+ul.follow li:first-child {
+    width: 100%;
+}
+ul.follow li a {
+    display: block;
+    height: 39px;
+    overflow: hidden;
+    text-indent: -1000px;
+    width: 39px;
+}
+ul.follow li a.fb {
+    background: url(../../../web/images/base_images/footer_fb.png) no-repeat right top;
+}
+ul.follow li a.vk {
+    background: url(../../../web/images/base_images/footer_vk.png) no-repeat right top;
+}
+ul.follow li a.ok {
+    background: url(../../../web/images/base_images/footer_ok.png) no-repeat right top;
+}
+ul.follow li a.tw {
+    background: url(../../../web/images/base_images/footer_tw.png) no-repeat right top;
+}
+ul.follow li a:hover {
+    background-position: left top;
+}
+ul.development {
+    float: left;
+    margin: 0 0 0 13px;
+    overflow: hidden;
+}
+ul.development li {
+    color: #9B9B9B;
+    line-height: 28px;
+    margin: 0 0 9px;
+    overflow: hidden;
+}
+ul.development li a {
+    display: inline-block;
+}
+ul.development li a.dev {
+    background: url(../../../web/images/base_images/footer_dev_label.png) no-repeat left top;
+    height: 21px;
+    overflow: hidden;
+    width: 29px;
+}
+ul.development li a.design {
+    background: url(../../../web/images/base_images/footer_des_label.png) no-repeat left top;
+    height: 14px;
+    overflow: hidden;
+    width: 24px;
+}
+ul.development li a:hover {
+    background-position: left bottom;
+}
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> RESET CSS <--------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+
+
+
+
+/*.container { position: relative; width: 1100px; margin: 0 auto; padding: 0; }*/
 
 #logo { float: left; margin: 0; padding-right: 30px; }
-#navigation li { list-style: none; float: left; padding-right: 10px; padding-top: 15px; }
-#header a { text-decoration: none; }
-#header a:hover { text-decoration: underline; }
-#sign-in { padding-top: 15px; padding-right: 10px; float: left; }
-#search { padding-top: 15px; }
+/*#navigation li { list-style: none; float: left; padding-right: 10px; padding-top: 15px; }*/
+/*#header a { text-decoration: none; }*/
+/*#header a:hover { text-decoration: underline; }*/
+/*#sign-in { padding-top: 15px; padding-right: 10px; float: left; }*/
+/*#search { padding-top: 15px; }*/
 .social-sign-in { padding-right: 5px; }
 
-.front-dream { float: left; width: 22%; height: 450px; border: 4px double black; margin: 5px; padding: 5px;}
+/*.front-dream { float: left; width: 30%; border: 4px double black; margin: 5px; padding: 5px;}*/
 .front-dream .like { border-top: 1px solid #000000; border-bottom: 1px solid #000000; }
 li { list-style-type: none }
 
@@ -119,3 +620,98 @@ p.progressbar-info {
 #contacts {
     margin: 20px 0 5px 0;
 }
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> SLIDER STYLES <----------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+#my-carousel {
+    position: relative;
+}
+#my-carousel .prev {
+    left: 20px;
+    position: absolute;
+    top: 50%;
+}
+#my-carousel .next {
+    position: absolute;
+    right: 20px;
+    top: 50%;
+}
+#my-carousel ul {
+    position:absolute; /* required */
+    overflow:hidden; /* required */
+    margin:0;
+    padding:0;
+    list-style:none;
+}
+
+#my-carousel ul li {
+    float:left; /* required */
+    height: 320px;
+    /*margin: 0 10px 0 0;*/
+    position: relative;
+    width: 500px;
+}
+#my-carousel ul li img {
+    bottom: 0;
+    display: block;
+    height: 320px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 500px;
+}
+#my-carousel ul li p {
+    bottom: 20px;
+    color: #FFF;
+    left: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+
+
+
+#my-carousel .mask {
+    position:relative; /* required */
+    overflow:hidden; /* required */
+    width:500px; /* required */
+}
+
+#my-carousel .pagination-links {
+    list-style:none;
+    margin:0;
+    padding:0;
+}
+
+#my-carousel .pagination-links li {
+    display:inline;
+}
+
+#my-carousel .pagination-links li.current {
+    background:grey;
+}
+
+#my-carousel .disabled {
+    color:grey;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
