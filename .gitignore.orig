@@ -1,0 +1,18 @@
+web/bundles/
+app/bootstrap.php.cache
+app/cache/*
+app/logs/*
+build/
+vendor
+composer.phar
+
+.idea/
+app/config/parameters.yml
+<<<<<<< HEAD
+web/media/cache/
+web/uploads/
+*~
+=======
+web/uploads/*
+web/media/*
+>>>>>>> 30574c8ed8ff24650ff7f9171c4f39e0fe1852c9
