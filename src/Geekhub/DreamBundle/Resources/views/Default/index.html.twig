@@ -9,7 +9,16 @@
             <li><a href="#">Some text</a></li>
             <li><a href="#">Some text</a></li>
         </ul>
-        <div class="slider"></div>
+        <div class="slider" id="my-carousel">
+            <ul>
+                {% for dream in topDreams %}
+                    <li>
+                        <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />
+                        <p>{{ dream.description }}</p>
+                    </li>
+                {% endfor %}
+            </ul>
+        </div>
     </div>
 
 
