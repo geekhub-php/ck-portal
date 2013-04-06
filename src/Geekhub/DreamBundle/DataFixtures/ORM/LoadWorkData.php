@@ -15,7 +15,6 @@ class LoadWorkData extends AbstractFixture implements OrderedFixtureInterface
         for ($i = 0; $i < 100; $i++) {
             $work = new Work();
             $work->setQuantity(rand(1, 5));
-            $work->setWorker(rand(1, 10));
             $work->setName($job[rand(1, 17)]);
 
             $manager->persist($work);

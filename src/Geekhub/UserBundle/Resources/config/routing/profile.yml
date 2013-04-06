@@ -1,0 +1,15 @@
+profile_my_show:
+    pattern:    /
+    defaults:   { _controller: UserBundle:Profile:showMyProfile }
+
+profile_stranger_show:
+    pattern:    /{slug}/show
+    defaults:   { _controller: UserBundle:Profile:showStrangerProfile }
+
+ajax_update_about_me:
+    pattern:    /ajax/update/about-me
+    defaults:   { _controller: UserBundle:AjaxUser:updateUserAboutMe }
+
+ajax_update_avatar:
+    pattern:    /ajax/update/avatar
+    defaults:   { _controller: UserBundle:AjaxUser:updateUserAvatar }

@@ -2,34 +2,32 @@
 namespace Geekhub\UserBundle\DataFixtures\ORM;
 
 use Doctrine\Common\DataFixtures\AbstractFixture;
+use Symfony\Component\DependencyInjection\ContainerAwareInterface;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 use Doctrine\Common\DataFixtures\OrderedFixtureInterface;
 use Doctrine\Common\Persistence\ObjectManager;
+use Behat\Gherkin\Node\TableNode;
+
 use Geekhub\UserBundle\Entity\User;
 
-class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
+class LoadUserData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
 {
     public function load(ObjectManager $manager)
     {
-        $info = $this->setNameAndSurnameList();
+        $table = new TableNode(file_get_contents(__DIR__.'/user.gherkin'));
+        $array = $table->getRows();
+        for ($i = 1; isset($array[$i]); $i++) {
+            $entity = new User();
+            for ($col = 0; isset($array[$i][$col]); $col++) {
+                $setter = 'set'.ucfirst($array[0][$col]);
+                $entity->$setter($array[$i][$col]);
+            }
 
-        for ($i = 1; $i <= 17; $i++) {
-            $userRef = 'user'.$i;
+            $this->setAdditionalInfo($entity);
 
-            $user = new User();
-            $user->setName($info[$i]['name']);
-            $user->setFirstName($info[$i]['surname']);
-            $user->setUsername($userRef);
-            $user->setEmail($userRef.'@ex.com.ua');
-            $user->setPlainPassword($userRef);
-            $user->setLocked(false);
-            $user->setEnabled(true);
-            $user->setExpired(false);
-            $user->setProfilePicture($this->getReference('image' . $i)->getPath());
-            $manager->persist($user);
-            $manager->flush();
+            $manager->persist($entity);
 
-            $this->addReference($userRef, $user);
-
+            $this->addReference('user'.$i, $entity);
         }
 
         //Demo user
@@ -43,29 +41,38 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
         $user->setEnabled(true);
         $user->setExpired(false);
         $manager->persist($user);
+
         $manager->flush();
 
         $this->addReference('userdemo', $user);
     }
 
-    function setNameAndSurnameList()
+    protected function setAdditionalInfo(User $entity)
     {
-        $list = array();
-        $i = 1;
+        $entity->setName($entity->getFirstName().' '.$entity->getLastName());
+        $entity->setUsername($entity->getFirstName());
+        $entity->setPlainPassword($entity->getFirstName());
+        $entity->setLocked(false);
+        $entity->setEnabled(true);
+        $entity->setExpired(false);
 
-        $nameFile = fopen(__DIR__."/name", "r");
-        $surnameFile = fopen(__DIR__."/surname", "r");
-        while (!feof($nameFile) || !feof($surnameFile)) {
-            $name = fgets($nameFile);
-            $surname = fgets($surnameFile);
-            $list[$i]['name'] = $name;
-            $list[$i]['surname'] = $surname;
-            $i++;
-        }
-        fclose($nameFile);
-        fclose($surnameFile);
+        copy(__DIR__ . '/images/' . $entity->getProfilePicture(), $this->getUploadRootDir() . '/' . $entity->getProfilePicture());
+        $entity->setProfilePicture($this->getUploadDir().'/'.$entity->getProfilePicture());
+    }
 
-        return $list;
+    protected function getUploadRootDir()
+    {
+        return $this->container->get('kernel')->getRootdir() . '/../web/' . $this->getUploadDir();
+    }
+
+    protected function getUploadDir()
+    {
+        return 'uploads/images';
+    }
+
+    public function setContainer(ContainerInterface $container = null)
+    {
+        $this->container = $container;
     }
 
     /**

@@ -28,7 +28,6 @@ twig:
 assetic:
     debug:          "%kernel.debug%"
     use_controller: false
-    bundles:        [ ]
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
@@ -117,7 +116,7 @@ swiftmailer:
     transport:  smtp
     encryption: ssl
     auth_mode:  login
-    host:       smtp.gmail.com
+    host:       %swiftmailer_host%
     username:   %swiftmailer_username%
     password:   %swiftmailer_password%
 
@@ -139,6 +138,10 @@ liip_imagine:
             quality: 75
             filters:
                 thumbnail: { size: [50, 50], mode: outbound }
+        dream_middle:
+            quality: 75
+            filters:
+                thumbnail: { size: [80, 80], mode: outbound }
         dream_main_image:
             quality: 75
             filters:
@@ -149,11 +152,11 @@ liip_imagine:
 
 geekhub_file:
     image:
-        allowed_mime_type:   [ image/jpeg, image/pjpeg, image/png ]
+        allowed_extensions:   [ jpeg, jpg, png ]
         size_limit:           5085760
         upload_directory:     uploads/images/
     document:
-        allowed_mime_type:   [ application/pdf, application/msword, application/microsoft_word, application/doc, application/rtf, application/xls, application/msexcel ]
+        allowed_extensions:   [ doc, xls, xlsx, pdf, docx ]
         size_limit:           10485760
         upload_directory:     uploads/documents/
     video:

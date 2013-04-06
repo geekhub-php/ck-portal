@@ -25,5 +25,6 @@ parameters:
 
 #    swiftmailer
     delivery_address:         example@gmail.com
+    swiftmailer_host:         smtp.gmail.com
     swiftmailer_username:     username
     swiftmailer_password:     password

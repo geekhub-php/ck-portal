@@ -4,6 +4,7 @@ parameters:
     vkontakte_user_provider.class: Geekhub\UserBundle\UserProvider\VkontakteUserProvider
     facebook_user_provider.class: Geekhub\UserBundle\UserProvider\FacebookUserProvider
     odnoklassniki_user_provider.class: Geekhub\UserBundle\UserProvider\OdnoklassnikiUserProvider
+    geekhub.user_bundle.user_manager.class: Geekhub\UserBundle\UserManager
 
 services:
     my_user_provider:
@@ -31,4 +32,6 @@ services:
         parent: abstract_social_network_provider
         calls:
             - [setAppKeys, [{odnoklassniki_app_key: %odnoklassniki_app_key%, odnoklassniki_app_secret: %odnoklassniki_app_secret%}]]
+    geekhub.user_bundle.user_manager:
+        class: "%geekhub.user_bundle.user_manager.class%"
 

@@ -75,8 +75,12 @@ class FileUploader
         }
 
         // Validate file mimeType
-        if (!in_array($uploadedFile->getClientMimeType(), $file->getAllowedMimeType())) {
-            $file->setError('File has an invalid mime type, it should be one of ' . (implode(', ', $file->getAllowedMimeType())) . '.');
+        $pathinfo = pathinfo($uploadedFile->getClientOriginalName());
+        $ext = isset($pathinfo['extension']) ? $pathinfo['extension'] : NULL;
+
+        if($file->getAllowedExtensions() && !in_array(strtolower($ext), array_map("strtolower", $file->getAllowedExtensions()))){
+            $these = implode(', ', $file->getAllowedExtensions());
+            $file->setError("File has an invalid extension, it should be one of ". $these .". Your file extension is ". $ext);
             return false;
         }
 

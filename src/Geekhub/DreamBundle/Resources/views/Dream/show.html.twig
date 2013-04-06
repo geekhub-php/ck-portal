@@ -56,7 +56,9 @@
                 charset="utf-8"></script>
         <div id="ya_share"></div>
         <input type="hidden" id="progress-bar-update-url" value="{{ path('cbsupport_ajax_update_progressbar', { 'dreamId': dream.id }) }}" />
-        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and dream.state == 'open' %}
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED")
+            and dream.state == 'open'
+            and app.security.token.user.id != dream.owner.id %}
             <ul id="contribute-actions">
                 <li>
                     <a class="contribute" href="#">
@@ -80,12 +82,14 @@
                     </a>
                     <div class="block">
                         {% for item in dream.equipment %}
-                            <label>{{ item.name }}</label>
-                            <select class="equipment" name="{{ item.id }}">
-                                {% for number in 0..item.quantity %}
-                                    <option value="{{ number }}">{{ number }}</option>
-                                {% endfor %}
-                            </select>шт. <br />
+                            {% if item.getIsDonate == false %}
+                                <label>{{ item.name }}</label>
+                                <select class="equipment" name="{{ item.id }}">
+                                    {% for number in 0..item.quantity %}
+                                        <option value="{{ number }}">{{ number }}</option>
+                                    {% endfor %}
+                                </select>шт. <br />
+                            {% endif %}
                         {% endfor %}
                         <label for="equipment-hide">
                             <input type="checkbox" id="equipment-hide" class="hide" /> Приховати мою допомогу
@@ -101,12 +105,17 @@
                     </a>
                     <div class="block">
                         {% for item in dream.work %}
-                            <label>{{ item.name }}</label>
-                            <select class="work" name="{{ item.id }}">
-                                {% for number in 0..item.quantity %}
-                                    <option value="{{ number }}">{{ number }}</option>
-                                {% endfor %}
-                            </select> днів.<br />
+                            {% if item.getIsDonate == false %}
+                                <input class="work" id="work-point-{{ item.id }}" type="checkbox" name="{{ item.id }}"
+                                    {%  for workPoint in app.security.token.user.getWorkDonates %}
+                                        {% if workPoint.getParent.getId == item.id %}
+                                            checked
+                                        {% endif %}
+                                    {%  endfor  %}
+                                />
+                                <label for="work-point-{{ item.id }}">{{ item.name }}</label>
+                                <br />
+                            {% endif %}
                         {% endfor %}
                         <label for="work-hide">
                             <input type="checkbox" id="work-hide" class="hide" /> Приховати мою допомогу
@@ -133,7 +142,7 @@
                     </div>
                 </li>
             </ul>
-        {% elseif dream.state == 'open' %}
+        {% elseif dream.state == 'open' and not is_granted("IS_AUTHENTICATED_REMEMBERED") %}
             <div style="clear: both">
                 Щоб прийняти участь у реалізації мрії, будь-ласка, авторизуйтесь.<br />
                 <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}" class="social-sign-in">
@@ -156,8 +165,10 @@
             <tr>
                 <th>Автор</th>
                 <td>
-                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp
-                    - {{ dream.owner.name }}
+                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />&nbsp-&nbsp
+                    <a href="{{ path('profile_stranger_show', {'slug':dream.owner.slug}) }}">
+                        {{ dream.owner.name }}
+                    </a>
                     <div style="float: right">
                         <ul class="dream-action">
                             {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == dream.owner.id %}
@@ -212,17 +223,13 @@
                 Повернутися на головну
             </a>
         </li>
-        <li>
-            <a href="{{ path('dream_edit', { 'slug': dream.slug }) }}">
-                Редагувати мрію
-            </a>
-        </li>
-        <li>
-            <form action="{{ path('dream_delete', { 'slug': dream.slug }) }}" method="post">
-                {{ form_widget(delete_form) }}
-                <button type="submit">Видалити мрію</button>
-            </form>
-        </li>
+        {% if is_granted("IS_AUTHENTICATED_REMEMBERED") and app.security.token.user.id == dream.owner.id %}
+            <li>
+                <a href="{{ path('dream_edit', { 'slug': dream.slug }) }}">
+                    Редагувати мрію
+                </a>
+            </li>
+        {% endif %}
     </ul>
 {% endblock %}
 {% block javascripts %}
@@ -263,7 +270,7 @@
             });
             workArray = {};
             divData.find('.work').each(function() {
-                workArray[this.name] = this.value;
+                workArray[this.name] = this.checked;
             });
             var active
             $.ajax({

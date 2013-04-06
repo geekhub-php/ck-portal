@@ -110,7 +110,7 @@ class DreamManager
         $partPlan = 0;
         foreach ($dream->getWork() as $workPoint) {
             if ($workPoint->getIsDonate() == false) {
-                $planQuantity = $planQuantity + $workPoint->getQuantity() * $workPoint->getWorker();
+                $planQuantity = $planQuantity + $workPoint->getQuantity();
             }
             else {
                 $partPlan = $partPlan + $workPoint->getQuantity();

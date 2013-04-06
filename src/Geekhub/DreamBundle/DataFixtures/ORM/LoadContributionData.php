@@ -26,7 +26,7 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
                 //get 100%
                 $planQuantity = 0;
                 foreach ($workDreamPoints as $workPoint) {
-                    $planQuantity = $planQuantity + $workPoint->getQuantity() * $workPoint->getWorker();
+                    $planQuantity = $planQuantity + $workPoint->getQuantity();
                 }
                 /** @var $workPoint Work */
                 foreach ($workDreamPoints as $workPoint) {
@@ -41,8 +41,7 @@ class LoadContributionData extends AbstractFixture implements OrderedFixtureInte
 
                     $work = new Work();
 
-                    $work->setQuantity(rand(1, $workPoint->getQuantity()/2));
-                    $work->setWorker(1);
+                    $work->setQuantity(1);
                     $work->setName($workPoint->getName());
                     $work->setDream($dream);
                     $work->setHide(rand(0, 1));

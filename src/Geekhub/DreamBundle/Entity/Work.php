@@ -12,13 +12,6 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Work extends AbstractPoint
 {
-    /**
-     * @var integer
-     *
-     * @ORM\Column(name="worker", type="integer")
-     */
-    protected $worker;
-
     /** @ORM\ManyToOne(targetEntity="Dream", inversedBy="work") */
     protected $dream;
 
@@ -44,22 +37,6 @@ class Work extends AbstractPoint
     public function getDream()
     {
         return $this->dream;
-    }
-
-    /**
-     * @param int $worker
-     */
-    public function setWorker($worker)
-    {
-        $this->worker = $worker;
-    }
-
-    /**
-     * @return int
-     */
-    public function getWorker()
-    {
-        return $this->worker;
     }
 
     public function setUser(\Geekhub\UserBundle\Entity\User $user)
