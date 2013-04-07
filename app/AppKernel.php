@@ -31,6 +31,7 @@ class AppKernel extends Kernel
             new Geekhub\FileBundle\GeekhubFileBundle(),
             new JMS\SerializerBundle\JMSSerializerBundle(),
             new Geekhub\PagesBundle\PagesBundle(),
+            new \Geekhub\AssetsBundle\AssetsBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {
