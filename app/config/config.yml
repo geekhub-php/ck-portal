@@ -31,6 +31,14 @@ assetic:
     #java: /usr/bin/java
     filters:
         cssrewrite: ~
+    assets:
+        assets_css:
+            inputs:
+                - %kernel.root_dir%/../app/Resources/public/css/main.css
+                - %kernel.root_dir%/../app/Resources/public/css/prettyPhoto.css
+            filters:
+                - cssrewrite
+            output: css/asset.css
         #closure:
         #    jar: "%kernel.root_dir%/Resources/java/compiler.jar"
         #yui_css:
