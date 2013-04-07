@@ -157,6 +157,10 @@ liip_imagine:
         dream_popup:
             filters:
                 relative_resize: { widen: 800 }
+        dream_index:
+            quality: 75
+            filters:
+                thumbnail: { size: [230, 155], mode: outbound }
 
 geekhub_file:
     image:
