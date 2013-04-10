@@ -17,11 +17,11 @@
   Сценарий: Создание мечты
     Допустим я вхожу как пользователь "demo" с паролем "demo"
     И я на странице "/dream/new"
-    И я заполняю поле "geekhub_dreambundle_dreamtype_mainImage" значением "http://farm9.staticflickr.com/8104/8567551995_929bae20fc_b.jpg"
+    И я заполняю скрытое поле "geekhub_dreambundle_dreamtype_mainImage" значением "http://farm9.staticflickr.com/8104/8567551995_929bae20fc_b.jpg"
     И я заполняю поле "geekhub_dreambundle_dreamtype_title" значением "Нужен новый ноутбук MacBook Air"
     И я заполняю поле "geekhub_dreambundle_dreamtype_description" значением "MacBook Air поможет мне писать код в 5 раз эфективнее"
     И я заполняю поле "geekhub_dreambundle_dreamtype_phone" значением "8050-555-55-55"
-    И я заполняю поле "geekhub_dreambundle_dreamtype_tagArray" значением "тег1, тег2, тег3"
+    И я заполняю скрытое поле "geekhub_dreambundle_dreamtype_tagArray" значением "тег1, тег2, тег3"
     И галочка "geekhub_dreambundle_dreamtype_phoneAvailable" должна быть отмечена
 
     Когда я кликаю по ссылке "add_financial_link"

@@ -5,6 +5,7 @@ namespace Geekhub\DreamBundle\Features\Context;
 use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\MinkExtension\Context\MinkContext;
+use Behat\Behat\Event\SuiteEvent;
 
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
@@ -56,6 +57,49 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     public function waitSeconds($seconds)
     {
         $this->getSession()->wait(1000*$seconds);
+    }
+
+    /**
+     * @Given /^я заполняю скрытое поле "([^"]*)" значением "([^"]*)"$/
+     */
+    public function iaZapolniaiuSkrytoiePolieZnachieniiem($field, $value)
+    {
+//        $this->getSession()->getPage()->find('css',
+//            'input[name="'.$field.'"]')->setValue($value);
+
+        $javascript = "document.getElementById('".$field."').value='".$value."'";
+        $this->getSession()->executeScript($javascript);
+    }
+
+    /**
+     * @BeforeSuite
+     */
+    public static function eraseDataBase(SuiteEvent $event)
+    {
+        self::build_bootstrap();
+        self::showRun("database:drop", "app/console doctrine:database:drop --force  --env=test");
+        self::showRun("database:create", "app/console doctrine:database:create --env=test");
+        self::showRun("schema:create", "app/console doctrine:schema:create --env=test");
+
+        self::showRun("Changing permissions", "chmod -R 777 app/cache app/logs");
+        self::showRun("assets:install", "app/console assets:install --env=test");
+        self::showRun("Warming up dev cache", "php app/console cache:warmup --env=test");
+        self::showRun("Changing permissions", "chmod -R 777 app/cache app/logs");
+    }
+
+    public static function showRun($text, $command, $canFail = false)
+    {
+        echo "\n* $text\n$command\n";
+        passthru($command, $return);
+        if (0 !== $return && !$canFail) {
+            echo "\n/!\\ The command returned $return\n";
+            exit(1);
+        }
+    }
+
+    public static function build_bootstrap()
+    {
+        self::showRun('Building bootstrap', 'vendor/sensio/distribution-bundle/Sensio/Bundle/DistributionBundle/Resources/bin/build_bootstrap.php');
     }
 
     /**
