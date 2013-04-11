@@ -1,10 +1,33 @@
 language: php
 
 php:
-  - 5.3.3
+  - 5.3.6
   - 5.3
   - 5.4
 
-before_script: composer install
+before_script:
+    - cp app/config/parameters.yml.dist app/config/parameters.yml
+    - sudo apt-get update > /dev/null
+    - sudo apt-get install -y --force-yes apache2 libapache2-mod-php5 php5-curl php5-mysql php5-intl
+    - sudo sed -i -e "s,/var/www,$(pwd)/web,g" /etc/apache2/sites-available/default
+    - sudo /etc/init.d/apache2 restart
+    - sudo sed -i -e "/DocumentRoot/i\ServerName chedream.local" /etc/apache2/sites-available/default
+    - echo "127.0.0.1 chedream.local" | sudo tee -a /etc/hosts
+    - sudo /etc/init.d/apache2 restart
+    - composer self-update
+    - composer install --dev --prefer-source
+    - app/console do:da:cr -e=test > /dev/null
+    - app/console do:sc:cr -e=test > /dev/null
+    - chmod -R 777 app/cache app/logs
+    - app/console --env=test cache:warmup
+    - chmod -R 777 app/cache app/logs
+    - "sh -e /etc/init.d/xvfb start"
+    - "export DISPLAY=:99.0"
+    - "wget http://selenium.googlecode.com/files/selenium-server-standalone-2.31.0.jar"
+    - "java -jar selenium-server-standalone-2.31.0.jar > /dev/null &"
+    - sleep 5
 
-script: phpunit -c app
+script:
+    - phpunit -c app
+    - vendor/behat/behat/bin/behat @DreamBundle
+

@@ -1,6 +1,8 @@
 ck-portal
 ========================
 
+[![Build Status](https://travis-ci.org/geekhub-php/ck-portal.png?branch=develop)](https://travis-ci.org/geekhub-php/ck-portal)
+
 ck-portal - This is an open source project for the Cherkasy city administration. 
 The project is developed through the efforts of the project [Geekhub][1]
 
