@@ -15,13 +15,13 @@ parameters:
     secret:            ThisTokenIsNotSoSecretChangeIt
 
 #    OAuth parameters
-    facebook_app_id:      ~
-    facebook_app_secret:  ~
-    vkontakte_app_id:     ~
-    vkontakte_app_secret: ~
-    odnoklassniki_app_id:       ~
-    odnoklassniki_app_secret:   ~
-    odnoklassniki_app_public:   ~
+    facebook_app_id:      1
+    facebook_app_secret:  1
+    vkontakte_app_id:     1
+    vkontakte_app_secret: 1
+    odnoklassniki_app_id:       1
+    odnoklassniki_app_secret:   1
+    odnoklassniki_app_key:      1
 
 #    swiftmailer
     delivery_address:         example@gmail.com
