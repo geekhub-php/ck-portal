@@ -1,7 +1,6 @@
 language: php
 
 php:
-  - 5.3.6
   - 5.3
   - 5.4
 
@@ -16,6 +15,7 @@ before_script:
     - sudo /etc/init.d/apache2 restart
     - composer self-update
     - composer install --dev --prefer-source
+    - chmod -R 777 ./
     - app/console do:da:cr -e=test > /dev/null
     - app/console do:sc:cr -e=test > /dev/null
     - chmod -R 777 app/cache app/logs
