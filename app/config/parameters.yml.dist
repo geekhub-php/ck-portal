@@ -28,3 +28,6 @@ parameters:
     swiftmailer_host:         smtp.gmail.com
     swiftmailer_username:     username
     swiftmailer_password:     password
+
+    router.request_context.host: chedream.local
+    router.request_context.scheme: http

@@ -6,6 +6,8 @@ use Symfony\Component\HttpKernel\KernelInterface;
 use Behat\Symfony2Extension\Context\KernelAwareInterface;
 use Behat\MinkExtension\Context\MinkContext;
 use Behat\Behat\Event\SuiteEvent;
+use Behat\Behat\Exception\ErrorException;
+use Geekhub\DreamBundle\Entity\Dream;
 
 use Behat\Behat\Context\BehatContext,
     Behat\Behat\Exception\PendingException;
@@ -45,9 +47,9 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     {
         return array(
             new Step\Given('I am on "/login"'),
-            new Step\When("fill in \"Username:\" with \"$username\""),
-            new Step\When("fill in \"Password:\" with \"$password\""),
-            new Step\When("I press \"Login\""),
+            new Step\When("fill in \"username\" with \"$username\""),
+            new Step\When("fill in \"password\" with \"$password\""),
+            new Step\When("I press \"_submit\""),
         );
     }
 
@@ -72,6 +74,36 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
     }
 
     /**
+     * @Given /^админ одобрил мечту "([^"]*)"$/
+     */
+    public function adminOdobrilMiechtu($dreamTitle)
+    {
+        $em = $this->kernel
+            ->getContainer()
+            ->get('doctrine')
+            ->getManager();
+        /** @var $dream Dream */
+        $dream = $em
+            ->getRepository('DreamBundle:Dream')
+            ->findOneByTitle($dreamTitle);
+
+        if (!$dream) {
+            throw new ErrorException(
+                'Warning',
+                'Dream with title = "' . $dreamTitle . '" not found',
+                get_class($this),
+                '86'
+            );
+        }
+
+        $dream->setState('open');
+
+        $em->persist($dream);
+        $em->flush($dream);
+    }
+
+
+    /**
      * @BeforeSuite
      */
     public static function eraseDataBase(SuiteEvent $event)
@@ -82,6 +114,7 @@ class FeatureContext extends MinkContext implements KernelAwareInterface
         self::showRun("schema:create", "app/console doctrine:schema:create --env=test");
 
         self::showRun("Changing permissions", "chmod -R 777 app/cache app/logs");
+        self::showRun("Clear cache", "app/console cache:clear --no-warmup");
         self::showRun("assets:install", "app/console assets:install --env=test");
         self::showRun("Warming up dev cache", "php app/console cache:warmup --env=test");
         self::showRun("Changing permissions", "chmod -R 777 app/cache app/logs");
