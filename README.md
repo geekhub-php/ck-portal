@@ -34,3 +34,12 @@ Sylius was originally created by [Geekhub Project Team](http://geekhub.ck.ua).
 
 [1]:  http://geekhub.ck.ua/
 
+
+Config instruction
+------------------
+1. "composer install --dev"
+2. Copy parameters.yml.dist and rename to parameters.yml (app/config/)
+3. Set database connection parameters (database_name, database_user, database_password)
+4. Create table. Run "app/console doctrine:database:create" in console
+5. php bin/reload.php
+
