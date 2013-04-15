@@ -137,16 +137,26 @@
 
                 // add a new form (see next code block)
                 addForm(collectionHolderFinancial, $newFinancialLinkLi);
+                hideLinkIfLimit(collectionHolderFinancial, $newFinancialLinkLi);
             });
             $addWorkLink.on('click', function(e) {
                 e.preventDefault();
                 addForm(collectionHolderWork, $newWorkLinkLi);
+                hideLinkIfLimit(collectionHolderWork, $newWorkLinkLi);
             });
             $addEquipmentLink.on('click', function(e) {
                 e.preventDefault();
                 addForm(collectionHolderEquipment, $newEquipmentLinkLi);
+                hideLinkIfLimit(collectionHolderEquipment, $newEquipmentLinkLi);
             });
         });
+
+        function hideLinkIfLimit(collectionHolder, $newLinkLi) {
+            var length = 10;
+            if (jQuery(collectionHolder).children().length > length+1) {
+                jQuery($newLinkLi).replaceWith('<span class="add-link-warning">Ви можете додати не більше ' + length + '-ти статтей</span>');
+            }
+        }
 
         function addForm(collectionHolder, $newLinkLi) {
             // Get the data-prototype explained earlier
