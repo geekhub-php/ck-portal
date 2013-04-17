@@ -11,7 +11,11 @@
     <body>
         <div id="system-message-container">
             <dl id="system-message">
-
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="flash-notice">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
             </dl>
         </div>
         <div class="container">

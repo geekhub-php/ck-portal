@@ -2,6 +2,7 @@
 
 namespace Geekhub\DreamBundle\Entity;
 
+use Symfony\Component\Validator\Constraints as Assert;
 use Gedmo\Mapping\Annotation as Gedmo;
 use Doctrine\Common\Collections\ArrayCollection;
 use DoctrineExtensions\Taggable\Taggable;
@@ -28,6 +29,10 @@ class Dream implements Taggable
     /**
      * @var string
      *
+     * * @Assert\Length(
+     *      min = "8",
+     *      max = "70"
+     * )
      * @ORM\Column(name="title", type="string", length=255)
      */
     protected $title;
@@ -59,7 +64,7 @@ class Dream implements Taggable
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Image", mappedBy="dream", cascade={"persist", "remove"}) */
     protected $images;
 
-    /** @ORM\Column(name="main_image", type="string", length=255) */
+    /** @ORM\Column(name="main_image", type="string", length=255, nullable=true) */
     protected $mainImage;
 
     /** @ORM\OneToMany(targetEntity="Geekhub\FileBundle\Entity\Video", mappedBy="dream", cascade={"persist", "remove"}) */
