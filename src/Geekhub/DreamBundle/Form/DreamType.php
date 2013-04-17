@@ -18,6 +18,7 @@ class DreamType extends AbstractType
         $builder
             ->add('title', 'text', array(
                 'label' => 'Нава мрії',
+                'max_length' => 70
             ))
             ->add('description', 'textarea', array(
                 'label' => 'Опис мрії',
@@ -52,6 +53,7 @@ class DreamType extends AbstractType
             ->add('tagArray', 'text', array(
                 'data' => $stringTags,
                 'label' => 'Теги',
+                'required' => false,
             ))
             ->add('phone', 'text', array(
                 'label' => 'Телефон',
