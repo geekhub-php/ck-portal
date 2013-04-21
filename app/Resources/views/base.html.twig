@@ -22,7 +22,9 @@
             {% block header %}
                 {% include '::header.html.twig' %}
             {% endblock %}
-            {% block body %}{% endblock %}
+            {% block body %}
+                {% block fos_user_content %}{% endblock %}
+            {% endblock %}
             {% block footer %}
                 <div class="footer">
                     <span class="copy">&copy; 2012 Черкаська мрія</span>
