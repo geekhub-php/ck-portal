@@ -15,14 +15,14 @@
         <a href="{{ path('dream_dreams', {'state': 'complete'}) }}">Втілені</a>
     </li>
 </ul>
-    {% render url('dream_show_more_dreams', { 'state': state }) %}
+    {{ render(controller('DreamBundle:Dream:showMoreDreams', { 'state': state, 'limit': 8, 'offset': 0 })) }}
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script>
         $("#show-more").on('click', function(e) {
             e.preventDefault();
-            $('#show-more-container').load('{{ path('dream_show_more_dreams', {'state': state, 'limit': limit+8, 'offser': offset+8}) }}');
+            $('#show-more-container').load('{{ path('dream_show_more_dreams', {'state': state, 'limit': limit+8, 'offset': offset+8}) }}');
         });
     </script>
 {% endblock %}
