@@ -1,0 +1,11 @@
+services:
+    sonata.admin.user:
+        class: Geekhub\UserBundle\Admin\UserAdmin
+        tags:
+            - { name: sonata.admin, manager_type: orm, group: user, label: "User" }
+        arguments:
+            - ~
+            - Geekhub\UserBundle\Entity\User
+            - 'SonataAdminBundle:CRUD'
+        calls:
+            - [ setTranslationDomain, [Geekhub\UserBundle]]
