@@ -28,7 +28,9 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
         "jms/serializer-bundle": "0.12.*@dev",
         "misd/guzzle-bundle": "1.0.*@dev",
-        "friendsofsymfony/jsrouting-bundle": "1.1.*@dev"
+        "friendsofsymfony/jsrouting-bundle": "1.1.*@dev",
+        "sonata-project/admin-bundle": "2.2.*@dev",
+        "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev"
     },
 
     "minimum-stability": "dev",

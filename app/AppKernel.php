@@ -33,6 +33,9 @@ class AppKernel extends Kernel
             new Geekhub\PagesBundle\PagesBundle(),
             new \Geekhub\AssetsBundle\AssetsBundle(),
             new FOS\JsRoutingBundle\FOSJsRoutingBundle(),
+            new Sonata\BlockBundle\SonataBlockBundle(),
+            new Sonata\jQueryBundle\SonatajQueryBundle(),
+            new Sonata\AdminBundle\SonataAdminBundle(),
         );
 
         if (in_array($this->getEnvironment(), array('dev', 'test'))) {

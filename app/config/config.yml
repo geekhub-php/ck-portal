@@ -174,3 +174,12 @@ geekhub_file:
     video:
         allowed_providers:    [ youtube.com, vimeo.com ]
         upload_directory:     uploads/video-thumbnails/
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.rss:
