@@ -107,6 +107,9 @@ class User extends BaseUser
     /** @ORM\Column(name="deletedAt", type="datetime", nullable=true) */
     private $deletedAt;
 
+    /** @ORM\Column(name="ban_reason", type="text", length=255, nullable=true) */
+    private $banReason;
+
     /**
      * @var datetime
      *
@@ -910,5 +913,17 @@ class User extends BaseUser
     public function getUserDreams()
     {
         return $this->userDreams;
+    }
+
+    public function getBanReason()
+    {
+        return $this->banReason;
+    }
+
+    public function setBanReason($banReason)
+    {
+        $this->banReason = $banReason;
+
+        return $this;
     }
 }
