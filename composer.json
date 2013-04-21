@@ -29,6 +29,7 @@
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
         "jms/serializer-bundle": "0.12.*@dev",
         "misd/guzzle-bundle": "1.0.*@dev"
+        "friendsofsymfony/jsrouting-bundle": "1.1.*@dev"
     },
 
     "minimum-stability": "dev",
