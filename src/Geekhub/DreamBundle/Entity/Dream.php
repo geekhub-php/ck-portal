@@ -150,6 +150,9 @@ class Dream implements Taggable
      */
     protected $updated;
 
+    /** @ORM\Column(name="locked", type="boolean", nullable=true) */
+    protected $locked;
+
     public function getTags()
     {
         $this->tags = $this->tags ?: new ArrayCollection();
@@ -805,5 +808,17 @@ class Dream implements Taggable
     public function getNotices()
     {
         return $this->notices;
+    }
+
+    public function getLocked()
+    {
+        return $this->locked;
+    }
+
+    public function setLocked($locked)
+    {
+        $this->locked = $locked;
+
+        return $this;
     }
 }

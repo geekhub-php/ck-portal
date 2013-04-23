@@ -110,6 +110,9 @@ class User extends BaseUser
     /** @ORM\Column(name="ban_reason", type="text", length=255, nullable=true) */
     private $banReason;
 
+    /** @ORM\Column(name="locked_at", type="datetime", nullable=true) */
+    private $lockedAt;
+
     /**
      * @var datetime
      *
@@ -926,4 +929,17 @@ class User extends BaseUser
 
         return $this;
     }
+
+    public function getLockedAt()
+    {
+        return $this->lockedAt;
+    }
+
+    public function setLockedAt($lockedAt)
+    {
+        $this->lockedAt = $lockedAt;
+
+        return $this;
+    }
+
 }
