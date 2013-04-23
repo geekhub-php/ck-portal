@@ -36,3 +36,9 @@ services:
     geekhub.user_bundle.user_manager:
         class: "%geekhub.user_bundle.user_manager.class%"
 
+    softdeleteable_admin_controll:
+        class: Geekhub\UserBundle\Listener\SoftdeleteableAdminListener
+        calls:
+            - [ setEntityManager, [ @doctrine.orm.entity_manager ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: disableSoftdeleteable }
