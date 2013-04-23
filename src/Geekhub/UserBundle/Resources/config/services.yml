@@ -36,6 +36,16 @@ services:
     geekhub.user_bundle.user_manager:
         class: "%geekhub.user_bundle.user_manager.class%"
 
+    user_locked_listener:
+        class: Geekhub\UserBundle\Listener\UserLockedListener
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+
+    user_unlocked_listener:
+        class: Geekhub\UserBundle\Listener\UserUnlockedListener
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+
     softdeleteable_admin_controll:
         class: Geekhub\UserBundle\Listener\SoftdeleteableAdminListener
         calls:
