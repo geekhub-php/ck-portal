@@ -262,6 +262,46 @@ ul.header-menu li a.add-dream:hover {
     margin: 0 auto;
     width: 500px;
 }
+.slider ul li {
+
+}
+.slider ul li.current {
+    display: block;
+}
+.slider ul li {
+    display: none;
+    float:left;
+    height: 320px;
+    overflow: hidden;
+    position: relative;
+    width: 500px;
+}
+.slider ul li img {
+    bottom: 0;
+    display: block;
+    height: 320px;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 500px;
+}
+.slider ul li p {
+    bottom: 20px;
+    color: #FFF;
+    left: 20px;
+    position: absolute;
+    right: 20px;
+}
+
+
+
+
+
+
+
+
+
 ul.splash.left {
     float: left;
 }
@@ -623,78 +663,55 @@ p.progressbar-info {
 /*--------------------------------------------------------------------------------------------------------------------*/
 /*-----------------------------------------> SLIDER STYLES <----------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
-#my-carousel {
-    position: relative;
-}
-#my-carousel .prev {
-    left: 20px;
-    position: absolute;
-    top: 50%;
-}
-#my-carousel .next {
-    position: absolute;
-    right: 20px;
-    top: 50%;
-}
-#my-carousel ul {
-    position:absolute; /* required */
-    overflow:hidden; /* required */
-    margin:0;
-    padding:0;
-    list-style:none;
-}
-
-#my-carousel ul li {
-    float:left; /* required */
-    height: 320px;
-    /*margin: 0 10px 0 0;*/
-    position: relative;
-    width: 500px;
-}
-#my-carousel ul li img {
-    bottom: 0;
-    display: block;
-    height: 320px;
-    left: 0;
-    position: absolute;
-    right: 0;
-    top: 0;
-    width: 500px;
-}
-#my-carousel ul li p {
-    bottom: 20px;
-    color: #FFF;
-    left: 20px;
-    position: absolute;
-    right: 20px;
-}
+/*#my-carousel {*/
+    /*position: relative;*/
+/*}*/
+/*#my-carousel .prev {*/
+    /*left: 20px;*/
+    /*position: absolute;*/
+    /*top: 50%;*/
+/*}*/
+/*#my-carousel .next {*/
+    /*position: absolute;*/
+    /*right: 20px;*/
+    /*top: 50%;*/
+/*}*/
+/*#my-carousel ul {*/
+    /*position:absolute; *//* required */
+    /*overflow:hidden; *//* required */
+    /*margin:0;*/
+    /*padding:0;*/
+    /*list-style:none;*/
+/*}*/
 
 
 
 
-#my-carousel .mask {
-    position:relative; /* required */
-    overflow:hidden; /* required */
-    width:500px; /* required */
-}
 
-#my-carousel .pagination-links {
-    list-style:none;
-    margin:0;
-    padding:0;
-}
 
-#my-carousel .pagination-links li {
-    display:inline;
-}
+/*#my-carousel .mask {*/
+    /*position:relative; *//* required */
+    /*overflow:hidden; *//* required */
+    /*width:500px; *//* required */
+/*}*/
 
-#my-carousel .pagination-links li.current {
-    background:grey;
-}
+/*#my-carousel .pagination-links {*/
+    /*list-style:none;*/
+    /*margin:0;*/
+    /*padding:0;*/
+/*}*/
 
-#my-carousel .disabled {
-    color:grey;
-}
+/*#my-carousel .pagination-links li {*/
+    /*display:inline;*/
+/*}*/
+
+/*#my-carousel .pagination-links li.current {*/
+    /*background:grey;*/
+/*}*/
+
+/*#my-carousel .disabled {*/
+    /*color:grey;*/
+/*}*/
 
 
 

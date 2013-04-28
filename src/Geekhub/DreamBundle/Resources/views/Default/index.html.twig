@@ -2,18 +2,18 @@
 {% block body %}
     <div class="slider-wrapper"><span class="slider-bottom-shadow"></span>
         <ul class="splash left">
-            <li><a href="#">Some text</a></li>
-            <li><a href="#">Some text</a></li>
+            <li><a href="#" id="dream-1">Some text</a></li>
+            <li><a href="#" id="dream-2">Some text</a></li>
         </ul>
         <ul class="splash right">
-            <li><a href="#">Some text</a></li>
-            <li><a href="#">Some text</a></li>
+            <li><a href="#" id="dream-3">Some text</a></li>
+            <li><a href="#" id="dream-4">Some text</a></li>
         </ul>
-        <div class="slider" id="my-carousel">
+        <div class="slider">
             <ul>
                 {% for dream in topDreams %}
                     <li>
-                        <img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />
+                        {#<img src="{{ dream.mainImage | imagine_filter('dream_main_image') }}" class="dream-main-image" />#}
                         <p>{{ dream.description }}</p>
                     </li>
                 {% endfor %}
@@ -30,10 +30,10 @@
                 </a>
                 <a href="#" class="add-to-chosen">Додати до обраного.</a>
                 <div class="dream-creator">
-                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}
+                    {#<img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}#}
                 </div>
                 <div class="dream-photo"><span></span>
-                    <img src="{{ dream.mainImage | imagine_filter('dream_index') }}" class="dream-main-image" />
+                    {#<img src="{{ dream.mainImage | imagine_filter('dream_index') }}" class="dream-main-image" />#}
                 </div>
                 <ul class="support">
                     <li>
@@ -55,10 +55,10 @@
                 </a>
                 <a href="#" class="add-to-chosen">Додати до обраного.</a>
                 <div class="dream-creator">
-                    <img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}
+                    {#<img src="{{ dream.owner.profilePicture | imagine_filter('profile_avatar_ico') }}" style="float: left" />  {{ dream.owner.name }}#}
                 </div>
                 <div class="dream-photo"><span></span>
-                    <img src="{{ dream.mainImage | imagine_filter('dream_index') }}" class="dream-main-image" />
+                    {#<img src="{{ dream.mainImage | imagine_filter('dream_index') }}" class="dream-main-image" />#}
                 </div>
                 <ul class="support">
                     <li>
