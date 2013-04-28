@@ -14,6 +14,8 @@ class FOSUBUserProvider extends BaseClass
 
     private $odnoklassnikiProvider;
 
+    private $session;
+
     /**
      * {@inheritDoc}
      */
@@ -68,6 +70,12 @@ class FOSUBUserProvider extends BaseClass
         //update access token
         $user->$setter($response->getAccessToken());
 
+        //if user is banned
+        if (!$user->isAccountNonLocked() && $user->getBanReason()) {
+            $this->session->getFlashBag()->add('notice', 'Ваш акаунт заблоковано.');
+            $this->session->getFlashBag()->add('notice', 'Коментар адміністратора: ' . $user->getBanReason());
+        }
+
         return $user;
     }
 
@@ -84,6 +92,11 @@ class FOSUBUserProvider extends BaseClass
     public function setOdnoklassnikiProvider(OdnoklassnikiUserProvider $odnoklassnikiProvider)
     {
         $this->odnoklassnikiProvider = $odnoklassnikiProvider;
+    }
+
+    public function setSession($session)
+    {
+        $this->session = $session;
     }
 
 

@@ -79,6 +79,10 @@
 {% block javascripts %}
     {{ parent() }}
     <script src="https://ajax.googleapis.com/ajax/libs/jqueryui/1.8.12/jquery-ui.min.js" type="text/javascript" charset="utf-8"></script>
+
+    <script src="{{ asset('bundles/fosjsrouting/js/router.js') }}"></script>
+    <script src="{{ path('fos_js_routing_js', {"callback": "fos.Router.setData"}) }}"></script>
+
     <script src="{{ asset('bundles/dream/js/tag-it.min.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/dream/js/uploader/util.js') }}" type="text/javascript"></script>
     <script src="{{ asset('bundles/dream/js/uploader/handler.base.js') }}" type="text/javascript"></script>
@@ -137,16 +141,26 @@
 
                 // add a new form (see next code block)
                 addForm(collectionHolderFinancial, $newFinancialLinkLi);
+                hideLinkIfLimit(collectionHolderFinancial, $newFinancialLinkLi);
             });
             $addWorkLink.on('click', function(e) {
                 e.preventDefault();
                 addForm(collectionHolderWork, $newWorkLinkLi);
+                hideLinkIfLimit(collectionHolderWork, $newWorkLinkLi);
             });
             $addEquipmentLink.on('click', function(e) {
                 e.preventDefault();
                 addForm(collectionHolderEquipment, $newEquipmentLinkLi);
+                hideLinkIfLimit(collectionHolderEquipment, $newEquipmentLinkLi);
             });
         });
+
+        function hideLinkIfLimit(collectionHolder, $newLinkLi) {
+            var length = 10;
+            if (jQuery(collectionHolder).children().length > length+1) {
+                jQuery($newLinkLi).replaceWith('<span class="add-link-warning">Ви можете додати не більше ' + length + '-ти статтей</span>');
+            }
+        }
 
         function addForm(collectionHolder, $newLinkLi) {
             // Get the data-prototype explained earlier
@@ -400,7 +414,7 @@
                     $("#video-preview").append('<div class="video-thumbnail qq-upload-spinner"></div>');
 
                     $.ajax({
-                        url: "{{ url('file_get_youtube_thumbnail', { 'videoId': '' }) }}" + "/" + videoId,
+                        url: Routing.generate('file_get_youtube_thumbnail', { 'videoId': videoId }, true),
                         success: function(data){
                             var response = JSON.parse( data );
                             $("#video-preview").append('<img height="50px" src="' + response.remoteThumbnail + '" />');
@@ -431,7 +445,7 @@
                     $("#video-preview").append('<div class="video-thumbnail qq-upload-spinner"></div>');
 
                     $.ajax({
-                        url: "{{ url('file_get_vimeo_thumbnail', { 'videoId': '' }) }}" + "/" + videoId,
+                        url: Routing.generate('file_get_vimeo_thumbnail', { 'videoId': videoId }, true),
                         success: function(data){
                             var response = JSON.parse( data );
                             $("#video-preview").append('<img height="50px" src="' + response.remoteThumbnail + '" />');

@@ -50,7 +50,7 @@
             <li class="count-likes">Рейтинг: <span id="count-likes"></span></li>
         </ul>
         <div id="progress-bar">
-            {% render "DreamBundle:ContributorSupport:getAjaxProgressBar" with { dreamId: dream.id } %}
+            {{ render(controller('DreamBundle:ContributorSupport:getAjaxProgressBar', { dreamId: dream.id })) }}
         </div>
         <script type="text/javascript" src="//yandex.st/share/share.js"
                 charset="utf-8"></script>
