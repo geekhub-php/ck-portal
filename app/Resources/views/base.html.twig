@@ -5,8 +5,8 @@
         <title>{% block title %}Черкаська мрія{% endblock %}</title>
         {% block stylesheets %}
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-            {% stylesheets '../app/Resources/public/css/*' %}
-            <link rel="stylesheet" type="text/css" charset="UTF-8" media="all" href="{{ asset_url }}"/>
+            {% stylesheets 'bundles/assets/css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" type="text/css" charset="UTF-8" media="all" href="{{ asset_url }}"/>
             {% endstylesheets %}
         {% endblock %}
     </head>
@@ -59,7 +59,7 @@
             {% endblock %}
             {% block javascripts %}
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-                {% javascripts '../app/Resources/public/js/*' %}
+                {% javascripts 'bundles/assets/js/*' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
             {% endblock %}
