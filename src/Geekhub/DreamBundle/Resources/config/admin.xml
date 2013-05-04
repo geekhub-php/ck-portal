@@ -1,0 +1,15 @@
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services/services-1.0.xsd">
+    <services>
+        <service id="sonata.admin.dream" class="Geekhub\DreamBundle\Admin\DreamAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Dreams" label="Dream"/>
+            <argument />
+            <argument>Geekhub\DreamBundle\Entity\Dream</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+            <call method="setTranslationDomain">
+                <argument>Geekhub\Dreambundle</argument>
+            </call>
+        </service>
+    </services>
+</container>
