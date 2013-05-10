@@ -23,7 +23,7 @@
         "fpn/doctrine-extensions-taggable": "dev-master",
         "fpn/tag-bundle":"dev-master",
         "friendsofsymfony/user-bundle": "*",
-        "hwi/oauth-bundle": "0.2.*@dev",
+        "hwi/oauth-bundle": "*",
         "liip/imagine-bundle": "dev-master",
         "doctrine/doctrine-fixtures-bundle": "2.1.*@dev",
         "jms/serializer-bundle": "0.12.*@dev",
