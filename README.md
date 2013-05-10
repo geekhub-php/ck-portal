@@ -15,6 +15,7 @@ Road map
 ToDo
 -------------------------------------
 - Give opportunity for user to merge accounts other social network
+- Translations.
 
 Bug tracking
 ------------
