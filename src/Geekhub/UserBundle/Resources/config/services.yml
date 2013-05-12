@@ -15,6 +15,7 @@ services:
             - [ setVkontakteProvider, [ @vkontakte_user_provider ] ]
             - [ setFacebookProvider, [ @facebook_user_provider ] ]
             - [ setOdnoklassnikiProvider, [ @odnoklassniki_user_provider ] ]
+            - [ setSession, [ @session ] ]
     abstract_social_network_provider:
         class: "%abstact_social_network_provider.class%"
         arguments: [@fos_user.user_manager]
@@ -35,3 +36,19 @@ services:
     geekhub.user_bundle.user_manager:
         class: "%geekhub.user_bundle.user_manager.class%"
 
+    user_locked_listener:
+        class: Geekhub\UserBundle\Listener\UserLockedListener
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+
+    user_unlocked_listener:
+        class: Geekhub\UserBundle\Listener\UserUnlockedListener
+        tags:
+            - { name: doctrine.event_listener, event: preUpdate, method: preUpdate }
+
+    softdeleteable_admin_controll:
+        class: Geekhub\UserBundle\Listener\SoftdeleteableAdminListener
+        calls:
+            - [ setEntityManager, [ @doctrine.orm.entity_manager ] ]
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: disableSoftdeleteable }

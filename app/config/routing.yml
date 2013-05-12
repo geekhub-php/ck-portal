@@ -18,6 +18,18 @@ _imagine:
     resource: .
     type:     imagine
 
+fos_js_routing:
+    resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
+
+admin:
+    resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
+    prefix: /admin
+
+_sonata_admin:
+    resource: .
+    type: sonata_admin
+    prefix: /admin
+
 # Internal routing configuration to handle ESI
 # ****** WARNING ******
 # This route should be enabled with caution as it can open a security vulnerability

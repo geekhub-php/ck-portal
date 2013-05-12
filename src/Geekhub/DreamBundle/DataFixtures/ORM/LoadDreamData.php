@@ -26,7 +26,6 @@ class LoadDreamData extends AbstractFixture implements OrderedFixtureInterface
             $dream->setDescription($info[rand(1, 17)]['description']);
             $dream->setCreated($date[rand(1, 17)]['created']);
             $dream->setUpdated($date[rand(1, 17)]['updated']);
-            $dream->setDeletedAt($date[rand(1, 17)]['deleted']);
             $dream->setOnFront(rand(0, 1));
             $dream->setOwner($this->getReference('user' . $owner));
             $dream->setPhone('+38(' . $operator[rand(0, 3)] . ')' . rand(100, 500) . '-' . rand(10, 99) . '-' . rand(10, 99));

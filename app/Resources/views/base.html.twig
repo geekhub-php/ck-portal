@@ -5,20 +5,28 @@
         <title>{% block title %}Черкаська мрія{% endblock %}</title>
         {% block stylesheets %}
             <link rel="icon" type="image/x-icon" href="{{ asset('favicon.ico') }}" />
-            <link rel="stylesheet" href="{{ asset('css/asset.css') }}">
+            {% stylesheets 'bundles/assets/css/*' filter='cssrewrite' %}
+                <link rel="stylesheet" type="text/css" charset="UTF-8" media="all" href="{{ asset_url }}"/>
+            {% endstylesheets %}
         {% endblock %}
     </head>
     <body>
         <div id="system-message-container">
             <dl id="system-message">
-
+                {% for flashMessage in app.session.flashbag.get('notice') %}
+                    <div class="flash-notice">
+                        {{ flashMessage }}
+                    </div>
+                {% endfor %}
             </dl>
         </div>
         <div class="container">
             {% block header %}
                 {%  include '::header.html.twig' %}
             {% endblock %}
-            {% block body %}{% endblock %}
+            {% block body %}
+                {% block fos_user_content %}{% endblock %}
+            {% endblock %}
             {% block footer %}
                 <div class="footer">
                     <span class="copy">&copy; 2012 Черкаська мрія</span>
@@ -51,7 +59,7 @@
             {% endblock %}
             {% block javascripts %}
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
-                {% javascripts '../app/Resources/public/js/*' %}
+                {% javascripts 'bundles/assets/js/*' %}
                 <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
             {% endblock %}

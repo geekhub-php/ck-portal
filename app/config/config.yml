@@ -1,7 +1,6 @@
 imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
-    - { resource: @UserBundle/Resources/config/services.yml }
 
 framework:
     #esi:             ~
@@ -59,7 +58,13 @@ doctrine:
 
     orm:
         auto_generate_proxy_classes: "%kernel.debug%"
-        auto_mapping: true
+        entity_managers:
+            default:
+                auto_mapping: true
+                filters:
+                    softdeleteable:
+                        class: Gedmo\SoftDeleteable\Filter\SoftDeleteableFilter
+                        enabled: true
 
 # Swiftmailer Configuration
 swiftmailer:
@@ -174,3 +179,30 @@ geekhub_file:
     video:
         allowed_providers:    [ youtube.com, vimeo.com ]
         upload_directory:     uploads/video-thumbnails/
+
+sonata_block:
+    default_contexts: [cms]
+    blocks:
+        sonata.admin.block.admin_list:
+            contexts:   [admin]
+
+        sonata.block.service.text:
+        sonata.block.service.rss:
+
+sonata_admin:
+    title:      Chedream.com
+    title_logo: /bundles/assets/img/logo.png
+    templates:
+        # default global templates
+        layout:  SonataAdminBundle::standard_layout.html.twig
+        ajax:    SonataAdminBundle::ajax_layout.html.twig
+
+        # default actions templates, should extend a global templates
+        list:    SonataAdminBundle:CRUD:list.html.twig
+        show:    SonataAdminBundle:CRUD:show.html.twig
+        edit:    SonataAdminBundle:CRUD:edit.html.twig
+
+    dashboard:
+        blocks:
+            # display a dashboard block
+            - { position: left, type: sonata.admin.block.admin_list }
