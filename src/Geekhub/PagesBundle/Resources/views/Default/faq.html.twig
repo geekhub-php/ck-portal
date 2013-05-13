@@ -1,25 +1,44 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    {% for item in faqs %}
-        <div id="accordion">
-            <h3 class="faq-title">
-                <a href="javascript:void(0)">{{ item.title }}</a>
-            </h3>
-            <div class="faq-text" style="display: none;">
-                {{ item.text }}
+    <div class="content-area">
+
+        <h1 class="page-title">Регламент та поради</h1>
+
+        <div class="page-text">
+
+            <ul class="faq-list">
+            {% for item in faqs %}
+                <li class="question-title">
+                    <a href="javascript:void(0)#question{{ loop.index }}">{{ item.title }}</a>
+                </li>
+            {% endfor %}
+            </ul>
+
+            <div class="faq-text">
+            {% for item in faqs %}
+                <div id="question{{ loop.index }}" class="question-text" style="display: none">
+                    {{ item.text }}
+                </div>
+            {% endfor %}
             </div>
+
         </div>
-    {% endfor %}
+
+    </div>
 {% endblock %}
 {% block javascripts %}
     {{ parent() }}
     <script src="http://code.jquery.com/ui/1.10.1/jquery-ui.js"></script>
     <script>
         $(document).ready(function(){
-            $('body').find('h3.faq-title').click(function(){
-//                $('.faq-text').hide('fast');
-                $(this).next().slideToggle();
-            }).next().hide();
+            $('body').find('.question-title a').click(function(){
+                var linkURL = $(this).attr('href');
+                var questionID = '#' + linkURL.split('#')[1];
+                $('.active').removeClass('active');
+                $('.question-text').css({display: 'none'});
+                $(this).parent().addClass('active');
+                $(questionID).css({display: 'block'});
+            });
         });
     </script>
 {% endblock %}

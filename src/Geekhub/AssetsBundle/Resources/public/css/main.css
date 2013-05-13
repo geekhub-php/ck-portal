@@ -712,3 +712,55 @@ p.progressbar-info {
 /*#my-carousel .disabled {*/
 /*color:grey;*/
 /*}*/
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------> FAQ <--------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.content-area {
+    overflow: hidden;
+    background: #FFF;
+    padding: 30px;
+    margin-bottom: 20px;
+}
+.content-area .page-title {
+    overflow: hidden;
+    font-size: 32px;
+    line-height: 32px;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f5f5f5;
+    font-weight: 700;
+}
+.content-area .page-text {
+    overflow: hidden;
+    margin: 10px auto;
+}
+.faq-list {
+    overflow: hidden;
+    float: left;
+    width: 280px;
+    margin-right: 30px;
+}
+.faq-list li {
+    display: block;
+    background: url(../img/faq_list_icon.png) 6px 13px no-repeat;
+    padding: 10px 10px 10px 27px;
+    border-bottom: 1px solid #f5f5f5;
+    min-height: 16px;
+}
+.faq-list li:first-child {
+    padding-top: 0;
+    background-position: 6px 3px;
+}
+.faq-list li a {
+    color: #000;
+    text-decoration: none;
+}
+.faq-list li a:hover {
+    color: #DD3509;
+}
+.faq-text {
+    overflow: hidden;
+}
+
