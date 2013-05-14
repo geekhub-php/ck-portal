@@ -31,9 +31,16 @@ class Faq
     /**
      * @var string
      *
-     * @ORM\Column(name="text", type="text")
+     * @ORM\Column(name="question", type="text")
      */
-    private $text;
+    private $question;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="answer", type="text")
+     */
+    private $answer;
 
 
     /**
@@ -69,26 +76,50 @@ class Faq
         return $this->title;
     }
 
+
     /**
-     * Set text
+     * Set question
      *
-     * @param string $text
+     * @param string $question
      * @return Faq
      */
-    public function setText($text)
+    public function setQuestion($question)
     {
-        $this->text = $text;
-    
+        $this->question = $question;
+
         return $this;
     }
 
     /**
-     * Get text
+     * Get question
      *
      * @return string 
      */
-    public function getText()
+    public function getQuestion()
     {
-        return $this->text;
+        return $this->question;
+    }
+
+    /**
+     * Set answer
+     *
+     * @param string $answer
+     * @return Faq
+     */
+    public function setAnswer($answer)
+    {
+        $this->answer = $answer;
+
+        return $this;
+    }
+
+    /**
+     * Get answer
+     *
+     * @return string 
+     */
+    public function getAnswer()
+    {
+        return $this->answer;
     }
 }
