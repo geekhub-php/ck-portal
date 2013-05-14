@@ -712,3 +712,85 @@ p.progressbar-info {
 /*#my-carousel .disabled {*/
 /*color:grey;*/
 /*}*/
+
+
+/*--------------------------------------------------------------------------------------------------------------------*/
+/*--------------------------------------------> FAQ <--------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+.content-area {
+    overflow: hidden;
+    background: #FFF;
+    padding: 30px;
+    margin-bottom: 20px;
+    min-height: 400px;
+}
+.content-area .page-title {
+    overflow: hidden;
+    font-size: 30px;
+    line-height: 30px;
+    text-align: center;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #f5f5f5;
+    font-weight: 700;
+}
+.content-area .page-text {
+    overflow: hidden;
+    margin: 10px auto;
+}
+.faq-list {
+    overflow: hidden;
+    float: left;
+    width: 280px;
+    margin-right: 30px;
+    font-size: 14px;
+}
+.faq-list .question-title {
+    display: block;
+    background: url(../img/faq_list_icon.png) 6px 13px no-repeat;
+    padding: 10px 10px 10px 27px;
+    border-bottom: 1px solid #f5f5f5;
+    min-height: 16px;
+}
+.faq-list .question-title.active {
+    background: url(../img/faq_list_icon_current.png) 6px 13px no-repeat;
+}
+.faq-list .question-title:first-child {
+    padding-top: 0;
+    background-position: 6px 3px;
+}
+.faq-list .question-title a {
+    display: block;
+    color: #000;
+    text-decoration: none;
+    padding-right: 15px;
+}
+.faq-list .question-title a:hover {
+    color: #DD3509;
+    background: url("../img/faq_list_triangle_hover.png") right 3px no-repeat;
+}
+.faq-text {
+    overflow: hidden;
+    font-size: 16px;
+    line-height: 22px;
+    margin-right: 20px;
+}
+.question-text {
+    overflow: hidden;
+    margin-bottom: 20px;
+    text-align: left;
+}
+.answer-text {
+    text-align: justify;
+}
+.question-text span,
+.answer-text span {
+    margin-right: 5px;
+    font-weight: 700;
+}
+.question-text span {
+    color: #f2602c;
+}
+.answer-text span {
+    color: #37acb1;
+}
+
