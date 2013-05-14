@@ -9,18 +9,21 @@
             <ul class="faq-list">
             {% for item in faqs %}
                 <li class="question-title">
-                    <a href="javascript:void(0)#question{{ loop.index }}">{{ item.title }}</a>
+                    <a href="javascript:void(0)#q={{ loop.index }}">{{ item.title }}</a>
                 </li>
             {% endfor %}
             </ul>
 
-            <div class="faq-text">
+            <dl class="faq-text">
             {% for item in faqs %}
-                <div id="question{{ loop.index }}" class="question-text" style="display: none">
-                    {{ item.text }}
-                </div>
+                <dt id="question{{ loop.index }}" class="question-text" style="display: none">
+                    <span>Питання:</span>{{ item.question }}
+                </dt>
+                <dd id="answer{{ loop.index }}" class="answer-text" style="display: none">
+                    <span>Відповідь:</span>{{ item.answer }}
+                </dd>
             {% endfor %}
-            </div>
+            </dl>
 
         </div>
 
@@ -33,12 +36,17 @@
         $(document).ready(function(){
             $('body').find('.question-title a').click(function(){
                 var linkURL = $(this).attr('href');
-                var questionID = '#' + linkURL.split('#')[1];
+                var query = linkURL.split('#')[1]
+                var questionID = '#question' + query.split('=')[1];
+                var answerID = '#answer' + query.split('=')[1];
                 $('.active').removeClass('active');
                 $('.question-text').css({display: 'none'});
+                $('.answer-text').css({display: 'none'});
                 $(this).parent().addClass('active');
                 $(questionID).css({display: 'block'});
+                $(answerID).css({display: 'block'});
             });
+            $('.question-title:first-child a').click();
         });
     </script>
 {% endblock %}
