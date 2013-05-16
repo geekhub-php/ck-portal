@@ -13,4 +13,5 @@ web/uploads/
 web/css
 web/js
 *~
+*.orig
 composer.lock
