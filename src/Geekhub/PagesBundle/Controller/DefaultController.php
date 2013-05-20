@@ -13,4 +13,9 @@ class DefaultController extends Controller
             'faqs' => $faqs,
         ));
     }
+
+    public function contactsAction()
+    {
+        return $this->render('PagesBundle:Default:contacts.html.twig');
+    }
 }

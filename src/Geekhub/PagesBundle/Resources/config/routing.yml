@@ -1,3 +1,7 @@
 pages_faq:
     pattern:  /faq
     defaults: { _controller: PagesBundle:Default:faq }
+
+pages_contacts:
+    pattern:  /contacts
+    defaults: { _controller: PagesBundle:Default:contacts }
