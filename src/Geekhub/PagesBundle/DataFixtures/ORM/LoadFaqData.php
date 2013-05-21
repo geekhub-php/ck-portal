@@ -10,7 +10,7 @@ use Behat\Gherkin\Node\TableNode;
 
 use Geekhub\PagesBundle\Entity\Faq;
 
-class LoadFaqData extends AbstractFixture implements OrderedFixtureInterface, ContainerAwareInterface
+class LoadFaqData extends AbstractFixture implements OrderedFixtureInterface
 {
     public function load(ObjectManager $manager)
     {
@@ -23,32 +23,10 @@ class LoadFaqData extends AbstractFixture implements OrderedFixtureInterface, Co
                 $entity->$setter($array[$i][$col]);
             }
 
-            $this->setAdditionalInfo($entity);
-
             $manager->persist($entity);
         }
 
         $manager->flush();
-    }
-
-    protected function setAdditionalInfo(Faq $entity)
-    {
-//        copy(__DIR__ . '/images/' . $entity->getProfilePicture(), $this->getUploadRootDir() . '/' . $entity->getProfilePicture());
-    }
-
-    protected function getUploadRootDir()
-    {
-        return $this->container->get('kernel')->getRootdir() . '/../web/' . $this->getUploadDir();
-    }
-
-    protected function getUploadDir()
-    {
-        return 'uploads/images';
-    }
-
-    public function setContainer(ContainerInterface $container = null)
-    {
-        $this->container = $container;
     }
 
     /**
