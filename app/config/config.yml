@@ -81,6 +81,7 @@ stof_doctrine_extensions:
             timestampable: true
             uploadable: true
             softdeleteable: true
+            sortable: true
 
 fpn_tag:
     model:
