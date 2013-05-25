@@ -9,6 +9,8 @@
                 <link rel="stylesheet" type="text/css" charset="UTF-8" media="all" href="{{ asset_url }}"/>
             {% endstylesheets %}
         {% endblock %}
+        {% block headJs %}
+        {% endblock headJs %}
     </head>
     <body>
         <div id="system-message-container">
@@ -32,16 +34,16 @@
                     <span class="copy">&copy; 2012 Черкаська мрія</span>
                     <ul class="links">
                         <li>
-                            <a href="#">Мрії</a>
+                            <a href="{{ path('dream_dreams') }}">Мрії</a>
                         </li>
                         <li>
-                            <a href="#">Регламент та поради</a>
+                            <a href="{{ path('pages_faq') }}">Регламент та поради</a>
                         </li>
                         <li>
                             <a href="#">Підписатись на оновлення</a>
                         </li>
                         <li>
-                            <a href="#">Контакти</a>
+                            <a href="{{ path('pages_contacts') }}">Контакти</a>
                         </li>
                     </ul>
                     <ul class="follow">
@@ -60,7 +62,7 @@
             {% block javascripts %}
                 <script type="text/javascript" src="http://code.jquery.com/jquery-1.8.3.min.js"></script>
                 {% javascripts 'bundles/assets/js/*' %}
-                <script type="text/javascript" src="{{ asset_url }}"></script>
+                    <script type="text/javascript" src="{{ asset_url }}"></script>
                 {% endjavascripts %}
             {% endblock %}
         </div>
