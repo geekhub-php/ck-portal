@@ -16,6 +16,9 @@ class DefaultController extends Controller
 
     public function contactsAction()
     {
-        return $this->render('PagesBundle:Default:contacts.html.twig');
+        $contacts = $this->getDoctrine()->getManager()->getRepository('PagesBundle:Contact')->findAll();
+        return $this->render('PagesBundle:Default:contacts.html.twig', array(
+            'contacts' => $contacts,
+        ));
     }
 }

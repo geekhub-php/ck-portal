@@ -1,4 +1,7 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    Contacts page!
+    <h1>Зворотній зв’язок</h1>
+    {% for contact in contacts %}
+        <p>{{ contact.name }} - <img src="{{ contact.webPath }}"> - {{ contact.contact }}</p>
+    {% endfor %}
 {% endblock %}
