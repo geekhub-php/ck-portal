@@ -1,7 +1,76 @@
 {% extends "::base.html.twig" %}
 {% block body %}
-    <h1>Зворотній зв’язок</h1>
-    {% for contact in contacts %}
-        <p>{{ contact.name }} - <img src="{{ contact.webPath }}"> - {{ contact.contact }}</p>
-    {% endfor %}
+
+    <div class="content-area">
+
+        <div class="contacts-top">
+            <h1 class="contacts-title">Зворотній зв’язок</h1>
+            <h2 class="contact-us">Пишіть нам</h2>
+        </div>
+
+        <div class="contacts-left">
+
+            <ul class="contacts-list">
+                {% for contact in contacts %}
+                    <li>
+                        <div class="list-left">{{ contact.name }}</div>
+                        <div class="list-center"><img src="{{ contact.webPath }}" alt="" /></div>
+                        <div class="list-right">{{ contact.contact }}</div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            <div class="contacts-info">
+
+                <div class="contacts-address">
+                    <div class="address-left">
+                        З будь-яких питаннь<br />
+                        звертайтесь за адресою
+                    </div>
+                    <div class="address-center"><img src="{{ asset('/bundles/assets/img/contacts_address_icon.png') }}" alt=""/></div>
+                    <div class="address-right">
+                        м. Черкаси,<br />
+                        вул. Дашкевича 40
+                    </div>
+                </div>
+
+                <div class="contacts-map">
+
+                    <script
+                            src="http://maps.googleapis.com/maps/api/js?key=AIzaSyDY0kkJiTPVd2U7aTOAwhc9ySH6oHxOIYM&sensor=false">
+                    </script>
+
+                    <script>
+                        var myCenter=new google.maps.LatLng(49.440729,32.05832);
+
+                        function initialize()
+                        {
+                            var mapProp = {
+                                center:myCenter,
+                                zoom:15,
+                                mapTypeId:google.maps.MapTypeId.ROADMAP
+                            };
+
+                            var map=new google.maps.Map(document.getElementById("googleMap"),mapProp);
+
+                            var marker=new google.maps.Marker({
+                                position:myCenter
+                            });
+
+                            marker.setMap(map);
+                        }
+
+                        google.maps.event.addDomListener(window, 'load', initialize);
+                    </script>
+
+                    <div id="googleMap"></div>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="contacts-right"></div>
+
+    </div>
+
 {% endblock %}
