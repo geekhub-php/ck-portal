@@ -714,9 +714,7 @@ p.progressbar-info {
 /*}*/
 
 
-/*--------------------------------------------------------------------------------------------------------------------*/
-/*--------------------------------------------> FAQ <--------------------------------------------------------------*/
-/*--------------------------------------------------------------------------------------------------------------------*/
+/********************** FAQ ************************/
 .content-area {
     overflow: hidden;
     background: #FFF;
@@ -730,7 +728,7 @@ p.progressbar-info {
     line-height: 30px;
     text-align: center;
     padding-bottom: 20px;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #e1e1e1;
     font-weight: 700;
 }
 .content-area .page-text {
@@ -748,7 +746,7 @@ p.progressbar-info {
     display: block;
     background: url(../img/faq_list_icon.png) 6px 13px no-repeat;
     padding: 10px 10px 10px 27px;
-    border-bottom: 1px solid #f5f5f5;
+    border-bottom: 1px solid #e1e1e1;
     min-height: 16px;
 }
 .faq-list .question-title.active {
@@ -793,4 +791,78 @@ p.progressbar-info {
 .answer-text span {
     color: #37acb1;
 }
+/********************** END FAQ ********************/
 
+/********************** CONTACTS ********************/
+.contacts-top {
+    overflow: hidden;
+    border-bottom: 1px solid #e1e1e1;
+    padding-bottom: 20px;
+}
+.contacts-title {
+    float: left;
+    overflow: hidden;
+    width: 435px;
+    font-size: 30px;
+    line-height: 30px;
+    font-weight: 700;
+    margin: 0 30px 0 0;
+}
+.contact-us {
+    float: left;
+    font-size: 26px;
+    line-height: 26px;
+}
+.contacts-left {
+    overflow: hidden;
+    float: left;
+    width: 435px;
+    margin-right: 30px;
+}
+.contacts-right {
+    overflow: hidden;
+}
+.contacts-list {
+    overflow: hidden;
+}
+.contacts-list li {
+    overflow: hidden;
+    padding: 10px 0;
+    border-bottom: 1px solid #e1e1e1;
+}
+.contacts-list .list-left,
+.contacts-list .list-right,
+.contacts-address .address-left,
+.contacts-address .address-right {
+    float: left;
+    width: 200px;
+}
+.contacts-list .list-left,
+.contacts-address .address-left {
+    text-align: right;
+}
+.contacts-list .list-right,
+.contacts-address .address-right {
+    text-align: left;
+}
+.contacts-list .list-center,
+.contacts-address .address-center {
+    float: left;
+    width: 35px;
+}
+.contacts-list .list-center img,
+.contacts-address .address-center img {
+    display: block;
+    margin: 0 auto;
+}
+.contacts-address {
+    overflow: hidden;
+    padding: 10px 0;
+}
+#googleMap {
+    overflow: hidden;
+    width: 433px;
+    height: 290px;
+    border: 1px solid #e1e1e1;
+}
+/********************** END CONTACTS ****************/
