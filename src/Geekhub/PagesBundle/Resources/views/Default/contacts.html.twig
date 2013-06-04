@@ -69,7 +69,32 @@
             </div>
         </div>
 
-        <div class="contacts-right"></div>
+        <div class="contacts-right">
+            <form method="post" {{ form_enctype(form) }}>
+                {{ form_errors(form) }}
+
+                {{ form_label(form.email) }}
+                {{ form_errors(form.email) }}
+                {{ form_widget(form.email) }}
+
+                {{ form_label(form.theme) }}
+                {{ form_errors(form.theme) }}
+                {{ form_widget(form.theme) }}
+
+                {{ form_label(form.text) }}
+                {{ form_errors(form.text) }}
+                {{ form_widget(form.text) }}
+
+                {{ form_label(form.captcha) }}
+                {{ form_errors(form.captcha) }}
+                {{ form_widget(form.captcha) }}
+                <p>Скільки буде 3 плюс 2?</p>
+                <p>
+                    <button type="submit">Надіслати</button>
+                </p>
+                {{ form_rest(form) }}
+            </form>
+        </div>
 
     </div>
 
