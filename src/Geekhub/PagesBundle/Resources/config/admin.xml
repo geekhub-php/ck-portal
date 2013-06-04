@@ -7,11 +7,20 @@
                 >
             <tag name="form.type_extension" alias="file" />
         </service>
+        <service id="acme_demo.form.type.map" class="Geekhub\PagesBundle\Form\Type\MapType">
+            <tag name="form.type" alias="map" />
+        </service>
 
         <service id="sonata.admin.contact" class="Geekhub\PagesBundle\Admin\ContactAdmin">
             <tag name="sonata.admin" manager_type="orm" group="Contacts" label="Contacts"/>
             <argument />
             <argument>Geekhub\PagesBundle\Entity\Contact</argument>
+            <argument>SonataAdminBundle:CRUD</argument>
+        </service>
+        <service id="sonata.admin.address" class="Geekhub\PagesBundle\Admin\AddressAdmin">
+            <tag name="sonata.admin" manager_type="orm" group="Contacts" label="Address"/>
+            <argument />
+            <argument>Geekhub\PagesBundle\Entity\Address</argument>
             <argument>SonataAdminBundle:CRUD</argument>
         </service>
     </services>

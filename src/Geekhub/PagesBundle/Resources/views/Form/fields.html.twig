@@ -10,3 +10,11 @@
 
     {% endspaceless %}
 {% endblock %}
+{% block map_widget %}
+    {% spaceless %}
+        {{ block('form_widget') }}
+        {% if map.latitude is not null %}
+            <img src="{{ asset(image_url) }}"/>
+        {% endif %}
+    {% endspaceless %}
+{% endblock %}
