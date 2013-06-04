@@ -3,7 +3,7 @@ namespace Geekhub\PagesBundle\Form\Type;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\OptionsResolver\OptionsResolverInterface;
-use Symfony\Component\Form\Test\FormBuilderInterface;
+use Symfony\Component\Form\FormBuilderInterface;
 
 class MapType extends AbstractType
 {
