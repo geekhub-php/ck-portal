@@ -865,4 +865,69 @@ p.progressbar-info {
     height: 290px;
     border: 1px solid #e1e1e1;
 }
+.ct-form {
+    margin-top: 10px;
+    font-family: Trebuchet MS, sans-serif;
+}
+.ct-form p {
+    overflow: hidden;
+    margin-bottom: 15px;
+}
+.ct-form p label {
+    display: block;
+    text-transform: uppercase;
+    color: #f2602c;
+    margin-bottom: 5px;
+    font-weight: 700;
+}
+.ct-form p input,
+.ct-form p textarea {
+    padding: 2px 5px;
+    border: 1px solid #e1e1e1;
+    font-size: 16px;
+}
+.ct-form p input {
+    height: 30px;
+}
+.ct-form .ct-form-email input,
+.ct-form .ct-form-theme input,
+.ct-form .ct-form-text textarea {
+    width: 423px;
+}
+.ct-form .ct-form-text textarea {
+    height: 250px;
+}
+.ct-form .ct-form-captcha input {
+    width: 160px;
+    margin-right: 20px;
+}
+.ct-form .ct-form-captcha span {
+    font-size: 16px;
+}
+.ct-form .ct-form-submit button {
+    color: #FFF;
+    border: none;
+    cursor: pointer;
+    font-weight: 700;
+    font-size: 16px;
+    text-transform: uppercase;
+    padding: 12px 80px;
+    box-shadow: 0 0 3px #CCC;
+    background: #ED431D;
+    background-image: -ms-linear-gradient(top, #FF9C38 0%, #ED431D 100%);
+    background-image: -moz-linear-gradient(top, #FF9C38 0%, #ED431D 100%);
+    background-image: -o-linear-gradient(top, #FF9C38 0%, #ED431D 100%);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, #FF9C38), color-stop(1, #ED431D));
+    background-image: -webkit-linear-gradient(top, #FF9C38 0%, #ED431D 100%);
+    background-image: linear-gradient(to bottom, #FF9C38 0%, #ED431D 100%);
+}
+.ct-form .ct-form-submit button:hover {
+    background: #FF9C38;
+    background-image: -ms-linear-gradient(bottom, #FF9C38 0%, #ED431D 100%);
+    background-image: -moz-linear-gradient(bottom, #FF9C38 0%, #ED431D 100%);
+    background-image: -o-linear-gradient(bottom, #FF9C38 0%, #ED431D 100%);
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #FF9C38), color-stop(1, #ED431D));
+    background-image: -webkit-linear-gradient(bottom, #FF9C38 0%, #ED431D 100%);
+    background-image: linear-gradient(to top, #FF9C38 0%, #ED431D 100%);
+}
 /********************** END CONTACTS ****************/
