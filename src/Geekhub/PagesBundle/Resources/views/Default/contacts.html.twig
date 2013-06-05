@@ -70,26 +70,35 @@
         </div>
 
         <div class="contacts-right">
-            <form method="post" {{ form_enctype(form) }}>
+            <form class="ct-form" method="post" {{ form_enctype(form) }}>
                 {{ form_errors(form) }}
 
-                {{ form_label(form.email) }}
-                {{ form_errors(form.email) }}
-                {{ form_widget(form.email) }}
+                <p class="ct-form-email">
+                    {{ form_label(form.email) }}
+                    {{ form_errors(form.email) }}
+                    {{ form_widget(form.email) }}
+                </p>
 
-                {{ form_label(form.theme) }}
-                {{ form_errors(form.theme) }}
-                {{ form_widget(form.theme) }}
+                <p class="ct-form-theme">
+                    {{ form_label(form.theme) }}
+                    {{ form_errors(form.theme) }}
+                    {{ form_widget(form.theme) }}
+                </p>
 
-                {{ form_label(form.text) }}
-                {{ form_errors(form.text) }}
-                {{ form_widget(form.text) }}
+                <p class="ct-form-text">
+                    {{ form_label(form.text) }}
+                    {{ form_errors(form.text) }}
+                    {{ form_widget(form.text) }}
+                </p>
 
-                {{ form_label(form.captcha) }}
-                {{ form_errors(form.captcha) }}
-                {{ form_widget(form.captcha) }}
-                <p>Скільки буде 3 плюс 2?</p>
-                <p>
+                <p class="ct-form-captcha">
+                    {{ form_label(form.captcha) }}
+                    {{ form_errors(form.captcha) }}
+                    {{ form_widget(form.captcha) }}
+                    <span>Скільки буде 3 плюс 2?</span>
+                </p>
+
+                <p class="ct-form-submit">
                     <button type="submit">Надіслати</button>
                 </p>
                 {{ form_rest(form) }}
