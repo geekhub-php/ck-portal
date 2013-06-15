@@ -16,7 +16,7 @@ class LoadDocumentData extends AbstractFixture implements OrderedFixtureInterfac
 
     public function load(ObjectManager $manager)
     {
-        $type = array('doc.doc', 'xls.xls', 'xlsx.xlsx', 'pdf.pdf', 'Новый документ 1.doc');
+        $type = array('doc.doc', 'xls.xls', 'xlsx.xlsx', 'pdf.pdf', 'doc1.doc');
 
         for ($i = 0; $i < 100; $i++) {
             $file = new DreamFile();
