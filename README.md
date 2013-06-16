@@ -44,3 +44,66 @@ Config instruction
 4. Create table. Run "app/console doctrine:database:create" in console
 5. php bin/reload.php
 
+Config Windows instruction
+--------------------------
+
+1. Скачайте и установите xampp если этого еще не сделали http://sourceforge.net/projects/xampp/files/latest/download
+2. Установите git если вы еще этого не сделали http://git-scm.com/book/ru/%D0%92%D0%B2%D0%B5%D0%B4%D0%B5%D0%BD%D0%B8%D0%B5-%D0%A3%D1%81%D1%82%D0%B0%D0%BD%D0%BE%D0%B2%D0%BA%D0%B0-Git
+
+
+3. Форкните прокект на гитхабе
+4. Заклоньте проект в С:/xampp/htdocs/chedream
+```bash
+    git clone git@github.com:username/ck-portal.git /c/xampp/htdocs/chedream
+```
+5. Перейдите в папку с заклоненым проектом:
+```bash
+    cd /c/xampp/htdocs/chedream
+```
+6. Скачайте компосер в свой проект:
+```bash
+    /c/xampp/php/php  -r "eval('?>'.file_get_contents('http://getcomposer.org/installer'));"
+```
+7. Настройте php.ini в вашем проекте
+```ini
+    extension=php_openssl.dll
+    extension=php_fileinfo.dll
+```
+8. Установите зависимости:
+```bash
+    /c/xampp/php/php composer.phar install
+```
+9. Создайте свой файл parameters.yml из parameters.yml.dist
+```bash
+    cp /c/xampp/htdocs/chedream/app/config/parameters.yml.dist /c/xampp/htdocs/chedream/app/config/parameters.yml
+```
+10. Создайте базу данных
+```bash
+    /c/xampp/php/php app/console doctrine:database:create
+```
+11. Запустите релоад для Windows:
+```bash
+    reload.bat
+```
+
+12. Добавляем виртуал хост
+
+a) Добавляем в файл httpd-vhosts.conf (C:\xampp\apache\conf\extra)
+```conf
+    <VirtualHost *:80>
+        DocumentRoot "C:/xampp/htdocs/chedream/web"
+        ServerName chedream.local
+        ServerAlias www.chedream.local
+    </VirtualHost>
+```
+
+b) Добавляем в файл hosts (C:\WINDOWS\system32\drivers\etc\)
+```conf
+127.0.0.1       chedream.local
+```
+
+c) Останавливаем и вновь запускаем апач
+
+
+
+/c/xampp/php/php app/console assets:install - эту комманду в консоли нужно выполнять после изменений сделаных в файлах стилей или js
