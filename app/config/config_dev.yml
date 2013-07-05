@@ -27,3 +27,11 @@ swiftmailer:
 
 #swiftmailer:
 #    delivery_address: me@example.com
+
+hwi_oauth:
+    resource_owners:
+        facebook:
+            type:                facebook
+            client_id:           "177082695795223"
+            client_secret:       "d5ece8770a6ef636cebef9752f12dd41"
+            scope:               "email, user_photos, user_website"
