@@ -83,7 +83,7 @@ body {
 
 
 .header {
-    background: url(../img/header_spot.png) no-repeat center top;
+    background: url(img/header_spot.png) no-repeat center top;
     height: 75px;
     position: relative;
 
@@ -92,7 +92,7 @@ body {
     font-family: 'DAXPRO';
 }
 h1#logo a {
-    background: url(../img/logo.png) no-repeat left top;
+    background: url(img/logo.png) no-repeat left top;
     display: block;
     height: 32px;
     margin: 20px 0 0;
@@ -119,7 +119,7 @@ ul.header-menu li a:hover {
     color: #DD3509;
 }
 ul.header-menu li a.add-dream {
-    background: url(../img/add_dream.png) no-repeat right top;
+    background: url(img/add_dream.png) no-repeat right top;
     display: block;
     font-family: 'DAXPRO-BOLD';
     height: 40px;
@@ -127,7 +127,7 @@ ul.header-menu li a.add-dream {
     padding: 0 49px 0 30px;
 }
 ul.header-menu li a.add-dream:hover {
-    background: url(../img/add_dream.png) no-repeat right bottom;
+    background: url(img/add_dream.png) no-repeat right bottom;
     color: #33393E;
 }
 .signin-block {
@@ -157,15 +157,15 @@ ul.header-menu li a.add-dream:hover {
     text-indent: -100px;
 }
 .signin-block ul li a.fb-signin {
-    background: url(../img/fb_header_link.png) no-repeat right top;
+    background: url(img/fb_header_link.png) no-repeat right top;
     width: 31px;
 }
 .signin-block ul li a.vk-signin {
-    background: url(../img/vk_header_link.png) no-repeat right top;
+    background: url(img/vk_header_link.png) no-repeat right top;
     width: 40px;
 }
 .signin-block ul li a.ok-signin {
-    background: url(../img/ok_header_link.png) no-repeat right top;
+    background: url(img/ok_header_link.png) no-repeat right top;
     width: 30px;
 }
 .signin-block ul li a:hover {
@@ -178,7 +178,7 @@ ul.header-menu li a.add-dream:hover {
     top: 0;
 }
 .search-block a {
-    background: url(../img/seaech_icon.png) no-repeat 59px center;
+    background: url(img/seaech_icon.png) no-repeat 59px center;
     box-sizing: border-box;
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
@@ -230,7 +230,7 @@ ul.header-menu li a.add-dream:hover {
     color: #FFF;
 }
 .search-block form button[type="submit"] {
-    background: url(../img/search_button.png) no-repeat left top;
+    background: url(img/search_button.png) no-repeat left top;
     border: none;
     display: block;
     height: 75px;
@@ -248,7 +248,7 @@ ul.header-menu li a.add-dream:hover {
     position: relative;
 }
 .slider-wrapper span.slider-bottom-shadow {
-    background: url(../img/slider_shadow.png) no-repeat center top;
+    background: url(img/slider_shadow.png) no-repeat center top;
     bottom: -17px;
     display: block;
     height: 17px;
@@ -339,13 +339,13 @@ ul.splash.right li a:hover {
 }
 
 ul.splash.left li a.active {
-    background: url(../img/splash_left_active_bg.png) no-repeat left top;
+    background: url(img/splash_left_active_bg.png) no-repeat left top;
     color: #FFF;
     margin-left: -12px;
     padding-left: 32px;
 }
 ul.splash.right li a.active {
-    background: url(../img/splash_right_active_bg.png) no-repeat left top;
+    background: url(img/splash_right_active_bg.png) no-repeat left top;
     color: #FFF;
     margin-right: -12px;
     width: 242px;
@@ -369,7 +369,7 @@ ul.dreams-list > li {
     width: 230px;
 }
 ul.dreams-list li a.add-to-chosen {
-    background: url(../img/add_to_chosen.png) no-repeat left top;
+    background: url(img/add_to_chosen.png) no-repeat left top;
     height: 32px;
     overflow: hidden;
     position: absolute;
@@ -407,7 +407,7 @@ ul.dreams-list li .dream-photo {
     position: relative;
 }
 ul.dreams-list li .dream-photo span {
-    background: url(../img/dream_photo_span.png) no-repeat right top;
+    background: url(img/dream_photo_span.png) no-repeat right top;
     height: 20px;
     position: absolute;
     right: 0;
@@ -444,7 +444,7 @@ ul.dreams-list li .support li span {
     height: 130px;
 }
 .footer span.copy {
-    background: url(../img/footer_copy.png) no-repeat left center;
+    background: url(img/footer_copy.png) no-repeat left center;
     color: #9B9B9B;
     float: left;
     line-height: 21px;
@@ -488,16 +488,16 @@ ul.follow li a {
     width: 39px;
 }
 ul.follow li a.fb {
-    background: url(../img/footer_fb.png) no-repeat right top;
+    background: url(img/footer_fb.png) no-repeat right top;
 }
 ul.follow li a.vk {
-    background: url(../img/footer_vk.png) no-repeat right top;
+    background: url(img/footer_vk.png) no-repeat right top;
 }
 ul.follow li a.ok {
-    background: url(../img/footer_ok.png) no-repeat right top;
+    background: url(img/footer_ok.png) no-repeat right top;
 }
 ul.follow li a.tw {
-    background: url(../img/footer_tw.png) no-repeat right top;
+    background: url(img/footer_tw.png) no-repeat right top;
 }
 ul.follow li a:hover {
     background-position: left top;
@@ -517,13 +517,13 @@ ul.development li a {
     display: inline-block;
 }
 ul.development li a.dev {
-    background: url(../img/footer_dev_label.png) no-repeat left top;
+    background: url(img/footer_dev_label.png) no-repeat left top;
     height: 21px;
     overflow: hidden;
     width: 29px;
 }
 ul.development li a.design {
-    background: url(../img/footer_des_label.png) no-repeat left top;
+    background: url(img/footer_des_label.png) no-repeat left top;
     height: 14px;
     overflow: hidden;
     width: 24px;
@@ -744,13 +744,13 @@ p.progressbar-info {
 }
 .faq-list .question-title {
     display: block;
-    background: url(../img/faq_list_icon.png) 6px 13px no-repeat;
+    background: url(img/faq_list_icon.png) 6px 13px no-repeat;
     padding: 10px 10px 10px 27px;
     border-bottom: 1px solid #e1e1e1;
     min-height: 16px;
 }
 .faq-list .question-title.active {
-    background: url(../img/faq_list_icon_current.png) 6px 13px no-repeat;
+    background: url(img/faq_list_icon_current.png) 6px 13px no-repeat;
 }
 .faq-list .question-title:first-child {
     padding-top: 0;
@@ -764,7 +764,7 @@ p.progressbar-info {
 }
 .faq-list .question-title a:hover {
     color: #DD3509;
-    background: url("../img/faq_list_triangle_hover.png") right 3px no-repeat;
+    background: url("img/faq_list_triangle_hover.png") right 3px no-repeat;
 }
 .faq-text {
     overflow: hidden;
