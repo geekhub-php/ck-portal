@@ -12,6 +12,8 @@ web/media/cache/
 web/uploads/
 web/css
 web/js
+web/fonts
+web/img
 *~
 *.orig
 composer.lock
