@@ -4,6 +4,20 @@
     "autoload": {
         "psr-0": { "": "src/" }
     },
+    "repositories": [
+        {
+            "type": "package",
+            "package": {
+                "name": "blueimp/jQuery-File-Upload",
+                "version": "8.6.0",
+                "source": {
+                    "url": "https://github.com/blueimp/jQuery-File-Upload.git",
+                    "type": "git",
+                    "reference": "8.6.0"
+                }
+            }
+        }
+    ],
     "require": {
         "php": ">=5.3.3",
         "symfony/symfony": "2.2.*",
@@ -30,7 +44,8 @@
         "misd/guzzle-bundle": "1.0.*@dev",
         "friendsofsymfony/jsrouting-bundle": "1.1.*@dev",
         "sonata-project/admin-bundle": "2.2.*@dev",
-        "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev"
+        "sonata-project/doctrine-orm-admin-bundle": "2.2.*@dev",
+        "blueimp/jQuery-File-Upload": "8.6.0"
     },
 
     "minimum-stability": "dev",
