@@ -2,7 +2,8 @@
     "name": "symfony/framework-standard-edition",
     "description": "The \"Symfony Standard Edition\" distribution",
     "autoload": {
-        "psr-0": { "": "src/" }
+        "psr-0": { "": "src/" },
+        "files": ["vendor/blueimp/jQuery-File-Upload/server/php/UploadHandler.php"]
     },
     "repositories": [
         {
