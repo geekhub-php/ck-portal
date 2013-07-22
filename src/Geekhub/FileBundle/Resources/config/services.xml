@@ -9,9 +9,7 @@
     </parameters>
     
     <services>
-        <service id="geekhub.file_bundle.file_uploader" class="%geekhub.file_bundle.file_uploader.class%">
-
-        </service>
+        <service id="geekhub.file_bundle.file_uploader" class="%geekhub.file_bundle.file_uploader.class%" />
     </services>
     
     
