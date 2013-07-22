@@ -7,6 +7,7 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Gedmo\Uploadable\UploadableListener;
 use Symfony\Component\HttpFoundation\File\File;
+use Geekhub\FileBundle\UploadHandlerWrapper;
 
 use Geekhub\FileBundle\Entity\Image;
 use Geekhub\FileBundle\Entity\Document;
@@ -22,12 +23,28 @@ class DefaultController extends Controller
         $image->setSizeLimit($this->container->getParameter('geekhub_file.image.size_limit'));
         $image->setUploadDir($this->container->getParameter('geekhub_file.image.upload_directory'));
 
-        $fileUploader = $this->get('geekhub.file_bundle.file_uploader');
-        $fileUploader->handleUpload($request, $image);
+//        $fileUploader = $this->get('geekhub.file_bundle.file_uploader');
+//        $fileUploader->handleUpload($request, $image);
 
-        $serializedImage = $this->container->get('serializer')->serialize($image, 'json');
+//        $serializedImage = $this->container->get('serializer')->serialize($image, 'json');
 
-        return new Response($serializedImage, 200, array('Content-Type' => 'text/plain'));
+//        return new Response($serializedImage, 200, array('Content-Type' => 'text/plain'));
+
+        $uploadHendler = new UploadHandlerWrapper(array(
+            'image_versions' => array(
+                'thumbnail' => array(
+                    'crop' => true,
+                    'max_width' => 280,
+                    'max_height' => 200,
+                ),
+            ),
+            'param_name' => 'fileUpload',
+            'upload_dir' => $this->get('kernel')->getRootDir() . '/../web/uploads/images/',
+            'upload_url' => $this->get('router')->generate('dream_homepage', array(), true) . 'uploads/images/',
+        ));
+
+        //jQuery-file-uploader return json to client, so we must return empty response
+        return new Response();
     }
 
     public function uploadDocumentAction(Request $request)

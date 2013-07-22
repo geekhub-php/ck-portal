@@ -438,6 +438,94 @@ ul.dreams-list li .support li span {
     font: 16px 'DAXPRO-BOLD';
 }
 /*--------------------------------------------------------------------------------------------------------------------*/
+/*-----------------------------------------> CREATE DREAM <------------------------------------------------------------*/
+/*--------------------------------------------------------------------------------------------------------------------*/
+
+.bar {
+    height: 18px;
+    background: green;
+}
+#create-dream #main-image {
+    border: 1px dashed #b3b3b3;
+    width: 280px;
+    height: 200px;
+}
+#create-dream #fileupload {
+    position: relative;
+    right: 0px;
+    top: 0px;
+    font-family: Arial;
+    font-size: 118px;
+    margin: 0px;
+    padding: 0px;
+    cursor: pointer;
+    opacity: 0;
+    height: 100%;
+    width: 100%;
+}
+#create-dream div.media {
+    width: 300px;
+    float: left;
+}
+#create-dream div.description {
+    width: 600px;
+    float: left;
+    clear: right;
+}
+#create-dream div#estimate {
+    clear: both;
+}
+#create-dream div#estimate ul {
+    width: 30%;
+    float: left;
+    margin: 0 10px;
+    padding-top: 10px;
+    border-top: 1px solid #000;
+}
+#create-dream div#estimate ul.first {
+    margin-left: 0;
+}
+#create-dream textarea {
+    height: 150px;
+}
+#create-dream input,
+#create-dream textarea {
+    width: 570px;
+}
+#create-dream input[type="checkbox"] {
+    float: right;
+    width: 60px;
+}
+span.require {
+    color: #f2602c;
+}
+span.helper {
+    color: #9B9B9B;
+    font-weight: normal;
+    font-size: 12px;
+    margin-left: 10px;
+}
+#phone span.choice {
+    border: 1px dotted #e1e1e1;
+    font-size: 8px;
+    font-weight: normal;
+    color: #464646;
+    margin-left: 5px;
+    padding: 2px 5px;
+    cursor: pointer;
+}
+#create-dream #phone span.active {
+    border: 1px solid #e1e1e1;
+    background: #5ec0cd;
+    color: white;
+}
+h3 {
+    color: #37acb1;
+    font-weight: bold;
+    margin-bottom: 10px;
+}
+
+/*--------------------------------------------------------------------------------------------------------------------*/
 /*--------------------------------------------> FOOTER <--------------------------------------------------------------*/
 /*--------------------------------------------------------------------------------------------------------------------*/
 .footer {
@@ -881,12 +969,15 @@ p.progressbar-info {
     font-weight: 700;
 }
 .ct-form p input,
-.ct-form p textarea {
+.ct-form p textarea,
+#create-dream input,
+#create-dream textarea {
     padding: 2px 5px;
     border: 1px solid #e1e1e1;
     font-size: 16px;
 }
-.ct-form p input {
+.ct-form p input,
+#create-dream input {
     height: 30px;
 }
 .ct-form .ct-form-email input,

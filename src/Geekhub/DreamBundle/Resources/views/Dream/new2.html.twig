@@ -1,0 +1,183 @@
+{% extends "::base.html.twig" %}
+{% block stylesheets %}
+    {{ parent() }}
+{% endblock stylesheets %}
+{% block headJs %}
+    {{ parent() }}
+{% endblock headJs %}
+{% block body %}
+    <div class="content-area" id="create-dream">
+        <div class="media">
+            <h3>ДОДАТИ</h3>
+            <div id="main-image">
+                <input id="fileupload" type="file" name="fileUpload[]" data-url="{{ path('file_upload_image') }}">
+            </div>
+            <div id="progress">
+                <div class="bar" style="width: 0%;"></div>
+            </div>
+        </div>
+        <div class="description">
+            <h3>НАЗВА&nbsp<span class="require">*</span></h3>
+            {{ form_errors(form.title) }}
+            {{ form_widget(form.title) }}
+
+            <h3>ОПИС МРІЇ&nbsp<span class="require">*</span></h3>
+            {{ form_errors(form.description) }}
+            {{ form_widget(form.description) }}
+
+            <h3>КЛЮЧОВІ СЛОВА<span class="helper">Відокремлювати комою</span></h3>
+            {{ form_errors(form.tagArray) }}
+            {{ form_widget(form.tagArray) }}
+
+            <div id="phone">
+                <h3>ТЕЛЕФОН&nbsp<span class="require">*</span></h3>
+                {{ form_errors(form.phone) }}
+                {{ form_widget(form.phone) }}
+            </div>
+
+            <div id="phone-available">
+                <h3 style="float: left">ПОКАЗУВАТИ ТЕЛЕФОН УСІМ КОРИСТУВАЧАМ?&nbsp<span class="require">*</span></h3>
+                {{ form_errors(form.phoneAvailable) }}
+                {{ form_widget(form.phoneAvailable) }}
+            </div>
+
+        </div>
+        <div id="estimate">
+            <h3>КОШТОРИС ПРОЕКТУ</h3>
+            <ul class="financial first" data-prototype="{{ form_widget(form.financial.vars.prototype)|e }}">
+                {{ form_row(form.financial) }}
+            </ul>
+            <ul class="equipment" data-prototype="{{ form_widget(form.equipment.vars.prototype)|e }}">
+                {{ form_row(form.equipment) }}
+            </ul>
+            <ul class="work" data-prototype="{{ form_widget(form.work.vars.prototype)|e }}">
+                {{ form_row(form.work) }}
+            </ul>
+        </div>
+
+    </div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="{{ asset('js/jquery-file-upload.js') }}"></script>
+{#======================= Upload main image ========================#}
+    <script>
+        $(function () {
+            $('#fileupload').fileupload({
+                imageCrop: true
+            })
+            .bind('fileuploaddone', function (e, data) {
+                result = $.parseJSON(data.result);
+                thumbnailUrl = result.fileUpload[0].thumbnailUrl;
+
+                $('#main-image')
+                    .css( "background", "url(" + thumbnailUrl + ")" )
+                    .css("border", "1px solid #b3b3b3");
+            });
+        });
+    </script>
+{#=========== Convert phoneAvailable to make more sweet ===========#}
+    <script>
+        $('#phone-available').hide();
+        $('#phone').find('h3').append('<span class="choice" id="to-all">УСІМ</span><span class="choice" id="only-admin">ТІЛЬКИ АДМІНІСТРАТОРУ</span>');
+
+//        set checked choice via css style
+        if ($('#phone-available input').is(':checked')) {
+            $('#to-all').addClass('active');
+        } else {
+            $('#only-admin').addClass('active');
+        }
+
+        $('#only-admin').bind('click', function() {
+            $(this).addClass('active');
+            $('#to-all').removeClass('active');
+            $('#phone-available input').attr('checked', false);
+        });
+        $('#to-all').bind('click', function() {
+            $(this).addClass('active');
+            $('#only-admin').removeClass('active');
+            $('#phone-available input').attr('checked', true);
+        });
+    </script>
+    <script type="text/javascript">
+        function dump(obj) {
+            var out = "";
+            if(obj && typeof(obj) == "object"){
+                for (var i in obj) {
+                    out += i + ": " + obj[i] + "\n";
+                }
+            } else {
+                out = obj;
+            }
+            alert(out);
+        }
+    </script>
+    <script>
+        var collectionHolderFinancial = $('ul.financial');
+        var collectionHolderWork = $('ul.work');
+        var collectionHolderEquipment = $('ul.equipment');
+        var collectionHolderVideo = $('ul.video');
+        var collectionHolderImage = $('ul.image');
+        var collectionHolderDocument = $('ul.document');
+
+        var $addFinanceLink = $('<a href="#" id="add_financial_link">Додати статтю</a>');
+        var $addWorkLink = $('<a href="#" id="add_work_link">Додати статтю</a>');
+        var $addEquipmentLink = $('<a href="#" id="add_equipment_link">Додати статтю</a>');
+
+        var $newFinancialLinkLi = $('<li></li>').append($addFinanceLink);
+        var $newWorkLinkLi = $('<li></li>').append($addWorkLink);
+        var $newEquipmentLinkLi = $('<li></li>').append($addEquipmentLink);
+        var $newVideoLinkLi = $('<li></li>');
+        var $newImageLinkLi = $('<li></li>');
+        var $newDocumentLinkLi = $('<li></li>');
+
+        jQuery(document).ready(function() {
+            // add the "add a tag" anchor and li to the tags ul
+            collectionHolderFinancial.append($newFinancialLinkLi);
+            collectionHolderWork.append($newWorkLinkLi);
+            collectionHolderEquipment.append($newEquipmentLinkLi);
+            collectionHolderVideo.append($newVideoLinkLi);
+            collectionHolderImage.append($newImageLinkLi);
+            collectionHolderDocument.append($newDocumentLinkLi);
+
+            $addFinanceLink.on('click', function(e) {
+                // prevent the link from creating a "#" on the URL
+                e.preventDefault();
+
+                // add a new form (see next code block)
+                addForm(collectionHolderFinancial, $newFinancialLinkLi);
+                hideLinkIfLimit(collectionHolderFinancial, $newFinancialLinkLi);
+            });
+            $addWorkLink.on('click', function(e) {
+                e.preventDefault();
+                addForm(collectionHolderWork, $newWorkLinkLi);
+                hideLinkIfLimit(collectionHolderWork, $newWorkLinkLi);
+            });
+            $addEquipmentLink.on('click', function(e) {
+                e.preventDefault();
+                addForm(collectionHolderEquipment, $newEquipmentLinkLi);
+                hideLinkIfLimit(collectionHolderEquipment, $newEquipmentLinkLi);
+            });
+        });
+
+        function hideLinkIfLimit(collectionHolder, $newLinkLi) {
+            var length = 10;
+            if (jQuery(collectionHolder).children().length > length+1) {
+                jQuery($newLinkLi).replaceWith('<span class="add-link-warning">Ви можете додати не більше ' + length + '-ти статтей</span>');
+            }
+        }
+
+        function addForm(collectionHolder, $newLinkLi) {
+            // Get the data-prototype explained earlier
+            var prototype = collectionHolder.attr('data-prototype');
+
+            // Replace '__name__' in the prototype's HTML to
+            // instead be a number based on the current collection's length.
+            var newForm = prototype.replace(/__name__/g, collectionHolder.children().length);
+
+            // Display the form in the page in an li, before the "Add a entity" link li
+            var $newFormLi = $('<li></li>').append(newForm);
+            $newLinkLi.before($newFormLi);
+        }
+    </script>
+{% endblock %}

@@ -113,7 +113,7 @@ class DreamController extends Controller
         $tags = $this->getDoctrine()->getRepository('TagBundle:Tag')->findAll();
         $form   = $this->createForm(new DreamType(), $dream);
 
-        return $this->render('DreamBundle:Dream:new.html.twig', array(
+        return $this->render('DreamBundle:Dream:new2.html.twig', array(
             'dream' => $dream,
             'tags' => $tags,
             'form'   => $form->createView(),
