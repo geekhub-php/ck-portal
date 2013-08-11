@@ -69,10 +69,14 @@
             .bind('fileuploaddone', function (e, data) {
                 result = $.parseJSON(data.result);
                 thumbnailUrl = result.fileUpload[0].thumbnailUrl;
-
-                $('#main-image')
-                    .css( "background", "url(" + thumbnailUrl + ")" )
-                    .css("border", "1px solid #b3b3b3");
+                if (result.fileUpload[0].error) {
+                    alert('Упс, щос пішло не так :( Напишіть нам, це нам дуже допоможе. Вкажіть наступну інформацію: ' + result.fileUpload[0].error);
+                    handleError(result.fileUpload[0].error);
+                } else {
+                    $('#main-image')
+                        .css( "background", "url(" + thumbnailUrl + ")" )
+                        .css("border", "1px solid #b3b3b3");
+                }
             });
         });
     </script>
