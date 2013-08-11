@@ -112,6 +112,16 @@
             alert(out);
         }
     </script>
+    {#=========== Handle Error for log it in the server side ===========#}
+    <script>
+        function handleError(error) {
+            $.ajax({
+                url: "{{ path('handle_error') }}",
+                data: error,
+                type: "POST"
+            });
+        }
+    </script>
     <script>
         var collectionHolderFinancial = $('ul.financial');
         var collectionHolderWork = $('ul.work');
