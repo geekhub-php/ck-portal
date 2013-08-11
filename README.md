@@ -20,7 +20,7 @@ ToDo
 Bug tracking
 ------------
 
-Sylius uses [GitHub issues](https://github.com/geekhub-php/ck-portal/issues?state=open).
+Chedream uses [GitHub issues](https://github.com/geekhub-php/ck-portal/issues?state=open).
 If you have found bug, please create an issue.
 
 MIT License
@@ -31,7 +31,7 @@ License can be found [here](https://github.com/Sylius/Sylius/blob/master/LICENSE
 Authors
 -------
 
-Sylius was originally created by [Geekhub Project Team](http://geekhub.ck.ua).
+Chedream was originally created by [Geekhub Project Team](http://geekhub.ck.ua).
 
 [1]:  http://geekhub.ck.ua/
 
