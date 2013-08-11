@@ -10,14 +10,14 @@ dream_show_more_dreams:
     pattern:  /showmore/{limit}/{offset}/{state}
     defaults: { _controller: "DreamBundle:Dream:showMoreDreams", limit: 8, offset: 0, state: 'new' }
 
-dream_entity:
+_dream_entity:
     resource: "@DreamBundle/Resources/config/routing/dream.yml"
     prefix:   /dream
 
-dream_cbsupport:
+_dream_cbsupport:
     resource: "@DreamBundle/Resources/config/routing/cbsupport.yml"
     prefix:   /cbsupport
 
-dream_emails:
+_dream_emails:
     resource: "@DreamBundle/Resources/config/routing/notify.yml"
     prefix:   /notify

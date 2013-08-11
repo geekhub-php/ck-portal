@@ -1,16 +1,16 @@
-pages:
+_pages:
     resource: "@PagesBundle/Resources/config/routing.yml"
     prefix:   /
 
-dream_bundle:
+_dream_bundle:
     resource: "@DreamBundle/Resources/config/routing.yml"
     prefix:   /
 
-user_bundle:
+_user_bundle:
     resource: "@UserBundle/Resources/config/routing.yml"
     prefix:   /
 
-file_bundle:
+_file_bundle:
     resource: "@GeekhubFileBundle/Resources/config/routing.yml"
     prefix:   /file
 
@@ -18,10 +18,10 @@ _imagine:
     resource: .
     type:     imagine
 
-fos_js_routing:
+_fos_js_routing:
     resource: "@FOSJsRoutingBundle/Resources/config/routing/routing.xml"
 
-admin:
+_admin:
     resource: '@SonataAdminBundle/Resources/config/routing/sonata_admin.xml'
     prefix: /admin
 
