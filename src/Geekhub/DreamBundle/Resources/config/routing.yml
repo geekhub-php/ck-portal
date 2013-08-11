@@ -2,6 +2,11 @@ dream_homepage:
     pattern:  /
     defaults: { _controller: DreamBundle:Default:index }
 
+handle_error:
+    pattern: /handle-error
+    defaults: { _controller: "DreamBundle:Default:handleError" }
+    requirements: { _method: post }
+
 dream_dreams:
     pattern:  /dreams/{state}
     defaults: { _controller: "DreamBundle:Dream:index", state: 'new' }

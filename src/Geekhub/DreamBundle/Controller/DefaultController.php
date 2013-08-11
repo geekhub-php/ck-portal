@@ -20,4 +20,11 @@ class DefaultController extends Controller
             'newDreams' => $newDreams
         ));
     }
+
+    public function handleErrorAction(Request $request)
+    {
+        $logger = $this->get('logger');
+        $logger->err($request->getContent());
+        return new Response('Error was logged', 200, array('Content-Type' => 'application/json'));
+    }
 }
