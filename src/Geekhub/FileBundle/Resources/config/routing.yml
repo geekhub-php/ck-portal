@@ -1,15 +1,19 @@
 file_upload_image:
     pattern:  /upload-image
     defaults: { _controller: "GeekhubFileBundle:Default:uploadImage" }
+    requirements: { _method: post }
 
 file_upload_document:
     pattern:  /upload-document
     defaults: { _controller: "GeekhubFileBundle:Default:uploadDocument" }
+    requirements: { _method: post }
 
 file_get_vimeo_thumbnail:
     pattern:  /get-vimeo-thumbnail/{videoId}
     defaults: { _controller: "GeekhubFileBundle:Default:getVimeoThumbnail" }
+    requirements: { _method: post }
 
 file_get_youtube_thumbnail:
     pattern:  /get-youtube-thumbnail/{videoId}
     defaults: { _controller: "GeekhubFileBundle:Default:getYoutubeThumbnail" }
+    requirements: { _method: post }

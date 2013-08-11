@@ -5,6 +5,7 @@ namespace Geekhub\FileBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 use Gedmo\Uploadable\UploadableListener;
 use Symfony\Component\HttpFoundation\File\File;
 use Geekhub\FileBundle\UploadHandlerWrapper;
@@ -16,6 +17,9 @@ class DefaultController extends Controller
 {
     public function uploadImageAction(Request $request)
     {
+        if (!$request->isXmlHttpRequest()) {
+            throw new AccessDeniedException();
+        }
         //ToDo Add user check
         $image = new Image();
 
