@@ -26,7 +26,7 @@ If you have found bug, please create an issue.
 MIT License
 -----------
 
-License can be found [here](https://github.com/Sylius/Sylius/blob/master/LICENSE).
+MIT
 
 Authors
 -------
