@@ -2,6 +2,7 @@
 
 namespace Geekhub\UserBundle\UserProvider;
 
+use Symfony\Component\Security\Core\User\UserInterface;
 use HWI\Bundle\OAuthBundle\OAuth\Response\UserResponseInterface;
 use HWI\Bundle\OAuthBundle\Security\Core\User\FOSUBUserProvider as BaseClass;
 
@@ -19,7 +20,7 @@ class FOSUBUserProvider extends BaseClass
     /**
      * {@inheritDoc}
      */
-    public function connect($user, UserResponseInterface $response)
+    public function connect(UserInterface $user, UserResponseInterface $response)
     {
         $property = $this->getProperty($response);
         $username = $response->getUsername();

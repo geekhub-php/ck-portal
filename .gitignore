@@ -16,4 +16,3 @@ web/fonts
 web/img
 *~
 *.orig
-composer.lock
